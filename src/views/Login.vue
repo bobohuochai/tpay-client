@@ -12,8 +12,8 @@
             <p class="text-24px font-600 text-center mb-24px">登录</p>
             <a-form :model="formState" layout="vertical" name="normal_login" class="login-form" @finish="onFinish"
                 @finishFailed="onFinishFailed" ref="formRef">
-                <a-form-item label="手机号" name="account" :rules="[{ required: true, message: '请输入手机号' }]">
-                    <a-input v-model:value="formState.account">
+                <a-form-item label="" name="account" :rules="[{ required: true, message: '请输入手机号' }]">
+                    <a-input v-model:value="formState.account" aria-placeholder="请输入手机号" placeholder="请输入手机号">
                         <template #prefix>
 
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -31,9 +31,8 @@
                     </a-input>
                 </a-form-item>
 
-                <a-form-item class="password-box" label="密码" name="password"
-                    :rules="[{ required: true, message: '请输入密码' }]">
-                    <a-input-password v-model:value="formState.password">
+                <a-form-item class="password-box" label="" name="password" :rules="[{ required: true, message: '请输入密码' }]">
+                    <a-input-password v-model:value="formState.password" aria-placeholder="请输入密码" placeholder="请输入密码">
                         <template #prefix>
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                                 <g opacity="0.5">
@@ -228,4 +227,5 @@ h4 {
 .login-btn:hover {
     background-color: #2C261B;
     color: #fff;
-}</style>
+}
+</style>

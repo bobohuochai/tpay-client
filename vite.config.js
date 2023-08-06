@@ -31,6 +31,7 @@ export default defineConfig({
           "disabled-color": "rgba(0, 0, 0, 0.25)", // disable state color
           "border-radius-base": "6px", // major border radius
           "border-color-base": "#d9d9d9", // major border color
+          //"border-color-base": "#F9D796",
           "box-shadow-base": "0 2px 8px rgba(0, 0, 0, 0.15)", // major shadow for layers
         },
         javascriptEnabled: true,
