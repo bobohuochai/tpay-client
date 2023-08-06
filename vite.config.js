@@ -3,10 +3,11 @@ import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
+import UnoCSS from "unocss/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueJsx()],
+  plugins: [vue(), vueJsx(), UnoCSS()],
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
@@ -17,7 +18,8 @@ export default defineConfig({
       less: {
         math: "always",
         modifyVars: {
-          "primary-color": "#2C261B",
+          // "primary-color": "#2C261B",
+          "primary-color": "#F9D796",
           "link-color": "#F9D796", // link color
           "success-color": "#52c41a", // success state color
           "warning-color": "#faad14", // warning state color
