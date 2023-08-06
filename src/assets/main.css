@@ -1,0 +1,11 @@
+@import './base.css';
+
+#app {
+  font-weight: normal;
+  min-height: 100vh;
+  background: #fff;
+}
+
+.form-wrapper {
+  padding: 24px 0;
+}
