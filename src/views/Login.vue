@@ -56,7 +56,7 @@
                 </a-form-item>
 
                 <a-form-item>
-                    <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button">
+                    <a-button type="primary" html-type="submit" class="login-form-button">
                         登录
                     </a-button>
                     <div style="margin-top: 16px">
@@ -163,8 +163,6 @@ h4 {
 
 .login-form-button {
     width: 100%;
-    background: #ffd362;
-    border-color: unset;
 }
 
 .bg-box {

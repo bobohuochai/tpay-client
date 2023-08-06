@@ -19,9 +19,13 @@ const handleBusinessError = async (data) => {
   } else {
     // https://github.com/axios/axios/issues/3779
     // 导出文件请求报错
-    const isJsonBlob = (data) => data instanceof Blob && data.type === "application/json";
-    const responseData = isJsonBlob(data) ? await data.text() : data ;
-    const responseJson = (typeof responseData === "string") ? JSON.parse(responseData) : responseData;
+    const isJsonBlob = (data) =>
+      data instanceof Blob && data.type === "application/json";
+    const responseData = isJsonBlob(data) ? await data.text() : data;
+    const responseJson =
+      typeof responseData === "string"
+        ? JSON.parse(responseData)
+        : responseData;
     message.error(responseJson.message || "未知错误");
   }
 };
