@@ -1,13 +1,13 @@
 <template>
-    <div class="login-wrap flex flex-grow-1 flex-shrink-0">
-        <div class="bg-box w-838px">
+    <div class="login-wrap flex">
+        <div class="bg-box w-838px flex-shrink-0">
             <a-carousel :autoplay="true" effect="fade" dotPosition="left">
                 <div><img class="h-960px w-838px" src="../assets/login1.png" /></div>
                 <div><img class="h-960px w-838px" src="../assets/login2.png" /></div>
                 <div><img class="h-960px w-838px" src="../assets/login3.png" /></div>
             </a-carousel>
         </div>
-        <div class="login">
+        <div class="login flex-grow-1">
 
             <p class="text-24px font-600 text-center mb-24px">登录</p>
             <a-form :model="formState" layout="vertical" name="normal_login" class="login-form" @finish="onFinish"
@@ -62,7 +62,20 @@
                 </a-form-item>
                 <a-form-item label="" name="authCode">
                     <div class="flex">
-                        <a-input class="h-36px" placeholder="输入验证码" v-model:value="formState.authCode"></a-input>
+                        <a-input class="h-36px" placeholder="输入验证码" v-model:value="formState.authCode">
+                            <template #prefix>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
+                                    fill="none">
+                                    <g opacity="0.5">
+                                        <path
+                                            d="M2.25 3.47087L9.00323 1.5L15.75 3.47087V7.51264C15.75 11.7608 13.0313 15.5323 9.00097 16.8752C4.96954 15.5323 2.25 11.76 2.25 7.51076V3.47087Z"
+                                            stroke="#333333" stroke-linejoin="round" />
+                                        <path d="M5.625 8.625L8.25 11.25L12.75 6.75" stroke="#333333" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </g>
+                                </svg>
+                            </template>
+                        </a-input>
                         <a-button ghost type="primary" class="btn-send h-36px ml-12px" @click="handleSendMessageCode()"
                             :disabled="canSendCheck()">发送验证码</a-button>
                         <span v-if="isSending" class="send-message-count">{{ canSendCount }}(S)</span>
@@ -76,7 +89,7 @@
                 </a-form-item>
             </a-form>
             <div class="text-center mt-24px">
-                还没有账户<router-link to="/register">，去注册</router-link>
+                还没有账户，<router-link to="/register">去注册</router-link>
             </div>
             <SendEmailVue ref="sendEmailVueRef"></SendEmailVue>
         </div>
@@ -176,42 +189,7 @@ h4 {
     bottom: 0px;
 }
 
-.bg-box {
-    div.top {
-        padding: 60px 90px 22px 87px;
-        width: 80%;
-    }
 
-    div.logo-container {
-        font-weight: 800;
-        font-size: 32px;
-    }
-
-    .title {
-        font-size: 26px;
-        line-height: 43px;
-        margin-bottom: 14px
-    }
-
-    .bolder {
-        font-weight: 800;
-    }
-
-    .sub-title {
-        font-size: 14px;
-        line-height: 30px;
-        margin-bottom: 10px;
-    }
-
-    .bold {
-        font-weight: 600
-    }
-
-    .desc {
-        font-size: 14px;
-        line-height: 22px;
-    }
-}
 
 ::v-deep .ant-input-affix-wrapper {
     min-height: 36px;
@@ -227,5 +205,11 @@ h4 {
 .login-btn:hover {
     background-color: #2C261B;
     color: #fff;
+}
+
+.send-message-count {
+    padding: 0 5px;
+    line-height: 36px;
+    color: #958e8e;
 }
 </style>
