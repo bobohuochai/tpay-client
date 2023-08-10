@@ -6,5 +6,5 @@ curDate=$(date "+%Y%m%d")
 if [ -f "dist-${curDate}.zip" ]; then rm dist-${curDate}.zip; echo "旧压缩文件删除"; fi
 zip -q -r dist-${curDate}.zip ./dist
 echo "资源压缩包dist-${curDate}.zip已生成准备上传..."
-scp -p "yvC&ak&n1" -r ./dist-${curDate}.zip  root@47.99.36.242:/data/html
+scp -p "wS&8Kr6NXA" -r ./dist-${curDate}.zip  root@47.99.36.242:/data/html
 echo "资源压缩包dist-${curDate}.zip上传成功"

@@ -239,7 +239,7 @@ const onFinishFailed = (errorInfo) => {
     position: absolute;
     top: 152px;
     bottom: 162px;
-    right: 240px;
+    left: 720px;
 }
 
 .register-form {
@@ -272,5 +272,15 @@ const onFinishFailed = (errorInfo) => {
     padding: 0 5px;
     line-height: 36px;
     color: #958e8e;
+}
+
+::v-deep .ant-input-affix-wrapper {
+    min-height: 36px;
+    height: 36px;
+}
+
+::v-deep .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    height: 36px;
+    line-height: 36px;
 }
 </style>

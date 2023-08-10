@@ -4,7 +4,6 @@
             <a-carousel :autoplay="true" effect="fade" dotPosition="left">
                 <div><img class="h-960px w-838px" src="../assets/login1.png" /></div>
                 <div><img class="h-960px w-838px" src="../assets/login2.png" /></div>
-                <div><img class="h-960px w-838px" src="../assets/login3.png" /></div>
             </a-carousel>
         </div>
         <div class="login flex-grow-1">
@@ -162,7 +161,7 @@ h4 {
     position: absolute;
     top: 152px;
     bottom: 162px;
-    right: 240px;
+    left: 720px;
 }
 
 .login-form {
