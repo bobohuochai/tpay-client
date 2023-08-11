@@ -4,6 +4,7 @@
             <div class="itm"><img class="h-960px w-838px" src="../assets/register.png" /></div>
         </div>
         <div class="register flex-grow-1">
+            <p class="text-24px font-600 text-center mb-24px c-#2C261B">注册账号</p>
             <a-form :model="formState" name="normal_login" class="register-form" :rules="rules" layout="vertical"
                 @finish="onFinish" @finishFailed="onFinishFailed">
                 <a-form-item label="" name="account">

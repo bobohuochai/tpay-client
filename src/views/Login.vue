@@ -124,7 +124,7 @@ const formState = reactive({
     account: "",
     password: "",
     remember: true,
-    authCodeType: '',
+    authCodeType: '0',
     authCode: ''
 });
 const onFinish = async (values) => {

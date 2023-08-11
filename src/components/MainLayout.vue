@@ -298,9 +298,9 @@ export default defineComponent({
 ::v-deep .ant-menu-inline .ant-menu-item::before {
     position: absolute;
     top: 0;
-    left: 8px;
+    left: 4px;
     bottom: 0;
-    border-left: 5px solid #F9D796;
+    border-left: 4px solid #F9D796;
     border-radius: 4px;
     transform: scaleY(0.0001);
     opacity: 0;
