@@ -1,5 +1,5 @@
 <template>
-    <img src="../assets/logo.png" alt="logo" />
+    <img class="h-32px w-32px" src="../assets/logo.png" alt="logo" />
     <span class="ml-8px">Tpay</span>
 </template>
 <style lang="less" scoped>

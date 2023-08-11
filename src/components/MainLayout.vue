@@ -1,12 +1,9 @@
 <template>
     <a-layout>
-        <a-layout-header class="header">
-            <img class="logo" :src="logoJpg" height="40" />
+        <a-layout-header class="header px-24px!" :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
+            <logo />
             <div class="header-content">
                 <notice-bar />
-            </div>
-            <div class="amount" v-if="userStore.userInfo.roleCode !== 'USER'">
-                可用余额：{{ amount }}
             </div>
             <a-dropdown class="username">
                 <a @click.prevent><span id="user-id-handler">用户ID：{{ userStore.userInfo.id }}</span></a>
@@ -23,10 +20,11 @@
                 </template>
             </a-dropdown>
         </a-layout-header>
-        <a-layout>
-            <a-layout-sider width="200" style="background: #fff">
-                <a-menu mode="inline" :style="{ height: '100%', borderRight: 0 }" v-model:selectedKeys="selectedKeys"
-                    v-model:openKeys="openKeys" @select="onSelect">
+        <a-layout has-sider>
+            <a-layout-sider width="200" class="sider-wrap"
+                :style="{ overflow: 'auto', position: 'fixed', left: 0, top: '64px', bottom: 0 }">
+                <a-menu class="menu-wrap" mode="inline" :style="{ height: '100%', borderRight: 0, background: '#f7f6f6' }"
+                    v-model:selectedKeys="selectedKeys" v-model:openKeys="openKeys" @select="onSelect">
                     <template v-for="sm in menus" :key="sm.key">
                         <a-sub-menu v-if="sm.children" :key="sm.key">
                             <template #title>
@@ -52,9 +50,10 @@
                         </template>
                     </template>
                 </a-menu>
+                <wallet-balance></wallet-balance>
             </a-layout-sider>
-            <a-layout>
-                <div class="tabs-box">
+            <a-layout class="bg-#f7f6f6" :style="{ marginLeft: '200px', marginTop: '64px', height: '100vh' }">
+                <!-- <div class="tabs-box">
                     <div ref="bsWrapper" class="bs-wrapper">
                         <better-scroll ref="bsScroll" :options="{ scrollX: true, scrollY: false, click: canClick }">
                             <div class="tabs">
@@ -65,17 +64,18 @@
                             </div>
                         </better-scroll>
                     </div>
-                </div>
+                </div> -->
                 <div style="padding: 0 24px 24px">
                     <a-breadcrumb style="margin: 16px 0">
-                        <a-breadcrumb-item v-for="b in breads">{{ b }}</a-breadcrumb-item>
+                        <a-breadcrumb-item v-for=" b  in  breads ">{{ b }}</a-breadcrumb-item>
                     </a-breadcrumb>
                     <a-layout-content :style="{
                         background: '#fff',
                         padding: '12px 24px',
                         margin: 0,
                         minHeight: '280px',
-                    }">
+                    }
+                        ">
                         <slot></slot>
                     </a-layout-content>
                 </div>
@@ -93,7 +93,10 @@ import NoticeBar from "../components/NoticeBar.vue";
 import BetterScroll from "./BetterScroll.vue";
 import { useDeviceInfo } from "../helpers/utils";
 import { moduleRoutes } from "../router/modules";
-import { useFile } from "../hooks/useFile"
+import { useFile } from "../hooks/useFile";
+import WalletBalance from '../components/WalletBalance.vue';
+import Logo from './logo.vue'
+
 
 import driver from '../driver/index';
 
@@ -106,6 +109,8 @@ export default defineComponent({
     components: {
         NoticeBar,
         BetterScroll,
+        WalletBalance,
+        Logo
     },
     setup() {
         const router = useRouter();
@@ -120,6 +125,7 @@ export default defineComponent({
         });
         return {
             route,
+            router,
             canClick: Boolean(deviceInfo.device.type),
             logoJpg: ref(logoJpg),
             userStore,
@@ -198,10 +204,7 @@ export default defineComponent({
                     ],
                 },
             ],
-            breads: ref([]),
-            onSelect(item) {
-                router.push(item.key);
-            },
+            breads: ref([])
         };
     },
     computed: {
@@ -222,6 +225,9 @@ export default defineComponent({
         },
     },
     methods: {
+        onSelect(item) {
+            this.router.push(item.key);
+        },
         menuIcon(url) {
             return useFile(url)
         },
@@ -285,11 +291,32 @@ export default defineComponent({
             }
         });
         this.openKeys = openKeys;
+
         // this.setBreads();
     },
 });
 </script>
 <style lang="less" scoped>
+.sider-wrap {
+    height: calc(100vh - 64px)
+}
+
+.menu-wrap {
+    max-height: calc(100vh - 64px - 204px - 48px);
+    overflow-y: auto;
+    padding-bottom: 28px;
+}
+
+
+
+::v-deep .ant-layout-sider {
+    background: #f7f6f6;
+}
+
+::v-deep .ant-menu-sub.ant-menu-inline {
+    background: #f7f6f6;
+}
+
 ::v-deep .ant-menu-title-content {
     display: flex;
     align-items: center;
@@ -319,11 +346,11 @@ export default defineComponent({
     transition: transform 0.15s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
+
 .header {
     display: flex;
     align-items: center;
     background-color: #fff;
-    gap: 24px;
     flex-shrink: 0;
     border-bottom: 1px solid #f0f0f0;
 
