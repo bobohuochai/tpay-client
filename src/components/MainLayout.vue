@@ -52,7 +52,7 @@
                 </a-menu>
                 <wallet-balance></wallet-balance>
             </a-layout-sider>
-            <a-layout class="bg-#f7f6f6" :style="{ marginLeft: '200px', marginTop: '64px', height: '100vh' }">
+            <a-layout class="bg-#f7f6f6 content-wrap" :style="{ marginLeft: '200px', marginTop: '64px', }">
                 <!-- <div class="tabs-box">
                     <div ref="bsWrapper" class="bs-wrapper">
                         <better-scroll ref="bsScroll" :options="{ scrollX: true, scrollY: false, click: canClick }">
@@ -71,7 +71,7 @@
                     </a-breadcrumb>
                     <a-layout-content :style="{
                         background: '#fff',
-                        padding: '12px 24px',
+                        padding: '24px',
                         margin: 0,
                         minHeight: '280px',
                     }
@@ -297,6 +297,10 @@ export default defineComponent({
 });
 </script>
 <style lang="less" scoped>
+.content-wrap {
+    min-height: calc(100vh - 64px);
+}
+
 .sider-wrap {
     height: calc(100vh - 64px)
 }

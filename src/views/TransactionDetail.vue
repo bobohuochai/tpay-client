@@ -1,32 +1,50 @@
 <template>
     <div class="page page-clear-list">
-        <div class="form-wrapper">
-            <a-form name="auth-list-form" layout="inline" :model="formState" @finish="onFinish">
-                <a-form-item label="卡号" name="cardNumber">
-                    <a-input v-model:value="formState.cardNumber" placeholder="请输入卡号">
-                    </a-input>
-                </a-form-item>
-                <a-form-item label="类型" name="type">
-                    <a-select :options="typeEnum" v-model:value="formState.type" placeholder="类型" allowClear>
-                    </a-select>
-                </a-form-item>
-                <a-form-item label="日期" name="date">
-                    <a-range-picker v-model:value="formState.date" />
-                </a-form-item>
-                <a-form-item>
-                    <a-button type="primary" html-type="submit">查询</a-button>
-                </a-form-item>
-                <a-form-item>
-                    <a-button type="primary" @click="onExportBtn">导出</a-button>
-                </a-form-item>
-            </a-form>
-        </div>
-        <a-table bordered :columns="columns" :data-source="clearPagingRes.records" :loading="loading"
+
+        <a-form class="mb-24px" name="auth-list-form" layout="inline" :model="formState" @finish="onFinish">
+            <a-form-item label="卡号" name="cardNumber">
+                <a-input v-model:value="formState.cardNumber" placeholder="请输入卡号">
+                </a-input>
+            </a-form-item>
+            <a-form-item label="类型" name="type" class="w-200px">
+                <a-select :options="typeEnum" v-model:value="formState.type" placeholder="请选择" allowClear>
+                </a-select>
+            </a-form-item>
+            <a-form-item label="日期" name="date">
+                <a-range-picker v-model:value="formState.date" />
+            </a-form-item>
+            <a-form-item>
+                <a-button html-type="submit" class="search-btn">
+                    <template #icon>
+                        <SearchOutlined />
+                    </template>
+                </a-button>
+            </a-form-item>
+
+
+
+            <a-form-item class="right">
+                <a-button type="primary" @click="onExportBtn" class="c-#2C261B font-400 text-opacity-70">
+                    <template #icon>
+                        <ExportOutlined />
+                    </template>
+                    导出
+                </a-button>
+            </a-form-item>
+        </a-form>
+
+        <a-table class="transaction-detail" :columns="columns" :data-source="clearPagingRes.records" :loading="loading"
             :pagination="pagination" @change="handleTableChange">
             <template #bodyCell="{ column, record }">
                 <a-space v-if="column.dataIndex === 'operate'">
                     <a @click="showDetailModal(record)">查看详情</a>
                 </a-space>
+            </template>
+            <template #emptyText>
+                <div class="flex flex-col justify-center items-center pa-32px">
+                    <EmptyIcon />
+                    <span>还没有数据，请开卡交易</span>
+                </div>
             </template>
         </a-table>
 
@@ -95,6 +113,8 @@ import EmailSelect from "../components/EmailSelect.vue";
 import { downloadFromRes } from "../helpers/utils";
 import * as transApis from "../services/trans";
 import { useUserStore } from "../stores/user";
+import { SearchOutlined, ExportOutlined } from '@ant-design/icons-vue';
+import EmptyIcon from '../components/icons/empty.vue'
 
 const userStore = useUserStore();
 
@@ -152,6 +172,7 @@ const pagination = computed(() => {
         total: Number(clearPagingRes.value.total),
         pageSize: Number(clearPagingRes.value.size),
         current: Number(clearPagingRes.value.current),
+        showQuickJumper: true
     };
 });
 
@@ -299,7 +320,8 @@ onMounted(async () => {
 </script>
 
 
-<style>
+
+<style scoped lang="less">
 .charge-fee-wrapper {
     margin: 0;
     padding: 0;
@@ -313,5 +335,29 @@ onMounted(async () => {
     width: 120px;
     margin-right: 25px;
     text-align: right;
+}
+
+.right {
+    position: absolute;
+    right: 36px
+}
+
+.transaction-detail {
+    ::v-deep table thead tr th {
+        border-bottom: 1px solid rgba(221, 177, 99, 0.00);
+        background: rgba(221, 177, 99, 0.08);
+    }
+}
+
+::v-deep .ant-picker,
+::v-deep .ant-select:not(.ant-select-customize-input) .ant-select-selector,
+::v-deep .ant-input {
+    border-radius: 6px;
+    background: rgba(44, 38, 27, 0.04);
+}
+
+.search-btn {
+    border-radius: 6px;
+    background: rgba(44, 38, 27, 0.04);
 }
 </style>

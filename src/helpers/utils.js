@@ -29,6 +29,9 @@ export const checkAmount = async (_rule, value) => {
   if (value < 0.01) {
     return Promise.reject("金额最小为0.01");
   }
+  if (!/^(0|[1-9][0-9]*)(\.\d+)?$/.test(value)) {
+    return Promise.reject("金额格式不对");
+  }
   return Promise.resolve();
 };
 
