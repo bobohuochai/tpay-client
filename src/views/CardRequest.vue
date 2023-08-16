@@ -33,7 +33,7 @@
                         <a-radio-button class="radio-item card-bin-btn mr-16px" v-for="item in sectionNoList" :key="item.id"
                             :value="item.id">
                             <div class="flex flex-col">
-                                <div class="region-label bg-#fff h-36px flex items-center justify-between px-8px">
+                                <div class="region-label  h-36px flex items-center justify-between px-8px">
                                     <div class="flex items-center">
                                         <img class="h-16px w-16px"
                                             :src="currencyFile(`/src/assets/currency/${item.currency}.png`)" alt="" />
@@ -82,19 +82,68 @@
                 <a-form-item class="w-320px" label="" name="count" :rules="[
                     { required: true, validator: checkCount, trigger: 'change' },
                 ]">
-                    <a-input v-model:value="formState.count" placeholder="请输入开卡数量" type="number">
+                    <a-input class="count-input" v-model:value="formState.count" placeholder="请输入开卡数量" type="number">
                     </a-input>
                 </a-form-item>
                 <p class="label">持卡人</p>
                 <a-form-item class="w-320px" label="" name="cardholderId" :rules="[{ required: true, message: '请选择持卡人' }]">
-                    <a-select :options="cardholder" v-model:value="formState.cardholderId" placeholder="请选择持卡人"
-                        allowClear></a-select>
+                    <a-select class="cardholder-select" :options="cardholder" v-model:value="formState.cardholderId"
+                        placeholder="请选择持卡人" allowClear></a-select>
                 </a-form-item>
-                <a-form-item :wrapper-col="{ span: 22, offset: 2 }">
+                <!--  合并步骤 -->
+                <p class="label">选择账户</p>
+                <a-form-item label="" name="wallet" :rules="[{ required: true, message: '请选择余额账户' }]">
+                    <!-- <a-select :allowClear="true" v-model:value="formState.wallet" button-style="solid" :options="waArr"
+                        placeholder="请选择余额账户" @change="handeChangeCurrency">
+                    </a-select> -->
+
+                    <!--  @change="handeChangeCurrency" 这个逻辑还要嘛 -->
+                    <a-radio-group button-style="solid" v-model:value="formState.wallet" @change="handeChangeCurrency"
+                        class=" wallet-group flex items-center">
+                        <a-radio-button v-for=" item  in  userStore.userInfo.walletVos " :key="item" :value="item.id"
+                            class="wallet-item-btn radio-item mr-16px">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="h-16px w-16px"
+                                        :src="currencyFile(`/src/assets/currency/${item.currencyCode}.png`)" alt="" />
+                                    <span class="pl-4px font-400 text-12px leading-none c-#2C261B">{{ item.currencyCode
+                                    }}</span>
+                                </div>
+                                <div class="separator mx-16px"></div>
+                                <span>{{ item.usableQuota }}</span>
+                                <SelectedWalletImg class="selectd-img" v-if="formState.walletId === item.id" />
+                            </div>
+                        </a-radio-button>
+                    </a-radio-group>
+
+                </a-form-item>
+                <!-- 合并步骤-->
+                <p class="label">单卡充值金额</p>
+                <a-form-item class="w-320px" label="" name="amount" :rules="[{ required: true, validator: checkAmount }]">
+                    <a-input class="amount-input" placeholder="请输入充值金额" v-model:value="formState.amount" type="number"
+                        @change="handleChargeChange(formState.amount)">
+                        <template #suffix>
+                            <span>{{ currencyCode }}</span>
+                        </template>
+                    </a-input>
+                </a-form-item>
+
+                <!-- 合并步骤-->
+                <p class="label">单卡到账金额</p>
+                <a-form-item class="w-320px" label="" name="charge" :rules="[{ required: true, message: '请输入单卡到账金额' }]">
+                    <a-input class="amount-input" placeholder="请输入到账金额" v-model:value="formState.charge" :disabled="true">
+                        <template #suffix>
+                            <span>{{ currencyCode }}</span>
+                        </template>
+                    </a-input>
+                </a-form-item>
+
+
+                <!-- <a-form-item :wrapper-col="{ span: 22, offset: 2 }">
                     <a-button type="primary" @click="handleNext()">
                         下一步
                     </a-button>
-                </a-form-item>
+                </a-form-item> -->
             </a-form>
         </div>
         <!-- 充值卡 -->
@@ -103,7 +152,8 @@
             <div class="apply_charge_card_wrapper">
                 <a-form name="card-apply-card-form" layout="horizontal" :labelCol="{
                     span: 2,
-                }" :model="formState" ref="applyCardRef" @finish="handleApplyCardFinish">
+                }
+                    " :model="formState" ref="applyCardRef" @finish="handleApplyCardFinish">
                     <a-form-item label="余额账户" name="wallet" :labelCol="{ span: 3, offset: 0 }"
                         :rules="[{ required: true, message: '请选择余额账户' }]">
                         <a-select style="width: 400px;" :allowClear="true" v-model:value="formState.wallet"
@@ -263,8 +313,10 @@ const handleToCharge = (val) => {
     console.log('充值');
 }
 
-const handeChangeCurrency = (val) => {
-    const res = waArr.find(item => item.value === val);
+// radio-group 和select 组建chang 事件的区别
+const handeChangeCurrency = (e) => {
+    const res = waArr.find(item => item.value === e.target.value);
+    console.log('wallet===>', res)
     if (res) {
         currencyWallet.value = res?.usableQuota || 0
     } else {
@@ -461,6 +513,25 @@ p.label {
     margin-bottom: 12px;
 }
 
+.wallet-item-btn {
+    border-radius: 6px;
+    border: 1px solid #EAE9E8;
+
+    .separator {
+        border-left: 1px solid #EAE9E8;
+        width: 1px;
+        height: 22px;
+    }
+
+    .selectd-img {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+
+    }
+
+}
+
 .share-radio-button {
     background-image: url('../assets/cards/sharedcard.png');
     width: 220px;
@@ -527,11 +598,15 @@ p.label {
     }
 }
 
+
+
 ::v-deep .ant-radio-button-wrapper-checked.radio-item {
     border-radius: 6px;
     border: 1px solid #F65050;
     background-color: #FFF;
     border-right-color: #F65050 !important;
+    color: unset;
+
 }
 
 
@@ -550,14 +625,28 @@ p.label {
 
 }
 
-::v-deep .ant-select,
-::v-deep .ant-input {
+.cardholder-select,
+.count-input {
     height: 36px;
     line-height: 36px;
     border-radius: 6px;
     background: rgba(44, 38, 27, 0.04);
     color: #2C261B
 }
+
+.amount-input.ant-input-affix-wrapper {
+    height: 36px;
+    line-height: 36px;
+    border-radius: 6px;
+    background: rgba(44, 38, 27, 0.04);
+
+    color: #2C261B;
+
+    ::v-deep .ant-input {
+        background-color: unset;
+    }
+}
+
 
 ::v-deep .ant-select-single:not(.ant-select-customize-input) .ant-select-selector,
 ::v-deep .ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
