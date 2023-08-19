@@ -299,6 +299,8 @@ export default defineComponent({
 <style lang="less" scoped>
 .content-wrap {
     min-height: calc(100vh - 64px);
+    width: calc(100vw - 200px) !important;
+    flex-grow: 0;
 }
 
 .sider-wrap {

@@ -1,24 +1,25 @@
 <template>
-    <div class="page page-card-request">
-        <p class="label">请选择卡片类型</p>
-        <!-- 申请卡 -->
-        <div v-show="openCardStep === 'openCard'">
-            <a-form ref="openCardFormRef" name="card-request-form" layout="horizontal" :labelCol="{
-                span: 2,
-            }" :model="formState" @finish="onFinish">
-                <a-form-item label="" name="isShare" :rules="[{ required: true, message: '请选择卡片类型' }]"
-                    @change="handleChangeCardType(formState.isShare)">
-                    <a-radio-group v-model:value="formState.isShare">
-                        <a-radio-button :value="false" class="radio-item no-share-radio-button mr-16px">
-                            <SelectedWalletImg class="selectd-img" v-if="!formState.isShare" />
-                        </a-radio-button>
-                        <!-- 共享卡 -->
-                        <!-- <a-radio-button :value="true" class="share-radio-button">
+    <div class="wrap-box">
+        <div class="page page-card-request">
+            <p class="label">请选择卡片类型</p>
+            <!-- 申请卡 -->
+            <div v-show="openCardStep === 'openCard'">
+                <a-form ref="openCardFormRef" name="card-request-form" layout="horizontal" :labelCol="{
+                    span: 2,
+                }" :model="formState" @finish="onFinish">
+                    <a-form-item label="" name="isShare" :rules="[{ required: true, message: '请选择卡片类型' }]"
+                        @change="handleChangeCardType(formState.isShare)">
+                        <a-radio-group v-model:value="formState.isShare">
+                            <a-radio-button :value="false" class="radio-item no-share-radio-button mr-16px">
+                                <SelectedWalletImg class="selectd-img" v-if="!formState.isShare" />
+                            </a-radio-button>
+                            <!-- 共享卡 -->
+                            <!-- <a-radio-button :value="true" class="share-radio-button">
                             <SelectedWalletImg class="selectd-img" v-if="formState.isShare" />
                         </a-radio-button>  -->
-                    </a-radio-group>
-                </a-form-item>
-                <!-- <a-form-item label="卡组织" name="cardLabel" :rules="[{ required: true, message: '请选择卡组织' }]">
+                        </a-radio-group>
+                    </a-form-item>
+                    <!-- <a-form-item label="卡组织" name="cardLabel" :rules="[{ required: true, message: '请选择卡组织' }]">
                     <a-radio-group @change="handleChangeCardGroup(formState.cardLabel)" v-model:value="formState.cardLabel"
                         button-style="solid" class="card-group">
                         <a-radio-button :key="`card_list_group_${index}`" v-for="(item, index) in cardGroupList"
@@ -27,215 +28,238 @@
                         </a-radio-button>
                     </a-radio-group>
                 </a-form-item> -->
-                <p class="label">卡Bin</p>
-                <a-form-item label="" name="cardId" :rules="[{ required: true, message: '请选择卡Bin' }]">
-                    <a-radio-group v-model:value="formState.cardId" button-style="solid">
-                        <a-radio-button class="radio-item card-bin-btn mr-16px" v-for="item in sectionNoList" :key="item.id"
-                            :value="item.id">
-                            <div class="flex flex-col">
-                                <div class="region-label  h-36px flex items-center justify-between px-8px">
-                                    <div class="flex items-center">
-                                        <img class="h-16px w-16px"
-                                            :src="currencyFile(`/src/assets/currency/${item.currency}.png`)" alt="" />
-                                        <span class="pl-4px c-#2C261B text-opacity-50 font-400 text-12px leading-none">{{
-                                            item.currencyName }}</span>
+                    <p class="label">卡Bin</p>
+                    <a-form-item label="" name="cardId" :rules="[{ required: true, message: '请选择卡Bin' }]">
+                        <a-radio-group v-model:value="formState.cardId" button-style="solid">
+                            <a-radio-button class="radio-item card-bin-btn mr-16px" v-for="item in sectionNoList"
+                                :key="item.id" :value="item.id">
+                                <div class="flex flex-col">
+                                    <div class="region-label  h-36px flex items-center justify-between px-8px">
+                                        <div class="flex items-center">
+                                            <img class="h-16px w-16px"
+                                                :src="currencyFile(`/src/assets/currency/${item.currency}.png`)" alt="" />
+                                            <span
+                                                class="pl-4px c-#2C261B text-opacity-50 font-400 text-12px leading-none">{{
+                                                    item.currencyName }}</span>
+                                        </div>
+                                        <img :src="currencyFile(`/src/assets/cards/${item.cardLabel}.png`)" alt="" />
                                     </div>
-                                    <img :src="currencyFile(`/src/assets/cards/${item.cardLabel}.png`)" alt="" />
+                                    <div class="bin-text bg-#2c261b0a h-36px flex items-center justify-center">
+                                        <span class="c-#2C261B font-500 text-16px leading-none ">{{ item.sectionNo }}</span>
+                                    </div>
+                                    <SelectedWalletImg class="selectd-img" v-if="formState.cardId === item.id" />
                                 </div>
-                                <div class="bin-text bg-#2c261b0a h-36px flex items-center justify-center">
-                                    <span class="c-#2C261B font-500 text-16px leading-none ">{{ item.sectionNo }}</span>
-                                </div>
-                                <SelectedWalletImg class="selectd-img" v-if="formState.cardId === item.id" />
-                            </div>
-                        </a-radio-button>
-                    </a-radio-group>
-                    <!-- <div v-if="formState.cardId && cardData" class="card-wrapper">
+                            </a-radio-button>
+                        </a-radio-group>
+                        <!-- <div v-if="formState.cardId && cardData" class="card-wrapper">
                         <div class="item-list" v-if="cardData.region"> 地区: <span> {{ cardData.region }}</span></div>
                         <div class="item-list" v-if="cardData.currencyName"> 结算币种: <span> {{ cardData.currencyName }}</span>
                         </div>
                     </div> -->
-                </a-form-item>
-                <p class="label">卡币种</p>
-                <a-form-item label="" name="currencyId" :rules="[{ required: true, message: '请选择卡币种' }]">
-                    <!-- <a-select :allowClear="true" v-model:value="formState.currencyId" button-style="solid"
+                    </a-form-item>
+                    <p class="label">卡币种</p>
+                    <a-form-item label="" name="currencyId" :rules="[{ required: true, message: '请选择卡币种' }]">
+                        <!-- <a-select :allowClear="true" v-model:value="formState.currencyId" button-style="solid"
                         class="card-currency" :options="currencyOptions"
                         @change="handelChangeCurrencyCode(formState.currencyId)">
                     </a-select> -->
-                    <a-radio-group @change="handelChangeCurrencyCode(formState.currencyId)"
-                        v-model:value="formState.currencyId" button-style="solid">
-                        <a-radio-button class="radio-item card-currency-btn mr-16px" v-for="item in currencyOptions"
-                            :key="item.value" :value="item.value">
-                            <div class="flex">
-                                <div class="flex items-center">
-                                    <img class="h-16px w-16px" :src="currencyFile(`/src/assets/currency/${item.label}.png`)"
-                                        alt="" />
-                                    <span class="pl-8px c-#2C261B text-opacity-70 font-400 text-12px leading-none">{{
-                                        item.label }}</span>
+                        <a-radio-group @change="handelChangeCurrencyCode(formState.currencyId)"
+                            v-model:value="formState.currencyId" button-style="solid">
+                            <a-radio-button class="radio-item card-currency-btn mr-16px" v-for="item in currencyOptions"
+                                :key="item.value" :value="item.value">
+                                <div class="flex">
+                                    <div class="flex items-center">
+                                        <img class="h-16px w-16px"
+                                            :src="currencyFile(`/src/assets/currency/${item.label}.png`)" alt="" />
+                                        <span class="pl-8px c-#2C261B text-opacity-70 font-400 text-12px leading-none">{{
+                                            item.label }}</span>
+                                    </div>
+                                    <SelectedWalletImg class="selectd-img" v-if="formState.currencyId === item.value" />
                                 </div>
-                                <SelectedWalletImg class="selectd-img" v-if="formState.currencyId === item.value" />
-                            </div>
-                        </a-radio-button>
-                    </a-radio-group>
-                </a-form-item>
+                            </a-radio-button>
+                        </a-radio-group>
+                    </a-form-item>
 
-                <p class="label">开卡数量</p>
-                <a-form-item class="w-320px" label="" name="count" :rules="[
-                    { required: true, validator: checkCount, trigger: 'change' },
-                ]">
-                    <a-input class="count-input" v-model:value="formState.count" placeholder="请输入开卡数量" type="number">
-                    </a-input>
-                </a-form-item>
-                <p class="label">持卡人</p>
-                <a-form-item class="w-320px" label="" name="cardholderId" :rules="[{ required: true, message: '请选择持卡人' }]">
-                    <a-select class="cardholder-select" :options="cardholder" v-model:value="formState.cardholderId"
-                        placeholder="请选择持卡人" allowClear></a-select>
-                </a-form-item>
-                <!--  合并步骤 -->
-                <p class="label">选择账户</p>
-                <a-form-item label="" name="wallet" :rules="[{ required: true, message: '请选择余额账户' }]">
-                    <!-- <a-select :allowClear="true" v-model:value="formState.wallet" button-style="solid" :options="waArr"
+                    <p class="label">开卡数量</p>
+                    <a-form-item class="w-320px" label="" name="count" :rules="[
+                        { required: true, validator: checkCount, trigger: 'change' },
+                    ]">
+                        <a-input class="count-input" v-model:value="formState.count" placeholder="请输入开卡数量" type="number">
+                        </a-input>
+                    </a-form-item>
+                    <p class="label">持卡人</p>
+                    <a-form-item class="w-320px" label="" name="cardholderId"
+                        :rules="[{ required: true, message: '请选择持卡人' }]">
+                        <a-select class="cardholder-select" :options="cardholder" v-model:value="formState.cardholderId"
+                            placeholder="请选择持卡人" allowClear></a-select>
+                    </a-form-item>
+                    <!--  合并步骤 -->
+                    <p class="label">选择账户</p>
+                    <a-form-item label="" name="wallet" :rules="[{ required: true, message: '请选择余额账户' }]">
+                        <!-- <a-select :allowClear="true" v-model:value="formState.wallet" button-style="solid" :options="waArr"
                         placeholder="请选择余额账户" @change="handeChangeCurrency">
                     </a-select> -->
 
-                    <!--  @change="handeChangeCurrency" 这个逻辑还要嘛 -->
-                    <a-radio-group button-style="solid" v-model:value="formState.wallet" @change="handeChangeCurrency"
-                        class=" wallet-group flex items-center">
-                        <a-radio-button v-for=" item  in  userStore.userInfo.walletVos " :key="item" :value="item.id"
-                            class="wallet-item-btn radio-item mr-16px">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <img class="h-16px w-16px"
-                                        :src="currencyFile(`/src/assets/currency/${item.currencyCode}.png`)" alt="" />
-                                    <span class="pl-4px font-400 text-12px leading-none c-#2C261B">{{ item.currencyCode
-                                    }}</span>
+                        <!--  @change="handeChangeCurrency" 这个逻辑还要嘛 -->
+                        <a-radio-group button-style="solid" v-model:value="formState.wallet" @change="handeChangeCurrency"
+                            class=" wallet-group flex items-center">
+                            <a-radio-button v-for=" item  in  userStore.userInfo.walletVos " :key="item" :value="item.id"
+                                class="wallet-item-btn radio-item mr-16px">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <img class="h-16px w-16px"
+                                            :src="currencyFile(`/src/assets/currency/${item.currencyCode}.png`)" alt="" />
+                                        <span class="pl-4px font-400 text-12px leading-none c-#2C261B">{{ item.currencyCode
+                                        }}</span>
+                                    </div>
+                                    <div class="separator mx-16px"></div>
+                                    <span>{{ item.usableQuota }}</span>
+                                    <SelectedWalletImg class="selectd-img" v-if="formState.walletId === item.id" />
                                 </div>
-                                <div class="separator mx-16px"></div>
-                                <span>{{ item.usableQuota }}</span>
-                                <SelectedWalletImg class="selectd-img" v-if="formState.walletId === item.id" />
-                            </div>
-                        </a-radio-button>
-                    </a-radio-group>
+                            </a-radio-button>
+                        </a-radio-group>
 
-                </a-form-item>
-                <!-- 合并步骤-->
-                <p class="label">单卡充值金额</p>
-                <a-form-item class="w-320px" label="" name="amount" :rules="[{ required: true, validator: checkAmount }]">
-                    <a-input class="amount-input" placeholder="请输入充值金额" v-model:value="formState.amount" type="number"
-                        @change="handleChargeChange(formState.amount)">
-                        <template #suffix>
-                            <span>{{ currencyCode }}</span>
-                        </template>
-                    </a-input>
-                </a-form-item>
+                    </a-form-item>
+                    <!-- 合并步骤-->
+                    <p class="label">单卡充值金额</p>
+                    <a-form-item class="w-320px" label="" name="amount"
+                        :rules="[{ required: true, validator: checkAmount }]">
+                        <a-input class="amount-input" placeholder="请输入充值金额" v-model:value="formState.amount" type="number"
+                            @change="handleChargeChange(formState.amount)">
+                            <template #suffix>
+                                <span>{{ currencyCode }}</span>
+                            </template>
+                        </a-input>
+                    </a-form-item>
 
-                <!-- 合并步骤-->
-                <p class="label">单卡到账金额</p>
-                <a-form-item class="w-320px" label="" name="charge" :rules="[{ required: true, message: '请输入单卡到账金额' }]">
-                    <a-input class="amount-input" placeholder="请输入到账金额" v-model:value="formState.charge" :disabled="true">
-                        <template #suffix>
-                            <span>{{ currencyCode }}</span>
-                        </template>
-                    </a-input>
-                </a-form-item>
+                    <!-- 合并步骤-->
+                    <p class="label">单卡到账金额</p>
+                    <a-form-item class="w-320px" label="" name="charge">
+                        <a-input class="amount-input" placeholder="请输入到账金额" v-model:value="formState.charge"
+                            :disabled="true">
+                            <template #suffix>
+                                <span>{{ currencyCode }}</span>
+                            </template>
+                        </a-input>
+                    </a-form-item>
 
 
-                <!-- <a-form-item :wrapper-col="{ span: 22, offset: 2 }">
+
+
+                    <!-- <a-form-item :wrapper-col="{ span: 22, offset: 2 }">
                     <a-button type="primary" @click="handleNext()">
                         下一步
                     </a-button>
                 </a-form-item> -->
-            </a-form>
-        </div>
-        <!-- 充值卡 -->
-        <a-card v-show="openCardStep === 'chargeCard'">
-            <p class="apply_charge_card_title">申请充值卡</p>
-            <div class="apply_charge_card_wrapper">
-                <a-form name="card-apply-card-form" layout="horizontal" :labelCol="{
-                    span: 2,
-                }
-                    " :model="formState" ref="applyCardRef" @finish="handleApplyCardFinish">
-                    <a-form-item label="余额账户" name="wallet" :labelCol="{ span: 3, offset: 0 }"
-                        :rules="[{ required: true, message: '请选择余额账户' }]">
-                        <a-select style="width: 400px;" :allowClear="true" v-model:value="formState.wallet"
-                            button-style="solid" class="card-currency" :options="waArr" placeholder="请选择余额账户"
-                            @change="handeChangeCurrency">
-                        </a-select>
-                    </a-form-item>
-                    <a-form-item label="单卡充值金额" name="amount" :labelCol="{ span: 3, offset: 0 }"
-                        :rules="[{ required: true, validator: checkAmount }]">
-                        <div style="display: flex;">
-                            <a-input style="width: 400px;" v-model:value="formState.amount" type="number"
-                                @change="handleChargeChange(formState.amount)">
-                            </a-input>
-                            <span class="currency-code"> {{ currencyCode }}</span>
-                        </div>
-                    </a-form-item>
-                    <a-form-item label="单卡到账金额" name="charge" :labelCol="{ span: 3, offset: 0 }"
-                        :rules="[{ required: true, message: '请输入单卡到账金额' }]">
-                        <div style="display: flex;">
-                            <a-input style="width: 400px;" v-model:value="formState.charge" :disabled="true">
-                            </a-input>
-                            <span class="currency-code"> {{ currencyCode }}</span>
-                        </div>
-                    </a-form-item>
-                    <a-form-item :wrapperCol="{ span: 8, offset: 3 }">
-                        <a-button type="primary" @click="handleChargeCardPrev()">
-                            返回
-                        </a-button>
-                        <a-button v-if="currencyWallet < formState.amount" style="margin-left: 10px;" type="primary"
-                            @click="handleToCharge()">
-                            余额不足，去充值
-                        </a-button>
-                        <a-button v-else :loading="requestCardLoading" style="margin-left: 10px;" type="primary"
-                            @click="handleChargeCardNext()">
-                            下一步
-                        </a-button>
-                    </a-form-item>
                 </a-form>
             </div>
-        </a-card>
-        <!-- 确认充值 -->
-        <a-card v-show="openCardStep === 'chargeCardPay'">
-            <h2>付款确认</h2>
-            <p class="pay_comfirm_title">费用信息</p>
-            <div class="pay_comfirm_wrapper">
-                <p>开卡卡数: {{ formState.count }}</p>
-                <p>开卡手续费: {{ formState.singleApplyFee }} {{ currencyCode }}</p>
-                <p>总计手续费: {{ formState.sumApplyFee }} {{ currencyCode }}</p>
-            </div>
-            <a-form-item :wrapper-col="{ span: 22, offset: 0 }">
-                <a-button type="primary" @click="handleChargeCardPayPrev()">
-                    返回
-                </a-button>
-                <a-button :loading="requestCardLoading" type="primary" style="margin-left: 10px;" html-type="submit"
-                    @click="handleSubmitCard">
-                    提交
-                </a-button>
-            </a-form-item>
-        </a-card>
-        <!-- 共享卡确认充值 -->
-        <a-card v-show="openCardStep === 'shareCardPay'">
-            <h2>付款确认</h2>
-            <p class="pay_comfirm_title">费用信息</p>
-            <div class="pay_comfirm_wrapper">
-                <p>开卡卡数: {{ formState.count }}</p>
-                <p>开卡手续费: {{ formState.singleApplyFee }} {{ currencyCode }}</p>
-                <p>总计手续费: {{ formState.sumApplyFee }} {{ currencyCode }}</p>
-            </div>
-            <a-form-item :wrapper-col="{ span: 22, offset: 0 }">
-                <a-button type="primary" @click="handleShareCardPayPrev()">
-                    返回
-                </a-button>
+            <!-- 充值卡 -->
+            <a-card v-show="openCardStep === 'chargeCard'">
+                <p class="apply_charge_card_title">申请充值卡</p>
+                <div class="apply_charge_card_wrapper">
+                    <a-form name="card-apply-card-form" layout="horizontal" :labelCol="{
+                        span: 2,
+                    }
+                        " :model="formState" ref="applyCardRef" @finish="handleApplyCardFinish">
+                        <a-form-item label="余额账户" name="wallet" :labelCol="{ span: 3, offset: 0 }"
+                            :rules="[{ required: true, message: '请选择余额账户' }]">
+                            <a-select style="width: 400px;" :allowClear="true" v-model:value="formState.wallet"
+                                button-style="solid" class="card-currency" :options="waArr" placeholder="请选择余额账户"
+                                @change="handeChangeCurrency">
+                            </a-select>
+                        </a-form-item>
+                        <a-form-item label="单卡充值金额" name="amount" :labelCol="{ span: 3, offset: 0 }"
+                            :rules="[{ required: true, validator: checkAmount }]">
+                            <div style="display: flex;">
+                                <a-input style="width: 400px;" v-model:value="formState.amount" type="number"
+                                    @change="handleChargeChange(formState.amount)">
+                                </a-input>
+                                <span class="currency-code"> {{ currencyCode }}</span>
+                            </div>
+                        </a-form-item>
+                        <a-form-item label="单卡到账金额" name="charge" :labelCol="{ span: 3, offset: 0 }"
+                            :rules="[{ required: true, message: '请输入单卡到账金额' }]">
+                            <div style="display: flex;">
+                                <a-input style="width: 400px;" v-model:value="formState.charge" :disabled="true">
+                                </a-input>
+                                <span class="currency-code"> {{ currencyCode }}</span>
+                            </div>
+                        </a-form-item>
+                        <a-form-item :wrapperCol="{ span: 8, offset: 3 }">
+                            <a-button type="primary" @click="handleChargeCardPrev()">
+                                返回
+                            </a-button>
+                            <a-button v-if="currencyWallet < formState.amount" style="margin-left: 10px;" type="primary"
+                                @click="handleToCharge()">
+                                余额不足，去充值
+                            </a-button>
+                            <a-button v-else :loading="requestCardLoading" style="margin-left: 10px;" type="primary"
+                                @click="handleChargeCardNext()">
+                                下一步
+                            </a-button>
+                        </a-form-item>
+                    </a-form>
+                </div>
+            </a-card>
+            <!-- 确认充值 -->
+            <a-card v-show="openCardStep === 'chargeCardPay'">
+                <h2>付款确认</h2>
+                <p class="pay_comfirm_title">费用信息</p>
+                <div class="pay_comfirm_wrapper">
+                    <p>开卡数: {{ formState.count }}</p>
+                    <p>开卡手续费: {{ formState.singleApplyFee }} {{ currencyCode }}</p>
+                    <p>总计手续费: {{ formState.sumApplyFee }} {{ currencyCode }}</p>
+                </div>
+                <a-form-item :wrapper-col="{ span: 22, offset: 0 }">
+                    <a-button type="primary" @click="handleChargeCardPayPrev()">
+                        返回
+                    </a-button>
+                    <a-button :loading="requestCardLoading" type="primary" style="margin-left: 10px;" html-type="submit"
+                        @click="handleSubmitCard">
+                        提交
+                    </a-button>
+                </a-form-item>
+            </a-card>
+            <!-- 共享卡确认充值 -->
+            <a-card v-show="openCardStep === 'shareCardPay'">
+                <h2>付款确认</h2>
+                <p class="pay_comfirm_title">费用信息</p>
+                <div class="pay_comfirm_wrapper">
+                    <p>开卡卡数: {{ formState.count }}</p>
+                    <p>开卡手续费: {{ formState.singleApplyFee }} {{ currencyCode }}</p>
+                    <p>总计手续费: {{ formState.sumApplyFee }} {{ currencyCode }}</p>
+                </div>
+                <a-form-item :wrapper-col="{ span: 22, offset: 0 }">
+                    <a-button type="primary" @click="handleShareCardPayPrev()">
+                        返回
+                    </a-button>
 
-                <a-button style="margin-left: 20px;" type="primary" html-type="submit" @click="handleSubmitCard">
-                    提交
-                </a-button>
-            </a-form-item>
-        </a-card>
+                    <a-button style="margin-left: 20px;" type="primary" html-type="submit" @click="handleSubmitCard">
+                        提交
+                    </a-button>
+                </a-form-item>
+            </a-card>
+        </div>
+        <!-- 新增-->
+        <div class="result" v-if="formValid">
+            <p class="c-#2C261B text-20px leading-none font-400 mb-16px mt-24px">付款确认</p>
+            <div class="pay_comfirm_wrapper">
+                <div class="mb-24px"><span class="label">总手续费</span> <span>{{ formState.sumApplyFee }} {{ currencyCode
+                }}</span>
+                </div>
+                <div class="mb-24px"><span class="label">卡到账金额</span> <span>{{ formState.sumRealAmount }} {{ currencyCode
+                }}</span></div>
+                <div><span class="label">总付款金额</span> <span>{{ formState.sumAmount }} {{ currencyCode }}</span></div>
+            </div>
+        </div>
+        <a-button class="bg-#2C261B mt-24px w-114px h-40px c-#fff" html-type="submit" @click="handleSubmitCard">
+            提交
+        </a-button>
+
     </div>
 </template>
 <script setup lang="jsx">
-import { ref, computed, reactive, onMounted, onBeforeMount } from "vue";
+import { ref, computed, reactive, onMounted, onBeforeMount, watch, unref } from "vue";
 import { useRouter } from "vue-router";
 import { message } from "ant-design-vue";
 import * as cardApis from "../services/card";
@@ -292,15 +316,18 @@ const currencyWallet = ref(0);
 let formState = reactive({
     amount: null, //金额
     count: null,//开卡数
-    charge: null, //预计到账金额
+    charge: null, //单卡到账金额
     cardholderId: null,//持卡人
     isShare: false,//类型
     cardLabel: 'Master',//卡组织
     cardId: '',//卡bin
     currencyId: '',//币种
     currency: '', //USD
-    singleApplyFee: '',
-    sumApplyFee: ''
+    "singleApplyFee": '', // 单卡手续费
+    //   "singleRealAmount": '', // 单卡到账金额
+    "sumAmount": '', // 总金额
+    "sumApplyFee": '', // 总手续费
+    "sumRealAmount": '' // 总到账金额
 });
 
 
@@ -355,15 +382,38 @@ const getAllCardGroup = async () => {
 }
 
 
+/**
+ *  "singleApplyFee":2, // 单卡手续费
+                "singleRealAmount":1, // 单卡到账金额
+                "sumAmount":12, // 总金额
+                "sumApplyFee":10, // 总手续费
+                "sumRealAmount":5 // 总到账金额
+ */
 
 const handleChargeChange = debounce(async (val) => {
     if (val >= 0.01) {
         const res = await cardApis.calcApplyFee({ amount: val, count: formState.count, cardId: formState.cardId, isShare: formState.isShare });
-        formState.charge = res?.realAmount;
-        formState.sumApplyFee = res?.sumApplyFee;
+        formState.charge = res?.singleRealAmount;
         formState.singleApplyFee = res?.singleApplyFee;
+        formState.sumAmount = res?.sumAmount;
+        formState.sumApplyFee = res?.sumApplyFee;
+        formState.sumRealAmount = res?.sumRealAmount;
+
     }
 }, 500);
+
+// 
+const formValid = ref(false);
+
+watch(() => formState, async (newValue) => {
+    formValid.value = false;
+    // 验证
+    await openCardFormRef.value.validate();
+    formValid.value = true;
+    // 计算
+    handleChargeChange(unref(formState).amount)
+
+}, { deep: true })
 
 
 
@@ -655,13 +705,40 @@ p.label {
 
 
 
+.wrap-box {
+    background: #f6f6f6;
+    margin: -24px;
 
+    .page {
+        background: #fff;
+        padding: 24px;
+    }
+}
 
 
 .pay_comfirm_wrapper {
-    padding: 10px;
-    background-color: #f5f5f9;
-    margin-bottom: 20px;
+    padding: 24px 36px;
+    border-radius: 6px;
+    background: #FFF;
+
+    .label {
+        color: #2C261B;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 100%;
+        /* 14px */
+    }
+
+    span {
+        color: #2C261B;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 100%;
+        opacity: 0.7;
+
+    }
 }
 
 .apply_charge_card_wrapper {
