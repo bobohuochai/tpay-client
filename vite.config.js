@@ -19,8 +19,8 @@ export default defineConfig({
         math: "always",
         modifyVars: {
           // "primary-color": "#2C261B",
-          "primary-color": "#F9D796",
-          "link-color": "#F9D796", // link color
+          "primary-color": "#DDB163",
+          "link-color": "#DDB163", // link color
           "success-color": "#52c41a", // success state color
           "warning-color": "#faad14", // warning state color
           "error-color": "#f5222d", // error state color
