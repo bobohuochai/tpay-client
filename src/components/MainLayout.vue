@@ -1,6 +1,6 @@
 <template>
     <a-layout>
-        <a-layout-header class="header px-24px!" :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
+        <a-layout-header class="header px-24px!" :style="{ position: 'fixed', zIndex: 100, width: '100%' }">
             <logo />
             <div class="header-content">
                 <notice-bar />
