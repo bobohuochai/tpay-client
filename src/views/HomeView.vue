@@ -7,13 +7,15 @@
 
             <div class="mt-16px flex">
                 <CardView title="近一个月数据分析" class="mr-16px w-564px flex-grow-0">
+                    <div class="cards-amount c-#2C261B text-14px font-400 text-opacity-70"><span>卡片总数</span> <span>{{
+                        dashboard?.userCard?.sumCount }}</span>张</div>
                     <div class="mt-36px flex ">
                         <StatisticItem :data="dashboard?.success" type="success"></StatisticItem>
                         <StatisticItem :data="dashboard?.failure" type="failure"></StatisticItem>
                         <StatisticItem :data="dashboard?.refund" type="refund"></StatisticItem>
                     </div>
                 </CardView>
-                <CardView title="关键指标" class="w-564px pb-0px">
+                <CardView title="关键指标" class="flex-grow-1 pb-0px">
                     <div class="flex">
                         <DashboardProgress class="mr-16px px-12px" type="success" :data="dashboard?.success">
                         </DashboardProgress>
@@ -80,6 +82,12 @@ onBeforeMount(async () => {
 
 </script>
 <style lang="less" scoped>
+div.cards-amount {
+    position: absolute;
+    right: 24px;
+    top: 24px;
+}
+
 div.main {
     background-color: #f6f6f6;
     margin: -24px;
