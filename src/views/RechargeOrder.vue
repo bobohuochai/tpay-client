@@ -398,7 +398,6 @@ div.right {
     height: 36px;
     line-height: 36px;
     border-radius: 6px;
-    background: rgba(44, 38, 27, 0.04);
     color: #2C261B
 }
 

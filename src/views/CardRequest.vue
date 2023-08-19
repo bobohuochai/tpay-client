@@ -668,19 +668,11 @@ p.label {
     display: none;
 }
 
-::v-deep .ant-picker,
-::v-deep .ant-select:not(.ant-select-customize-input) .ant-select-selector,
-::v-deep .ant-input {
-    background: unset;
-
-}
-
 .cardholder-select,
 .count-input {
     height: 36px;
     line-height: 36px;
     border-radius: 6px;
-    background: rgba(44, 38, 27, 0.04);
     color: #2C261B
 }
 
@@ -688,13 +680,7 @@ p.label {
     height: 36px;
     line-height: 36px;
     border-radius: 6px;
-    background: rgba(44, 38, 27, 0.04);
-
     color: #2C261B;
-
-    ::v-deep .ant-input {
-        background-color: unset;
-    }
 }
 
 

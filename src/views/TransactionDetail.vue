@@ -353,11 +353,9 @@ onMounted(async () => {
 ::v-deep .ant-select:not(.ant-select-customize-input) .ant-select-selector,
 ::v-deep .ant-input {
     border-radius: 6px;
-    background: rgba(44, 38, 27, 0.04);
 }
 
 .search-btn {
     border-radius: 6px;
-    background: rgba(44, 38, 27, 0.04);
 }
 </style>
