@@ -42,7 +42,8 @@
                                                 class="pl-4px c-#2C261B text-opacity-50 font-400 text-12px leading-none">{{
                                                     item.currencyName }}</span>
                                         </div>
-                                        <img :src="currencyFile(`/src/assets/cards/${item.cardLabel}.png`)" alt="" />
+                                        <img class="w-32px" :src="currencyFile(`/src/assets/cards/${item.cardLabel}.png`)"
+                                            alt="" />
                                     </div>
                                     <div class="bin-text bg-#2c261b0a h-36px flex items-center justify-center">
                                         <span class="c-#2C261B font-500 text-16px leading-none ">{{ item.sectionNo }}</span>
@@ -587,6 +588,7 @@ p.label {
     width: 220px;
     height: 80px;
     border: unset;
+    background-size:cover;
 
     .selectd-img {
         position: absolute;
@@ -639,6 +641,7 @@ p.label {
     width: 220px;
     height: 80px;
     background-color: unset;
+    background-size: cover;
 
     .selectd-img {
         position: absolute;

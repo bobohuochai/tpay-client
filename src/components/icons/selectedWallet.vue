@@ -18,6 +18,7 @@ div {
     height: 0;
     border-bottom: 30px solid #F65050;
     border-left: 27px solid transparent;
+    border-bottom-right-radius: 6px;
 
     .img {
         position: absolute;
