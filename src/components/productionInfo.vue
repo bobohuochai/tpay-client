@@ -32,7 +32,7 @@ ul {
 
 ul li {
     display: flex;
-    width: 326px;
+    flex-basis: 33%;
     padding: 24px;
     flex-direction: column;
     justify-content: center;
