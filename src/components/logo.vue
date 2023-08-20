@@ -1,6 +1,5 @@
 <template>
-    <img class="h-32px w-32px" src="../assets/logo.png" alt="logo" />
-    <span class="ml-8px">Tpay</span>
+    <img class="h-37px w-117px" src="../assets/logo.png" alt="logo" />
 </template>
 <style lang="less" scoped>
 span {
@@ -10,10 +9,5 @@ span {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-}
-
-img {
-    width: 32px;
-    height: 32px;
 }
 </style>

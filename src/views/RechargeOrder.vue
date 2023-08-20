@@ -1,9 +1,9 @@
 <template>
     <div class="page page-recharge-order">
-        <div class="bg-#fff pa-32px mb-24px">
+        <!-- <div class="bg-#fff pa-32px mb-24px">
             <WalletCard></WalletCard>
         </div>
-        <p class="text-20px font-400 leading-none mb-16px">账户充值</p>
+        <p class="text-20px font-400 leading-none mb-16px">账户充值</p> -->
         <a-card>
             <a-form name=" recharge-order-form" layout="horizontal" :model="formState" :labelCol="{
                 span: 2,

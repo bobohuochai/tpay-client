@@ -12,7 +12,8 @@
                     <img class="h-30px w-30px" :src="currencyFile(`/src/assets/currency/${item.currencyCode}.png`)"
                         alt="" />
                 </div>
-                <img v-if="$index === 0" src="../assets/home/arrow-right.png" class=" jump-img w-30px h-20px bg-cover" />
+                <img v-if="item.currencyCode === 'USD'" src="../assets/home/arrow-right.png" @click="goto(item)"
+                    class="jump-img w-30px h-20px bg-cover" />
             </li>
         </ul>
     </div>
@@ -22,7 +23,10 @@
 import { useUserStore } from "../stores/user";
 import { useFile } from '../hooks/useFile'
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 const userStore = useUserStore();
+const router = useRouter()
+
 const wallets = computed(() => {
     return userStore.wallets
 })
@@ -39,6 +43,11 @@ const backgroundImg = (item) => {
             backgroundSize: 'cover'
         }
     }
+}
+
+const goto = (item) => {
+    router.push({ name: 'RechargeOrder', query: { currency: item.currencyCode } })
+
 }
 
 
