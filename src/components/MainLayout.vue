@@ -40,9 +40,9 @@
                         </a-sub-menu>
                         <template v-else>
                             <a-menu-item class="flex items-center" :key="sm.key">
-                                <img class="mr-12px" v-if="isActive(sm.key)"
+                                <img class="mr-12px w-20px h-20px" v-if="isActive(sm.key)"
                                     :src="menuIcon(`/src/assets/menus/${sm.activeIcon}.png`)" alt="" />
-                                <img class="mr-12px" v-if="!isActive(sm.key)"
+                                <img class="mr-12px  w-20px h-20px" v-if="!isActive(sm.key)"
                                     :src="menuIcon(`/src/assets/menus/${sm.icon}.png`)" alt="" />
                                 <span :id="sm.key">{{ sm.name }}</span>
                             </a-menu-item>
