@@ -8,7 +8,7 @@
             <a-form name=" recharge-order-form" layout="horizontal" :model="formState" :labelCol="{
                 span: 2,
             }" @finish="onFinish">
-                <p class="label">单卡充值金额</p>
+                <p class="label">充值金额</p>
                 <a-radio-group v-model:value="formState.remittanceCurrency" class="mb-12px">
                     <a-radio v-for="option in remittanceCurrencyOption" :key="option.value" :value="option.value">
                         {{ option.label }}
@@ -113,7 +113,7 @@
                         </div>
                     </div>
                 </a-form-item>
-                <p class="label">凭证照片 <span class="pl-16px font-400"
+                <p class="label">充值凭证 <span class="pl-16px font-400"
                         style="color: rgba(44, 38, 27, 0.70); font-size: 10px">支持格式：JPG、JPEG、PNG &nbsp;
                         文件大小：≦10M</span>
                 </p>

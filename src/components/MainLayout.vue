@@ -162,7 +162,7 @@ export default defineComponent({
                     icon: 'cards-manage-default',
                     children: [
                         {
-                            name: "申请卡充值",
+                            name: "申请开卡",
                             key: "card-request",
                         },
                         {

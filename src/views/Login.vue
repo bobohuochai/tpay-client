@@ -159,7 +159,7 @@ h4 {
 
 .login {
     position: absolute;
-    top: 152px;
+    top: 52px;
     bottom: 162px;
     left: 720px;
 }
@@ -169,7 +169,7 @@ h4 {
     background: #fff;
     box-shadow: 0px 0px 60px 0px rgba(44, 38, 27, 0.06);
     width: 480px;
-    height: 560px;
+    height: 400px;
     flex-shrink: 0;
     padding: 36px;
     position: relative;
