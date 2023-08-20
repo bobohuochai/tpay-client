@@ -10,6 +10,9 @@
                 <template #overlay>
                     <a-menu>
                         <a-menu-item>
+                            <a @click="showUserRateTemplate">用户费率</a>
+                        </a-menu-item>
+                        <a-menu-item>
                             <router-link to="/kyc">认证信息</router-link>
                         </a-menu-item>
                         <a-menu-item>
@@ -82,6 +85,35 @@
             </a-layout>
         </a-layout>
     </a-layout>
+    <a-modal
+        v-model:visible="userRateTemplateConfig.show"
+        :title="userRateTemplateConfig.title"
+        :footer="null"
+        width="1000px"
+    >
+        <div v-if="userStore.rateTemplate">
+            <p><span>充值手续费：{{ showRate(userStore.rateTemplate.rechargeFee) }}</span></p>
+            <p><span>人民币充值手续费：{{ showRate(userStore.rateTemplate.cnyRechargeFee) }}</span></p>
+            <a-table
+                :columns="userRateTemplateColumns"
+                :data-source="userStore.rateTemplate.numberSegments"
+                :pagination="false"
+                style="padding-bottom: 20px;"
+            >
+                <template #bodyCell="{ column, record }">
+                    <template v-if="column.key === 'smallTransactionFee'">
+                        <p
+                        v-for="(smallFee, idx) in record.smallTransactionFee" 
+                        :key="`samll_${idx}`"
+                        class="number-segment-item"
+                        >
+                        {{ smallFee.limit[0] }} ~ {{ smallFee.limit[1] }} ：{{ showRate(smallFee) }}
+                        </p>
+                    </template>
+                </template>
+            </a-table>
+        </div>
+    </a-modal>
 </template>
 <script>
 import { defineComponent, ref, onMounted, watchEffect } from "vue";
@@ -120,6 +152,32 @@ export default defineComponent({
         const deviceInfo = useDeviceInfo();
         const selectedKeys = ref([route.path.replace("\/", "")]);
 
+
+        const userRateTemplateConfig = ref({
+            show: false,
+            title: "用户费率"
+        });
+
+        const userRateTemplateColumns = ref([
+            { title: "号段", dataIndex: "numberSegment", }, 
+            { title: "开卡费", dataIndex: "applyCardFee", customRender: ({ record }) => { return showRate(record.applyCardFee); } }, 
+            { title: "交易手续费", dataIndex: "transactionFee", customRender: ({ record }) => { return showRate(record.transactionFee); } }, 
+            { title: "退款手续费", dataIndex: "refundFee", customRender: ({ record }) => { return showRate(record.refundFee); } }, 
+            { title: "撤销手续费", dataIndex: "discardFee", customRender: ({ record }) => { return showRate(record.discardFee); } }, 
+            { title: "交易失败手续费", dataIndex: "failedFee", customRender: ({ record }) => { return showRate(record.failedFee); } }, 
+            { title: "小额交易费", key: "smallTransactionFee" }, 
+            { title: "跨境手续费", dataIndex: "crossBorderTransactionFee", customRender: ({ record }) => { return showRate(record.crossBorderTransactionFee); } }, 
+            { title: "货币转化费", dataIndex: "conversionFee", customRender: ({ record }) => { return showRate(record.conversionFee); } }, 
+        ]);
+        
+        const showRate = ((rate) => {
+            if (rate !== undefined && rate !== null) {
+                return rate.value + (rate.type === 0 ? '%' : '');
+            } else {
+                return '未配置';
+            }
+        });
+        
         watchEffect(() => {
             selectedKeys.value = [route.path.replace("\/", "")];
         });
@@ -131,6 +189,8 @@ export default defineComponent({
             userStore,
             tabStore,
             selectedKeys,
+            userRateTemplateConfig,
+            userRateTemplateColumns,
             openKeys: ref([]),
             menus: [
                 {
@@ -245,6 +305,17 @@ export default defineComponent({
             } else {
                 this.$router.push({ name: tab.name });
             }
+        },
+        async showUserRateTemplate() {
+            await this.userStore.getUserRateTemplate();
+            this.userRateTemplateConfig.show = true;
+        },
+        showRate(rate) {
+        if (rate !== undefined && rate !== null) {
+            return rate.value + (rate.type === 0 ? '%' : '');
+        } else {
+            return '未配置';
+        }
         },
         async logout() {
             try {
