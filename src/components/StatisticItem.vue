@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col mr-16px">
+    <div class="flex flex-col pr-16px ">
         <span class="text-12px font-600 leading-none mb-16px">{{ titleMap[type] }}</span>
         <label class="text-12px font-400 leading-none text-opacity-70 mb-8px">金额 <span :class='["text-18px", "font-500"
             , "leading-none", "pl-8px", type]'>{{ data?.amount
@@ -25,7 +25,7 @@ const titleMap = {
 }
 </script>
 
-<style>
+<style scoped lang="less">
 .success {
     color: #DDB163
 }

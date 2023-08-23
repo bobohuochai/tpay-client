@@ -9,7 +9,7 @@
                 <CardView title="近一个月数据分析" class="mr-16px w-564px flex-grow-0">
                     <div class="cards-amount c-#2C261B text-14px font-400 text-opacity-70"><span>卡片总数：</span><span>{{
                         dashboard?.userCard?.sumCount }}</span>张</div>
-                    <div class="mt-36px flex ">
+                    <div class="mt-36px flex justify-between">
                         <StatisticItem :data="dashboard?.success" type="success"></StatisticItem>
                         <StatisticItem :data="dashboard?.failure" type="failure"></StatisticItem>
                         <StatisticItem :data="dashboard?.refund" type="refund"></StatisticItem>

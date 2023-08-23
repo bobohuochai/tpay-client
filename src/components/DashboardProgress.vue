@@ -1,7 +1,6 @@
 <template>
-    <a-progress class="mt-24px home-progress" type="dashboard" :gapDegree="75" :percent="dashboard?.success?.percentage"
-        :width="138" :strokeColor="contentMap[type]?.strokeColor" :strokeWidth="16"
-        :trailColor="contentMap[type]?.trailColor">
+    <a-progress class="mt-24px home-progress" type="dashboard" :gapDegree="75" :percent="data?.percentage" :width="138"
+        :strokeColor="contentMap[type]?.strokeColor" :strokeWidth="16" :trailColor="contentMap[type]?.trailColor">
         <template #format="percent">
             <div class="flex flex-col items-center justify-center">
                 <label class="c-#DDB163 text-18px font-600  leading-none pb-4px">{{
@@ -24,10 +23,10 @@ const props = defineProps({
 
 const contentMap = {
     "success": {
-        text: '成功率', strokeColor: '#F9D796', trailColor: "rgba(249, 215, 150, 0.50)"
+        text: '成功率', strokeColor: '#F9D796', trailColor: "#f9d79680"
     },
-    "refund": { text: '退款率', strokeColor: '#2C261B', trailColor: 'rgba(44, 38, 27, 0.10)' },
-    "failure": { text: "失败率", strokeColor: '#F65050', trailColor: 'rgba(246, 80, 80, 0.20)' }
+    "refund": { text: '退款率', strokeColor: '#2C261B', trailColor: '#2c261b1a' },
+    "failure": { text: "失败率", strokeColor: '#2C261B', trailColor: '#2c261b1a' }
 }
 
 </script>
