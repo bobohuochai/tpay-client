@@ -213,8 +213,8 @@ const kycTypeOptions = [
     },
 ];
 
-const { currentRoute } = useRouter();
-const route = currentRoute.value;
+const router = useRouter()
+const route = router.currentRoute.value;
 
 onMounted(() => {
     if (route.params.referralCode !== undefined) {
@@ -229,7 +229,7 @@ const onFinish = async () => {
         loading.value = false;
     });
     message.success("注册成功，请登录");
-    router.push("/login");
+    router.push({ path: "/login" });
 };
 const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
