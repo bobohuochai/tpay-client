@@ -116,10 +116,6 @@ const columns = reactive([
       }
       return str;
     },
-  },
-  {
-    title: "打款方",
-    dataIndex: "dealerAccount",
   }
 ]);
 

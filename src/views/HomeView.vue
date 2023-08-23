@@ -7,7 +7,7 @@
 
             <div class="mt-16px flex">
                 <CardView title="近一个月数据分析" class="mr-16px w-564px flex-grow-0">
-                    <div class="cards-amount c-#2C261B text-14px font-400 text-opacity-70"><span>卡片总数</span> <span>{{
+                    <div class="cards-amount c-#2C261B text-14px font-400 text-opacity-70"><span>卡片总数：</span><span>{{
                         dashboard?.userCard?.sumCount }}</span>张</div>
                     <div class="mt-36px flex ">
                         <StatisticItem :data="dashboard?.success" type="success"></StatisticItem>

@@ -47,37 +47,32 @@
 
           <a
               v-if="
-              record.cardStatus === 'ACTIVE' &&
-              record.verifyFreezeUnFreezeCardStatus === 0
+              record.cardStatus === 'ACTIVE' 
             "
               @click="showBlockModal('冻结', record)"
           >冻结</a>
           <a
               v-if="
-              record.cardStatus === 'REVOKED' &&
-              record.verifyFreezeUnFreezeCardStatus === 0
+              record.cardStatus === 'REVOKED'
             "
               @click="showBlockModal('解冻', record)"
           >解冻</a>
           <a
               v-if="
-              record.cardStatus === 'ACTIVE' &&
-              record.verifyCloseCardStatus === 0
+              record.cardStatus === 'ACTIVE'
             "
               @click="showCloseModal(record)"
           >注销</a>
 
           <a
               v-if="
-              record.cardStatus === 'ACTIVE' &&
-              record.verifyCloseCardStatus === 0
+              record.cardStatus === 'ACTIVE'
             "
               @click="showPayModal('充值', record)"
           >充值</a>
           <a
               v-if="
               record.cardStatus === 'ACTIVE' &&
-              record.verifyCloseCardStatus === 0 &&
               record.usableQuota > 0
             "
               @click="showPayModal('退回', record)"

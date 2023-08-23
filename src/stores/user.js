@@ -10,6 +10,7 @@ export const useUserStore = defineStore("user", {
     first: true,
     sseClient: undefined,
     sseClientId: undefined,
+    rateTemplate: {},
   }),
   getters: {
     wallets(state) {
@@ -37,6 +38,13 @@ export const useUserStore = defineStore("user", {
       } catch (e) {
         removeToken();
         location.href = "/";
+      }
+    },
+    async getUserRateTemplate() {
+      try {
+        const res = await userApis.getRateTemplate();
+        this.rateTemplate = res;
+      } catch (e) {
       }
     },
     createSse() {

@@ -67,4 +67,7 @@ export const updateNewFlag = (params) => {
   return aIns.post('/vccuser/updateNewFlag', params);
 }
 
+export const getRateTemplate = (params) => {
+  return aIns.get('/vccuser/getRateTemplate', { params });
+}
 
