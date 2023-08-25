@@ -30,7 +30,7 @@
             </a-form-item>
         </a-form>
 
-        <a-table class="transaction-detail" :columns="columns" :data-source="walletDetailPagingRes.records"
+        <a-table bordered class="transaction-detail" :columns="columns" :data-source="walletDetailPagingRes.records"
             :pagination="pagination" :loading="loading" @change="handleTableChange">
             <template #emptyText>
                 <div class="flex flex-col justify-center items-center pa-32px">

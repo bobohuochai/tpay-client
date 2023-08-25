@@ -51,6 +51,12 @@
                     </a>
                 </a-space>
             </template>
+            <template #emptyText>
+                <div class="flex flex-col justify-center items-center pa-32px">
+                    <EmptyIcon />
+                    <span>还没有数据，请开卡交易</span>
+                </div>
+            </template>
         </a-table>
         <AddCardholderModal ref="addRef" @success="refreshCurrentPage"></AddCardholderModal>
     </div>

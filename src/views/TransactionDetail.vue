@@ -33,8 +33,8 @@
             </a-form-item>
         </a-form>
 
-        <a-table class="transaction-detail" :columns="columns" :data-source="clearPagingRes.records" :loading="loading"
-            :pagination="pagination" @change="handleTableChange">
+        <a-table bordered class="transaction-detail" :columns="columns" :data-source="clearPagingRes.records"
+            :loading="loading" :pagination="pagination" @change="handleTableChange">
             <template #bodyCell="{ column, record }">
                 <a-space v-if="column.dataIndex === 'operate'">
                     <a @click="showDetailModal(record)">查看详情</a>
