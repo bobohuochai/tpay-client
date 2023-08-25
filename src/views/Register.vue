@@ -1,7 +1,13 @@
 <template>
     <div class="register-wrap flex  ">
         <div class="bg-box w-838px flex-shrink-0">
-            <div class="itm"><img class="h-960px w-838px" src="../assets/register.png" /></div>
+            <Logo class="logo" />
+            <div class="bg">
+                <div class="text">
+                    <span>值得信任的<br /> 信用卡支付方案服务商</span>
+                </div>
+                <div class="img"></div>
+            </div>
         </div>
         <div class="register flex-grow-1">
             <p class="text-24px font-600 text-center mb-24px c-#2C261B">注册账号</p>
@@ -152,6 +158,7 @@ import { useRouter } from "vue-router";
 import * as userApis from "../services/user";
 import { message } from "ant-design-vue";
 import { useSendMessage } from '../hooks/message-send.js';
+import Logo from '../components/logo.vue';
 
 const formState = reactive({
     account: "",
@@ -236,6 +243,54 @@ const onFinishFailed = (errorInfo) => {
 };
 </script>
 <style lang="less" scoped>
+.bg-box {
+    border-radius: 6px 0px 0px 6px;
+    background: linear-gradient(320deg, #94CCF4 0%, rgba(148, 204, 244, 0.00) 100%);
+    box-shadow: 0px 0px 60px 0px rgba(148, 204, 244, 0.30);
+    height: 100vh;
+    width: 58%;
+    min-height: 960px;
+}
+
+.logo {
+    position: absolute;
+    top: 60px;
+    left: 60px;
+}
+
+div.bg {
+    position: relative;
+    height: 100vh;
+    min-height: 960px;
+
+    div.text {
+        position: absolute;
+        right: calc(118px + 98px);
+        top: 200px;
+        box-sizing: border-box;
+    }
+
+    span {
+        color: #2C261B;
+        font-size: 48px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: -3.36px;
+        display: inline-block;
+    }
+
+    div.img {
+        background: url('../assets/register.png');
+        background-size: cover;
+        width: 622px;
+        height: 558px;
+        position: absolute;
+        left: 0px;
+        bottom: 0px
+    }
+}
+
 .register {
     position: absolute;
     top: 152px;

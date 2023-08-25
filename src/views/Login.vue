@@ -1,9 +1,25 @@
 <template>
-    <div class="login-wrap flex">
-        <div class="bg-box w-838px flex-shrink-0">
+    <div class="flex">
+        <div class="bg-box flex-shrink-0">
+            <Logo class="logo" />
             <a-carousel :autoplay="true" effect="fade" dotPosition="left">
-                <div><img class="h-960px w-838px" src="../assets/login1.png" /></div>
-                <div><img class="h-960px w-838px" src="../assets/login2.png" /></div>
+                <div class="bg-1">
+                    <div class="text">
+                        <p>值得信任的 <br />信用卡支付方案服务商</p>
+                        <ul>
+                            <li>香港MSO持牌，保证您的资金安全</li>
+                            <li>满足您的电商采购、广告投放、游戏应用、SAAS等费用管理需求</li>
+                            <li>提供香港美国欧洲等多个地区多个币种信用卡服务</li>
+                        </ul>
+                    </div>
+                    <div class="img1"></div>
+                </div>
+                <div class="bg-2">
+                    <div class="text">
+                        <span>实用场景</span>
+                        <div class="img2"></div>
+                    </div>
+                </div>
             </a-carousel>
         </div>
         <div class="login flex-grow-1">
@@ -101,6 +117,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import * as userApis from "../services/user";
 import SendEmailVue from "../components/SendEmail.vue";
 import { useSendMessage } from '../hooks/message-send.js';
+import Logo from '../components/logo.vue';
 
 
 let { canSendCount, isSending, canSendCheck, sendMessageCode } = useSendMessage(async () => {
@@ -144,6 +161,114 @@ const disabled = computed(() => {
 });
 </script>
 <style lang="less" scoped>
+div.bg-1,
+div.bg-2 {
+    position: relative;
+    height: 100vh;
+    min-height: 960px;
+
+
+}
+
+div.bg-2 {
+    div.text {
+        position: absolute;
+        right: calc(118px + 48px);
+        top: 115px;
+        box-sizing: border-box;
+        padding-bottom: 55px;
+    }
+
+    span {
+        color: #2C261B;
+        font-size: 40px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: -1.6px;
+        padding-bottom: 35px;
+        display: inline-block;
+    }
+
+    div.img2 {
+        background: url('../assets/login2.png');
+        background-size: cover;
+        width: 465px;
+        height: 493px;
+    }
+}
+
+div.bg-1 {
+    div.text {
+        position: absolute;
+        right: 203px;
+        top: 115px;
+        box-sizing: border-box;
+        padding-bottom: 55px;
+    }
+
+    p {
+        color: #2C261B;
+        font-size: 48px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: -1.92px;
+        width: 463px;
+        margin-block: 0px;
+        padding-bottom: 35px;
+    }
+
+    ul {
+        margin-block: 0px;
+        padding-inline-start: 16px;
+    }
+
+    ul li {
+        color: #000000b3;
+        font-family: PingFang SC;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 22px;
+    }
+
+    ul li:not(:last-child) {
+        margin-bottom: 8px;
+    }
+}
+
+div.img1 {
+    background: url('../assets/login1.png');
+    background-size: cover;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 838px;
+    height: 468px;
+}
+
+.left {
+    background: linear-gradient(333deg, #F9D796 0%, rgba(249, 215, 150, 0.43) 100%);
+    box-shadow: 0px 0px 60px 0px rgba(249, 215, 150, 0.30);
+    height: 100vh
+}
+
+.bg-box {
+    border-radius: 6px 0px 0px 6px;
+    background: linear-gradient(333deg, #F9D796 0%, rgba(249, 215, 150, 0.43) 100%);
+    box-shadow: 0px 0px 60px 0px rgba(249, 215, 150, 0.30);
+    height: 100vh;
+    width: 58%;
+    min-height: 960px;
+}
+
+.logo {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
 h4 {
     font-size: 40px;
     line-height: 55px;
@@ -155,13 +280,10 @@ h4 {
 }
 
 
-
-
 .login {
     position: absolute;
     top: 52px;
-    bottom: 162px;
-    left: 720px;
+    left: calc(58% - 118px);
 }
 
 .login-form {
