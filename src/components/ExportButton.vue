@@ -1,6 +1,11 @@
 <template>
-  <a-button type="primary" @click="handle">导出</a-button>
-  <!-- <Teleport to="#app">
+    <a-button type="primary" @click="handle" class="c-#2C261B font-400 text-opacity-70">
+        <template #icon>
+            <ExportOutlined />
+        </template>
+        导出
+    </a-button>
+    <!-- <Teleport to="#app">
     <a-modal v-model:visible="visible" title="验证" :footer="null">
       <div>
         <a-form
@@ -27,33 +32,33 @@
 </template>
 <script setup>
 import { ref } from "vue";
-import * as userCardApis from "../services/userCard";
+import { ExportOutlined } from '@ant-design/icons-vue';
 
 const formRef = ref();
 const visible = ref(false);
 const dto = ref({
-  payPassword: "",
+    payPassword: "",
 });
 
 const rules = {
-  payPassword: [{ required: true, message: "请输入支付密码" }],
+    payPassword: [{ required: true, message: "请输入支付密码" }],
 };
 
 const emits = defineEmits({
-  success: () => true,
+    success: () => true,
 });
 
 const handle = async () => {
-  // const data = await userCardApis.verifyPayPassword({});
-  // visible.value = !data.flag;
-  // if (data.flag) {
-  //   emits("success");
-  // }
-  emits("success");
+    // const data = await userCardApis.verifyPayPassword({});
+    // visible.value = !data.flag;
+    // if (data.flag) {
+    //   emits("success");
+    // }
+    emits("success");
 };
 
 const finish = async () => {
-  await formRef.value.validate();
-  emits("success");
+    await formRef.value.validate();
+    emits("success");
 };
 </script>
