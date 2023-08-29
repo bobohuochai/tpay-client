@@ -7,12 +7,12 @@
             </div>
             <a-popover class="username">
                 <!-- <a @click.prevent><span id="user-id-handler">用户ID：{{ userStore.userInfo.id }}</span></a> -->
-                <img src="../assets/user.png" class="w-36px h-36px" />
+                <img src="../assets/user.png" class="w-36px h-36px" style="cursor: pointer;" />
                 <template #content>
                     <ul class="popover">
                         <li class="pb-6px">
-                            <span class="text-14px font-400 c-#2C261B text-opacity-50 pr-12px">用户账号</span>
-                            <span class="text-14px font-500 c-#2C261B">{{ userStore.userInfo.id }}</span>
+                            <span class="flex-shrink-0 text-14px font-400 c-#2C261B text-opacity-50 pr-12px">用户账号</span>
+                            <span class="flex-shrink-0 text-14px font-500 c-#2C261B">{{ userStore.userInfo.id }}</span>
                         </li>
                         <li class="py-6px">
                             <span class="text-14px font-400 c-#2C261B text-opacity-50 pr-12px">绑定手机</span>
