@@ -5,23 +5,36 @@
             <div class="header-content">
                 <notice-bar />
             </div>
-            <a-dropdown class="username">
-                <a @click.prevent><span id="user-id-handler">用户ID：{{ userStore.userInfo.id }}</span></a>
-                <template #overlay>
-                    <a-menu>
-                        <a-menu-item>
+            <a-popover class="username">
+                <!-- <a @click.prevent><span id="user-id-handler">用户ID：{{ userStore.userInfo.id }}</span></a> -->
+                <img src="../assets/user.png" class="w-36px h-36px" />
+                <template #content>
+                    <ul class="popover">
+                        <li class="pb-6px">
+                            <span class="text-14px font-400 c-#2C261B text-opacity-50 pr-12px">用户账号</span>
+                            <span class="text-14px font-500 c-#2C261B">{{ userStore.userInfo.id }}</span>
+                        </li>
+                        <li class="py-6px">
+                            <span class="text-14px font-400 c-#2C261B text-opacity-50 pr-12px">绑定手机</span>
+                            <span class="text-14px font-500 c-#2C261B">{{ userStore.userInfo.account }}</span>
+                        </li>
+                        <a-divider class="my-6px" />
+                        <li class="py-6px">
+                            <img class="w-18px h-18px mr-12px" src="../assets/cert.png" /> <router-link
+                                class="c-#2c261bb3 font-500" to="/kyc">认证信息</router-link>
+                        </li>
+                        <li class="py-6px">
+                            <img class="w-18px h-18px mr-12px" src="../assets/password.png" />
+                            <router-link class="c-#2c261bb3 font-500" to="/update-login-password">修改密码</router-link>
+                        </li>
+                        <!-- <li class="py-6px ">
                             <a @click="showUserRateTemplate">用户费率</a>
-                        </a-menu-item>
-                        <a-menu-item>
-                            <router-link to="/kyc">认证信息</router-link>
-                        </a-menu-item>
-                        <a-menu-item>
-                            <router-link to="/update-login-password">修改密码</router-link>
-                        </a-menu-item>
-                        <a-menu-item @click="logout"> 退出 </a-menu-item>
-                    </a-menu>
+                        </li> -->
+                        <a-divider class="my-6px" />
+                        <a class="c-#2c261bb3 font-400 text-14px py-6px" @click="logout">退出登录</a>
+                    </ul>
                 </template>
-            </a-dropdown>
+            </a-popover>
         </a-layout-header>
         <a-layout has-sider>
             <a-layout-sider width="200" class="sider-wrap"
@@ -85,29 +98,18 @@
             </a-layout>
         </a-layout>
     </a-layout>
-    <a-modal
-        v-model:visible="userRateTemplateConfig.show"
-        :title="userRateTemplateConfig.title"
-        :footer="null"
-        width="1000px"
-    >
+    <a-modal v-model:visible="userRateTemplateConfig.show" :title="userRateTemplateConfig.title" :footer="null"
+        width="1000px">
         <div v-if="userStore.rateTemplate">
             <p><span>充值手续费：{{ showRate(userStore.rateTemplate.rechargeFee) }}</span></p>
             <p><span>人民币充值手续费：{{ showRate(userStore.rateTemplate.cnyRechargeFee) }}</span></p>
-            <a-table
-                :columns="userRateTemplateColumns"
-                :data-source="userStore.rateTemplate.numberSegments"
-                :pagination="false"
-                style="padding-bottom: 20px;"
-            >
+            <a-table :columns="userRateTemplateColumns" :data-source="userStore.rateTemplate.numberSegments"
+                :pagination="false" style="padding-bottom: 20px;">
                 <template #bodyCell="{ column, record }">
                     <template v-if="column.key === 'smallTransactionFee'">
-                        <p
-                        v-for="(smallFee, idx) in record.smallTransactionFee" 
-                        :key="`samll_${idx}`"
-                        class="number-segment-item"
-                        >
-                        {{ smallFee.limit[0] }} ~ {{ smallFee.limit[1] }} ：{{ showRate(smallFee) }}
+                        <p v-for="(smallFee, idx) in record.smallTransactionFee" :key="`samll_${idx}`"
+                            class="number-segment-item">
+                            {{ smallFee.limit[0] }} ~ {{ smallFee.limit[1] }} ：{{ showRate(smallFee) }}
                         </p>
                     </template>
                 </template>
@@ -159,17 +161,17 @@ export default defineComponent({
         });
 
         const userRateTemplateColumns = ref([
-            { title: "号段", dataIndex: "numberSegment", }, 
-            { title: "开卡费", dataIndex: "applyCardFee", customRender: ({ record }) => { return showRate(record.applyCardFee); } }, 
-            { title: "交易手续费", dataIndex: "transactionFee", customRender: ({ record }) => { return showRate(record.transactionFee); } }, 
-            { title: "退款手续费", dataIndex: "refundFee", customRender: ({ record }) => { return showRate(record.refundFee); } }, 
-            { title: "撤销手续费", dataIndex: "discardFee", customRender: ({ record }) => { return showRate(record.discardFee); } }, 
-            { title: "交易失败手续费", dataIndex: "failedFee", customRender: ({ record }) => { return showRate(record.failedFee); } }, 
-            { title: "小额交易费", key: "smallTransactionFee" }, 
-            { title: "跨境手续费", dataIndex: "crossBorderTransactionFee", customRender: ({ record }) => { return showRate(record.crossBorderTransactionFee); } }, 
-            { title: "货币转化费", dataIndex: "conversionFee", customRender: ({ record }) => { return showRate(record.conversionFee); } }, 
+            { title: "号段", dataIndex: "numberSegment", },
+            { title: "开卡费", dataIndex: "applyCardFee", customRender: ({ record }) => { return showRate(record.applyCardFee); } },
+            { title: "交易手续费", dataIndex: "transactionFee", customRender: ({ record }) => { return showRate(record.transactionFee); } },
+            { title: "退款手续费", dataIndex: "refundFee", customRender: ({ record }) => { return showRate(record.refundFee); } },
+            { title: "撤销手续费", dataIndex: "discardFee", customRender: ({ record }) => { return showRate(record.discardFee); } },
+            { title: "交易失败手续费", dataIndex: "failedFee", customRender: ({ record }) => { return showRate(record.failedFee); } },
+            { title: "小额交易费", key: "smallTransactionFee" },
+            { title: "跨境手续费", dataIndex: "crossBorderTransactionFee", customRender: ({ record }) => { return showRate(record.crossBorderTransactionFee); } },
+            { title: "货币转化费", dataIndex: "conversionFee", customRender: ({ record }) => { return showRate(record.conversionFee); } },
         ]);
-        
+
         const showRate = ((rate) => {
             if (rate !== undefined && rate !== null) {
                 return rate.value + (rate.type === 0 ? '%' : '');
@@ -177,7 +179,7 @@ export default defineComponent({
                 return '未配置';
             }
         });
-        
+
         watchEffect(() => {
             selectedKeys.value = [route.path.replace("\/", "")];
         });
@@ -311,11 +313,11 @@ export default defineComponent({
             this.userRateTemplateConfig.show = true;
         },
         showRate(rate) {
-        if (rate !== undefined && rate !== null) {
-            return rate.value + (rate.type === 0 ? '%' : '');
-        } else {
-            return '未配置';
-        }
+            if (rate !== undefined && rate !== null) {
+                return rate.value + (rate.type === 0 ? '%' : '');
+            } else {
+                return '未配置';
+            }
         },
         async logout() {
             try {
@@ -368,6 +370,18 @@ export default defineComponent({
 });
 </script>
 <style lang="less" scoped>
+ul.popover {
+    margin: 0px;
+    padding: 0px;
+    margin-block: 0px;
+    list-style-type: none;
+}
+
+ul li {
+    display: flex;
+    align-items: center;
+}
+
 .content-wrap {
     min-height: calc(100vh - 64px);
     width: calc(100vw - 200px) !important;

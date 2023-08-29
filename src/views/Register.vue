@@ -295,7 +295,7 @@ div.bg {
     position: absolute;
     top: 152px;
     bottom: 162px;
-    left: 720px;
+    left: calc(58% - 118px);
 }
 
 .register-form {

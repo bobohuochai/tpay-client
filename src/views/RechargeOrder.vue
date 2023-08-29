@@ -16,7 +16,7 @@
                 </a-radio-group>
                 <a-form-item label="" name="remittanceAmount" :rules="[{ required: true, validator: checkAmount }]">
                     <a-input style="width: 286px" v-model:value="formState.remittanceAmount" :precision="2"
-                        placeholder="请输入充值金额" allowClear>
+                        placeholder="请输入充值金额">
                         <template #suffix>
                             <span class="font-400 c-#2C261B text-opacity-70">{{ formState.remittanceCurrency }}</span>
                         </template>
@@ -45,7 +45,7 @@
                                             <span class="pl-4px">{{ item.currencyCode }}</span>
                                         </div>
                                         <div class="separator mx-16px"></div>
-                                        <span>{{ item.usableQuota }}</span>
+                                        <span>{{ amountDes(item.currencyCode, item.usableQuota) }}</span>
                                         <SelectedWalletImg class="selectd-img" v-if="formState.walletId === item.id" />
                                     </div>
                                 </a-radio-button>
@@ -53,7 +53,8 @@
                         </a-form-item>
                         <div class="rate-item flex items-center"
                             v-if="selectedWallet && formState.remittanceCurrency !== selectedWallet.currencyCode">
-                            <img class="h-16px w-16px bg-" :src="currencyFile('/src/assets/borderDollar.png')" />
+                            <img style="border-radius: 6px;" class="h-16px w-16px"
+                                :src="currencyFile('/src/assets/borderDollar.png')" />
                             <span class="text-12px font-400 c-#2C261B pl-18px">1.00 {{ selectedWallet.currencyCode }} = {{
                                 onlineRate }}
                                 {{
@@ -63,7 +64,7 @@
                             }}</span>
                         </div>
                         <div class="mt-24px">
-                            <label class="font-600">预计到账</label>
+                            <label class="font-600">预计到账金额</label>
                             <template v-if="selectedWallet">
                                 <b>{{ previewAmount }} {{ selectedWallet.currencyCode }}</b>
                             </template>
@@ -114,16 +115,19 @@
                     </div>
                 </a-form-item>
                 <p class="label">充值凭证 <span class="pl-16px font-400"
-                        style="color: rgba(44, 38, 27, 0.70); font-size: 10px">支持格式：JPG、JPEG、PNG &nbsp;
+                        style="color: rgba(44, 38, 27, 0.40); font-size: 10px">支持格式：JPG、JPEG、PNG &nbsp;
                         文件大小：≦10M</span>
                 </p>
                 <a-form-item label="" name="fileList" :rules="[{ required: true, message: '请选择凭证' }]">
-                    <a-upload v-model:file-list="formState.fileList" name="fileList"
+                    <a-upload v-model:file-list="formState.fileList" name="fileList" list-type="picture-card"
+                        :showUploadList="{ showPreviewIcon: false, showRemoveIcon: true }"
                         accept="image/png, image/jpeg, image/jpg" :maxCount="1" :customRequest="uploadFile">
-                        <a-button type="dashed" class="upload-btn">
-                            <upload-outlined></upload-outlined>
-                            上传凭证
+
+
+                        <a-button type="dashed" class="upload-btn text-10px w-80px px-4px">
+                            <upload-outlined></upload-outlined><span>上传凭证</span>
                         </a-button>
+
 
                     </a-upload>
                 </a-form-item>
@@ -148,6 +152,22 @@ import { checkAmount } from "../helpers/utils";
 import { useFile } from '../hooks/useFile'
 import SelectedWalletImg from '../components/icons/selectedWallet.vue'
 import BorderDollarImg from '../components/icons/borderDollar.vue'
+
+const amountDes = (currency, amount) => {
+    switch (currency) {
+        case 'USD':
+            return `$ ${Number(amount).toLocaleString()}`
+            break;
+        case 'EUR':
+            return `€ ${Number(amount).toLocaleString()}`
+            break;
+        case 'GBP':
+            return `£ ${Number(amount).toLocaleString()}`
+            break;
+        default:
+            break;
+    }
+}
 
 const currencyFile = (imgFile) => {
     return useFile(imgFile)
