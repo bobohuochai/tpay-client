@@ -81,6 +81,7 @@
                         </better-scroll>
                     </div>
                 </div> -->
+                <NewMessage></NewMessage>
                 <div style="padding: 0 24px 24px">
                     <a-breadcrumb style="margin: 16px 0">
                         <a-breadcrumb-item v-for=" b  in  breads ">{{ b }}</a-breadcrumb-item>
@@ -128,8 +129,9 @@ import BetterScroll from "./BetterScroll.vue";
 import { useDeviceInfo } from "../helpers/utils";
 import { moduleRoutes } from "../router/modules";
 import { useFile } from "../hooks/useFile";
-import WalletBalance from '../components/WalletBalance.vue';
+import WalletBalance from './WalletBalance.vue';
 import Logo from './logo.vue'
+import NewMessage from './NewMessage.vue'
 
 
 import driver from '../driver/index';
@@ -144,7 +146,8 @@ export default defineComponent({
         NoticeBar,
         BetterScroll,
         WalletBalance,
-        Logo
+        Logo,
+        NewMessage
     },
     setup() {
         const router = useRouter();
