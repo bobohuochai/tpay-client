@@ -3,7 +3,7 @@
         <a-layout-header class="header px-24px!" :style="{ position: 'fixed', zIndex: 100, width: '100%' }">
             <logo />
             <div class="header-content">
-                <notice-bar />
+                <wallet-balance></wallet-balance>
             </div>
             <a-popover class="username">
                 <!-- <a @click.prevent><span id="user-id-handler">用户ID：{{ userStore.userInfo.id }}</span></a> -->
@@ -66,7 +66,7 @@
                         </template>
                     </template>
                 </a-menu>
-                <wallet-balance></wallet-balance>
+
             </a-layout-sider>
             <a-layout class="bg-#f7f6f6 content-wrap" :style="{ marginLeft: '200px', marginTop: '64px', }">
                 <!-- <div class="tabs-box">
@@ -393,7 +393,6 @@ ul li {
 }
 
 .menu-wrap {
-    max-height: calc(100vh - 64px - 204px - 48px);
     overflow-y: auto;
     padding-bottom: 28px;
 }
@@ -447,7 +446,9 @@ ul li {
 
     .header-content {
         flex: 1;
-        margin-left: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: end;
     }
 }
 
