@@ -1,7 +1,7 @@
 <template>
     <div class="wrap-box">
         <div class="page page-card-request">
-            <p class="label">请选择卡片类型</p>
+            <p class="label">卡片类型</p>
             <!-- 申请卡 -->
             <div v-show="openCardStep === 'openCard'">
                 <a-form ref="openCardFormRef" name="card-request-form" layout="horizontal" :labelCol="{

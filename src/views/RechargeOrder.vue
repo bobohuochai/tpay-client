@@ -1,15 +1,15 @@
 <template>
     <div class="page page-recharge-order">
-        <!-- <div class="bg-#fff pa-32px mb-24px">
-            <WalletCard></WalletCard>
-        </div>
-        <p class="text-20px font-400 leading-none mb-16px">账户充值</p> -->
         <a-card>
             <a-form name=" recharge-order-form" layout="horizontal" :model="formState" :labelCol="{
                 span: 2,
             }" @finish="onFinish">
                 <p class="label">充值金额</p>
-                <a-radio-group v-model:value="formState.remittanceCurrency" class="mb-12px">
+                <a-radio-group 
+                    v-model:value="formState.remittanceCurrency" 
+                    class="mb-12px"
+                    @change="handleChangeRemiittanceCurrency(formState.remittanceCurrency)"
+                >
                     <a-radio v-for="option in remittanceCurrencyOption" :key="option.value" :value="option.value">
                         {{ option.label }}
                     </a-radio>
@@ -153,12 +153,9 @@ import * as rechargeLogApis from "../services/recharge-log";
 import * as uploadApis from "../services/upload";
 import * as receiptAccountApis from "../services/receiptAccount";
 import { useUserStore } from "../stores/user";
-
-import WalletCard from "../components/WalletCard.vue"
 import { checkAmount } from "../helpers/utils";
 import { useFile } from '../hooks/useFile'
 import SelectedWalletImg from '../components/icons/selectedWallet.vue'
-import BorderDollarImg from '../components/icons/borderDollar.vue'
 
 const amountDes = (currency, amount) => {
     switch (currency) {
@@ -276,6 +273,19 @@ const handleChangeChannel = async (val) => {
     }
 };
 
+const handleChangeRemiittanceCurrency = async(val) => {
+    const channels = await receiptAccountApis.groupByChannel({
+        currencyCode: formState.remittanceCurrency
+    });
+    receiptChannels.value = channels.map((it) => ({
+        key: it,
+        value: it,
+    }));
+    // 清空已选
+    formState.receiptChannel = '';
+    formState.receiptAccountId = null;
+}
+
 const onError = (e) => {
     console.log(444, e);
 };
@@ -302,7 +312,7 @@ const onFinish = async (values) => {
     }
 };
 
-let previewAmount = ref('');
+let previewAmount = ref(0);
 
 watchEffect(async () => {
     if (
@@ -319,18 +329,14 @@ watchEffect(async () => {
         onlineRate.value = res.onlineRate;
         refreshDate.value = res.refreshDate;
     } else {
-        previewAmount.value = '';
+        previewAmount.value = 0;
         onlineRate.value = 0;
         refreshDate.value = '';
     }
 });
 
 onMounted(async () => {
-    const channels = await receiptAccountApis.groupByChannel();
-    receiptChannels.value = channels.map((it) => ({
-        key: it,
-        value: it,
-    }));
+    handleChangeRemiittanceCurrency();
 });
 </script>
 
