@@ -9,7 +9,7 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <span class="c-#2C261B text-14px font-400">{{ item.currencyCode }}</span>
-                    <img class="h-30px w-30px" :src="currencyFile(`/src/assets/currency/${item.currencyCode}.png`)"
+                    <img class="h-30px w-30px" :src="currencyFile(`/src/assets/currency/${item.currencyCode}.svg`)"
                         alt="" />
                 </div>
                 <img v-if="item.currencyCode === 'USD'" src="../assets/home/arrow-right.png" @click="goto(item)"

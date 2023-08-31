@@ -20,7 +20,6 @@ export const listByUserId = (params) => {
   return aIns.get("/cardholder/listByUserId", { params });
 };
 
-
 export const derive = (params) => {
-  return aIns.get('/cardholder/', { params, responseType: 'blob'});
+  return aIns.get('/cardholder/derive', { params, responseType: 'blob'});
 }

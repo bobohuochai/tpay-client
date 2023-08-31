@@ -11,6 +11,12 @@
                         placeholder="状态" allowClear>
                     </a-select>
                 </a-form-item>
+                <a-form-item label="备注" name="remark">
+                    <a-input
+                        v-model:value="formState.remark"
+                        placeholder="请输入备注">
+                    </a-input>
+                </a-form-item>
                 <a-form-item>
                     <a-button html-type="submit" class="search-btn">
                         <template #icon>

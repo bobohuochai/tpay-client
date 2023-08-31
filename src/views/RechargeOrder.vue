@@ -33,14 +33,22 @@
                     <div class="right">
                         <p class="label">币种钱包</p>
                         <a-form-item label="" name="walletId" :rules="[{ required: true, message: '请选择钱包' }]">
-                            <a-radio-group button-style="solid" v-model:value="formState.walletId"
-                                class="wallet-group flex items-center">
-                                <a-radio-button v-for="item in userStore.userInfo.walletVos" :key="item" :value="item.id"
-                                    class="wallet-item mr-16px">
+                            <a-radio-group 
+                                button-style="solid" 
+                                v-model:value="formState.walletId"
+                                class="wallet-group flex items-center"
+                            >
+                                <a-radio-button 
+                                    v-for="item in userStore.userInfo.walletVos" 
+                                    :key="item" 
+                                    :value="item.id"
+                                    class="wallet-item mr-16px"
+                                    :disabled="item.currencyCode !== 'USD'"
+                                >
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center">
                                             <img class="h-16px w-16px"
-                                                :src="currencyFile(`/src/assets/currency/${item.currencyCode}.png`)"
+                                                :src="currencyFile(`/src/assets/currency/${item.currencyCode}.svg`)"
                                                 alt="" />
                                             <span class="pl-4px">{{ item.currencyCode }}</span>
                                         </div>
@@ -60,11 +68,10 @@
                                 {{
                                     formState.remittanceCurrency
                                 }}</span>
-                            <span class="font-400 text-10px c-#2C261B text-opacity-40 pl-12px">更新于今天: {{ refreshDate
-                            }}</span>
+                            <span class="font-400 text-10px c-#2C261B text-opacity-40 pl-12px">更新于今天: {{ refreshDate }}</span>
                         </div>
                         <div class="mt-24px">
-                            <label class="font-600">预计到账金额</label>
+                            <label class="font-600">预计到账金额：</label>
                             <template v-if="selectedWallet">
                                 <b>{{ previewAmount }} {{ selectedWallet.currencyCode }}</b>
                             </template>
@@ -190,7 +197,7 @@ const onlineRate = ref(0);
 const refreshDate = ref('');
 
 const formState = reactive({
-    walletId: null, //钱包
+    walletId: userStore.usdWallet.id, //钱包
     remittanceAmount: null, // 汇款金额
     remittanceCurrency: "USD", // 币种
     receiptChannel: "", // 汇款方式
@@ -256,6 +263,9 @@ const handleChangeChannel = async (val) => {
     let accounts = [];
     if (res.length) {
         res.forEach((element) => {
+            if (formState.receiptAccountId === undefined || formState.receiptAccountId === null) {
+                formState.receiptAccountId = element.id;
+            }
             accounts.push({
                 label: element.account,
                 value: element.id,
@@ -281,6 +291,7 @@ const onFinish = async (values) => {
         formState.walletId = "";
         await rechargeLogApis.createOrder(values);
         message.success("已提交申请，待处理");
+        window.location.href = window.location.origin + window.location.pathname + "#/recharge-list";
         formState.remittanceAmount = "";
         formState.remittanceCurrency = "USD";
         formState.remittanceType = "";

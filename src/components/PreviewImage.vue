@@ -1,5 +1,5 @@
 <template>
-  <span :style="{cursor: 'pointer'}" @click="onClick">预览</span>
+  <a :style="{cursor: 'pointer'}" @click="onClick">预览</a>
   <a-image
     :width="width"
     :src="src"

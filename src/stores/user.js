@@ -11,6 +11,7 @@ export const useUserStore = defineStore("user", {
     sseClient: undefined,
     sseClientId: undefined,
     rateTemplate: {},
+    usdWallet: {},
   }),
   getters: {
     wallets(state) {
@@ -35,6 +36,15 @@ export const useUserStore = defineStore("user", {
         const res = await userApis.get();
         this.first = false;
         this.userInfo = res;
+        // 设置美元钱包
+        if (this.userInfo.walletVos) {
+          for (let i = 0; i< this.userInfo.walletVos.length; i++) {
+            const wallet = this.userInfo.walletVos[i];
+            if (wallet.currencyCode === 'USD') {
+              this.usdWallet = wallet;
+            }
+          }
+        }
       } catch (e) {
         removeToken();
         location.href = "/";
