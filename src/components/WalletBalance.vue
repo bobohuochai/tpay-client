@@ -26,6 +26,8 @@ const currencyFile = (imgFile) => {
     return useFile(imgFile)
 }
 
+const amountFormat = (amount) => { return amount.toLocaleString(); }
+
 </script>
 
 <style lang="less" scoped>
@@ -33,27 +35,28 @@ ul {
     margin: 0px;
     margin-block: 0px;
     padding: 0px;
+    display: flex;
+    align-items: center;
+
 }
 
 ul li {
-    margin-bottom: 12px
+    margin-right: 22px;
+    border-radius: 3px;
+    background: rgba(44, 38, 27, 0.04);
+    height: 36px;
 }
 
-ul li:first-child {
-    margin-top: 12px
-}
+
 
 ul li:last-child {
-    margin-bottom: 0px;
+    margin-right: 100px;
 }
 
-.balance-wrap {
-    position: fixed;
-    bottom: 36px;
-    left: 0px;
-    width: 200px;
-    border-top: 1px solid rgba(44, 38, 27, 0.04);
-    background: transparent;
-    background-color: #f6f6f6;
+.balance-wrap {}
+
+::selection {
+    background: unset;
+    color: unset
 }
 </style>

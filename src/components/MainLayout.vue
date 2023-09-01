@@ -3,7 +3,7 @@
         <a-layout-header class="header px-24px!" :style="{ position: 'fixed', zIndex: 100, width: '100%' }">
             <logo />
             <div class="header-content">
-                <notice-bar />
+                <wallet-balance></wallet-balance>
             </div>
             <a-popover class="username">
                 <!-- <a @click.prevent><span id="user-id-handler">用户ID：{{ userStore.userInfo.id }}</span></a> -->
@@ -66,7 +66,7 @@
                         </template>
                     </template>
                 </a-menu>
-                <wallet-balance></wallet-balance>
+
             </a-layout-sider>
             <a-layout class="bg-#f7f6f6 content-wrap" :style="{ marginLeft: '200px', marginTop: '64px', }">
                 <!-- <div class="tabs-box">
@@ -81,6 +81,7 @@
                         </better-scroll>
                     </div>
                 </div> -->
+                <NewMessage></NewMessage>
                 <div style="padding: 0 24px 24px">
                     <a-breadcrumb style="margin: 16px 0">
                         <a-breadcrumb-item v-for=" b  in  breads ">{{ b }}</a-breadcrumb-item>
@@ -128,8 +129,9 @@ import BetterScroll from "./BetterScroll.vue";
 import { useDeviceInfo } from "../helpers/utils";
 import { moduleRoutes } from "../router/modules";
 import { useFile } from "../hooks/useFile";
-import WalletBalance from '../components/WalletBalance.vue';
+import WalletBalance from './WalletBalance.vue';
 import Logo from './logo.vue'
+import NewMessage from './NewMessage.vue'
 
 
 import driver from '../driver/index';
@@ -144,7 +146,8 @@ export default defineComponent({
         NoticeBar,
         BetterScroll,
         WalletBalance,
-        Logo
+        Logo,
+        NewMessage
     },
     setup() {
         const router = useRouter();
@@ -393,7 +396,6 @@ ul li {
 }
 
 .menu-wrap {
-    max-height: calc(100vh - 64px - 204px - 48px);
     overflow-y: auto;
     padding-bottom: 28px;
 }
@@ -447,7 +449,9 @@ ul li {
 
     .header-content {
         flex: 1;
-        margin-left: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: end;
     }
 }
 
