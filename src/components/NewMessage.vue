@@ -1,7 +1,7 @@
 <template>
     <div class="message-box py-8px pl-24px mx-24px" v-if="visible">
         <img class="w-24px h-24px mr-16px" src="../assets/notice.png" />
-        <span>{{ message.content }}</span>
+        <span>{{ message?.content }}</span>
         <div class="flex flex-grow-1"></div>
         <img class="w-18px h-18px mr-12px cursor-pointer" src="../assets/close-message.png" @click="handleClose" />
     </div>
@@ -11,8 +11,8 @@
 import { onBeforeMount, ref } from 'vue'
 import { getNewMessageApi } from '../services/newMessage'
 
-const message = ref({ content: '为更好的服务客户，系统正在加紧升级中，07.30号恢复正常，敬请期待！' })
-const visible = ref(true)
+const message = ref({ content: '' })
+const visible = ref(false)
 
 const handleClose = () => {
     visible.value = false
@@ -20,8 +20,8 @@ const handleClose = () => {
 
 onBeforeMount(async () => {
     const resp = await getNewMessageApi()
-    console.log('resp.data===>', resp.data)
     message.value = resp.data
+    resp.data ? visible.value = true : visible.value = false
 })
 
 </script>
