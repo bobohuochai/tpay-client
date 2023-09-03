@@ -448,10 +448,10 @@ ul li {
     border-bottom: 1px solid #f0f0f0;
 
     .header-content {
-        flex: 1;
         display: flex;
         align-items: center;
-        justify-content: end;
+        justify-content: flex-end;
+        flex-grow: 1;
     }
 }
 
