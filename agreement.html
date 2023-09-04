@@ -1,0 +1,573 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.loli.net/css?family=Didact+Gothic&display=swap&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit; background-repeat: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) { 
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-top-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right-width: 0px; background-color: inherit; }
+.CodeMirror-linenumber { }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit; background-repeat: inherit; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print { 
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) { 
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; }
+a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom-width: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background-color: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print { 
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit; background-repeat: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) { 
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) { 
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.428571429rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ''; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ''; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left-width: 28px; border-left-style: solid; border-left-color: transparent; border-right-width: 28px; border-right-style: solid; border-right-color: transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ''; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right-width: 8px; border-right-style: solid; border-right-color: transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: '−'; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+
+
+@include-when-export url(https://fonts.loli.net/css?family=Didact+Gothic&display=swap&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext);
+
+/* cyrillic-ext */
+/* cyrillic */
+:root {
+	--window-border: none;
+	--typora-center-window-title: true;
+	--active-file-bg-color: #f3f3f3;
+	--bg-color: #fcfcfc;
+	--control-text-color: #777;
+}
+
+.mac-seamless-mode #typora-sidebar {
+	top: 20px;
+	padding-top: 0;
+	height: auto;
+}
+
+html,
+body,
+#write{
+	background: #fcfcfc;
+	background: var(--bg-color);
+	font-family: 'TeXGyreAdventor', "Century Gothic", "Didact Gothic", "Yu Gothic", 'Segoe UI Emoji', sans-serif;
+	font-weight: 300;
+	-webkit-font-smoothing: antialiased;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #111;
+	font-family: 'TeXGyreAdventor', "Century Gothic", "Didact Gothic", "Yu Gothic", sans-serif;
+}
+
+html {
+	font-size:16px;
+}
+
+#write {
+	max-width: 914px;
+	text-align: justify;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+#write>h1:first-child {
+	margin-top: 2.75rem;
+}
+#write>h2:first-child {
+	margin-top: 1.75rem;
+}
+#write>h3:first-child {
+	margin-top: 1rem;
+}
+#write>h4:first-child {
+	margin-top: 0.5rem;
+}
+h1 {
+	font-weight: normal;
+	line-height: 4rem;
+	margin: 0 0 1.75rem;
+	padding: 20px 30px;
+	text-align: center;
+	text-transform: uppercase;
+	margin-top: 4rem;
+}
+h2 {
+	font-weight: normal;
+	line-height: 3rem;
+	margin: 0 0 1.9375rem;
+	padding: 0 30px;
+	text-align: center;
+	text-transform: uppercase;
+	margin-top: 3rem
+}
+h3 {
+	font-weight: normal;
+}
+h4 {
+	font-weight: normal;
+}
+h5 {
+	font-size: 1.125rem;
+	font-weight: normal;
+}
+h6 {
+	font-size: 1rem;
+	font-weight: bold;
+}
+p {
+	color: #111;
+	font-size: 1rem;
+	line-height: 1.75rem;
+	margin: 0 0 1.25rem;
+}
+#write>h3.md-focus:before {
+	left: -1.875rem;
+	top: 0.5rem;
+	padding: 2px;
+}
+#write>h4.md-focus:before {
+	left: -1.875rem;
+	top: 0.3125rem;
+	padding: 2px;
+}
+#write>h5.md-focus:before {
+	left: -1.875rem;
+	top: 0.25rem;
+	padding: 2px;
+}
+#write>h6.md-focus:before {
+	left: -1.875rem;
+	top: .125rem;
+	padding: 2px;
+}
+@media screen and (max-width: 48em) {
+	blockquote {
+		margin-left: 1rem;
+		margin-right: 0;
+		padding: 0.5em;
+	}
+	.h1,
+	h1 {
+		font-size: 2.827rem;
+	}
+	.h2,
+	h2 {
+		font-size: 1.999rem;
+	}
+	.h3,
+	h3 {
+		font-size: 1.413rem;
+	}
+	.h4,
+	h4 {
+		font-size: 1.250rem;
+	}
+	.h5,
+	h5 {
+		font-size: 1.150rem;
+	}
+	.h6,
+	h6 {
+		font-size: 1rem;
+	}
+}
+a,
+.md-def-url {
+	color: #990000;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+table {
+	margin-bottom: 20px
+}
+table th,
+table td {
+	padding: 8px;
+	line-height: 1.25rem;
+	vertical-align: top;
+	border-top: 1px solid #ddd
+}
+table th {
+	font-weight: bold
+}
+table thead th {
+	vertical-align: bottom
+}
+table caption+thead tr:first-child th,
+table caption+thead tr:first-child td,
+table colgroup+thead tr:first-child th,
+table colgroup+thead tr:first-child td,
+table thead:first-child tr:first-child th,
+table thead:first-child tr:first-child td {
+	border-top: 0
+}
+table tbody+tbody {
+	border-top: 2px solid #ddd
+}
+code, .md-fences {
+	padding: .5em;
+	/*background: #f0f0f0;*/
+	border: 1px solid #ccc;
+	padding: .1em;
+	font-size: 0.9em;
+	margin-left: 0.2em;
+	margin-right: 0.2em;
+}
+.md-fences {
+	margin: 0 0 20px;
+	font-size: 1em;
+	padding: 0.3em 1em;
+  	padding-top: 0.4em;
+}
+.task-list{
+	padding-left: 0;
+}
+
+.task-list-item {
+	padding-left:2.125rem;
+}
+
+input {
+	border-style: ridge;
+}
+
+.task-list-item input {
+	top: 3px;
+}
+
+.md-task-list-item input {
+	margin-left: -1.5em;
+}
+
+.task-list-item input:before {
+	content: "";
+	display: inline-block;
+	width: 1rem;
+	height: 1rem;
+	vertical-align: middle;
+	text-align: center;
+	border: 1px solid gray;
+	background-color: #fdfdfd;
+	margin-left: 0;
+	-webkit-appearance: none;
+	margin-top: -1rem;
+}
+
+.typora-node .task-list-item input:before {
+	top: 0.3ex;
+	position: absolute;
+}
+
+.task-list-item input:checked:before,
+.task-list-item input[checked]:before{
+	content: '\25FC';
+	/*◘*/
+	font-size: 0.8125rem;
+	line-height: 0.9375rem;
+}
+
+/* Chrome 29+ */
+@media screen and (-webkit-min-device-pixel-ratio:0)
+  and (min-resolution:.001dpcm) {
+    .task-list-item input:before {
+    	margin-top: -0.2rem;
+    }
+
+    .task-list-item input:checked:before,
+	.task-list-item input[checked]:before {
+		margin-top: -0.2rem;
+	}
+}
+
+blockquote {
+	margin: 0 0 1.11111rem;
+	padding: 0.5rem 1.11111rem 0 1.05556rem;
+	border-left: 1px solid gray;
+}
+blockquote,
+blockquote p {
+	line-height: 1.6;
+	color: #6f6f6f;
+}
+#write pre.md-meta-block {
+	min-height: 30px;
+	background: #f8f8f8;
+	padding: 1.5em;
+	font-weight: 300;
+	font-size: 1em;
+	padding-bottom: 1.5em;
+	padding-top: 3em;
+    margin-top: -1.5em;
+	color: #999;
+	
+	width: 100vw;
+	max-width: calc(100% + 60px);
+	margin-left: -30px;
+	border-left: 30px #f8f8f8 solid;
+	border-right: 30px #f8f8f8 solid;
+}
+.MathJax_Display {
+	font-size: 0.9em;
+	margin-top: 0.5em;
+	margin-bottom: 0;
+}
+p.mathjax-block,
+.mathjax-block {
+	padding-bottom: 0;
+}
+.mathjax-block>.code-tooltip {
+	bottom: 5px;
+	box-shadow: none;
+}
+.md-image>.md-meta {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+.md-image>img {
+	margin-top: 2px;
+}
+.md-image>.md-meta:first-of-type:before {
+	padding-left: 4px;
+}
+
+#typora-source {
+	color: #555;
+}
+
+/** ui for windows **/
+#md-searchpanel {
+    border-bottom: 1px solid #ccc;
+}
+
+#md-searchpanel .btn {
+    border: 1px solid #ccc;
+}
+
+#md-notification:before {
+	top: 14px;
+}
+
+#md-notification {
+	background: #eee;
+}
+
+.megamenu-menu-panel .btn {
+	border: 1px solid #ccc;
+}
+
+#typora-sidebar {
+	box-shadow: none;
+}
+
+.file-list-item ,
+.show-folder-name .file-list-item {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	line-height: 20px;
+}
+
+.file-list-item-summary {
+	height: 40px;
+	line-height: 20px;
+}
+
+.ty-table-edit {
+	background: #ededed;
+}
+
+.dropdown-menu .divider {
+	border-color: #e5e5e5;
+}
+
+ @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
+</style><title>TPay用户协议与隐私保护</title>
+</head>
+<body class='typora-export'><div class='typora-export-content'>
+<div id='write'  class=''><h2 id='隐私保护以及使用协议'><span>隐私保护以及使用协议</span></h2><p><span>		</span><span>您的个人信息安全于本系统而言至关重要。一直以来，TPAY致力于为每位用户提供更安全的互联网环境。本系统将依据各国相关法律法规和技术规 范收集和使用您的个人信息，以帮助本系统向您提供更优质的支付服务。《隐私保护指引》（以下简称“本指引”）以 透明地方式呈现本系统收集和使用您个人信息的情况，以及您享有的对个人信息的控制权。本系统承诺 会对您的个人信息和其它数据进行严格保密，并严格按照本指引所阐述的内容处理您的个人信息。本系统 会根据您的同意和其它可处理您个人信息的法律依据收集、使用、存储、共享和转移您的个人信息。 以下是《隐私保护指引》的要点说明：</span></p><p><span>		</span><span>为帮助您注册并使用TPAY产品或服务，本系统可能收集与提供服务相关的个人信息，您有权拒绝或撤回授权。</span></p><p><span>		</span><span>您可以访问、更正、删除您的个人信息，改变您授权同意的范围，注销您的帐号，本系统为您提供了行使这些权利的途径。本系统采取了互联网业内标准的技术措施和数据安全措施来保护您的个人信息安全。除非再次征得您的同意，本系统不会将您的个人信息用于本指引未载明的其他目的。当您对本指引有任何疑问，可以和本系统进一步联系与咨询。</span></p><p><span>		</span><span>请确认您为 18 岁以上人士。</span></p><p><span>		</span><span>为了更好保护您的个人信息，建议您完整阅读更新的《隐私保护指引》。如需更多信息，请提交工单联系本系统。</span></p><p><span>		</span></p><p><span>		</span><span>目录</span></p><div class='md-toc' mdtype='toc'><p class="md-toc-content" role="list"><span role="listitem" class="md-toc-item md-toc-h2" data-ref="n3"><a class="md-toc-inner" style="" href="#隐私保护以及使用协议">隐私保护以及使用协议</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n178"><a class="md-toc-inner" style="" href="#1-引言">1. 引言</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n194"><a class="md-toc-inner" style="" href="#2-tpay处理个人信息的法律依据">2. TPAY处理个人信息的法律依据</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n35"><a class="md-toc-inner" style="" href="#3-本系统如何收集和使用您的个人信息">3. 本系统如何收集和使用您的个人信息</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n60"><a class="md-toc-inner" style="" href="#4-本系统如何共享转让公开披露您的个人信息">4 本系统如何共享、转让、公开披露您的个人信息</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n217"><a class="md-toc-inner" style="" href="#5-本系统如何保护您的个人信息">5. 本系统如何保护您的个人信息</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n221"><a class="md-toc-inner" style="" href="#6-本系统发出的通知">6. 本系统发出的通知</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n106"><a class="md-toc-inner" style="" href="#7-本系统如何使用-cookie-和其他追踪技术">7. 本系统如何使用 Cookie 和其他追踪技术</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n109"><a class="md-toc-inner" style="" href="#8-本系统如何处理未成年人的个人信息">8. 本系统如何处理未成年人的个人信息</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n114"><a class="md-toc-inner" style="" href="#9-本系统提供服务的使用要求">9. 本系统提供服务的使用要求</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n134"><a class="md-toc-inner" style="" href="#10-如何更新与修改本指引">10. 如何更新与修改本指引</a></span><span role="listitem" class="md-toc-item md-toc-h3" data-ref="n142"><a class="md-toc-inner" style="" href="#11-名词解释">11. 名词解释</a></span><span role="listitem" class="md-toc-item md-toc-h2" data-ref="n160"><a class="md-toc-inner" style="" href="#用户协议">用户协议</a></span></p></div><p>&nbsp;</p><h3 id='1-引言'><span>1. 引言</span></h3><p><span>本指引适用于TPAY网站（</span><a href='https://www.tpay123.com' target='_blank' class='url'>https://www.tpay123.com</a><span>）产品和服务（以下简称「本系统」）。</span></p><blockquote><p><span>【特别提示】请您在使用本系统的各项产品和/或服务前，仔细阅读并充分理解本指引。重点内容 本系统已采用粗体表示，希望您特别关注。一旦您使用或继续使用TPAY产品/服务，即表示您同意本系统按照本指引处理您的相关信息。如对本指引有任何疑问，您可以通过TPAY支付官方网站（</span><a href='https://www.tpay123.com' target='_blank' class='url'>https://www.tpay123.com</a><span>）以及本指引中「如何联系本系统」一节提供的联系方式/客服系 统与本系统联系。</span></p></blockquote><p><span>		</span><span>为了便于您理解本指引中的相关概念，本系统对专有名词标 记了下划线并在本指引第 14 节「名词解释」中给予详细介绍。本指引中相关名词的右 上角用“*”标记的，代表涉及TPAY收集的敏感信息，本系统向您加以增强式提示。</span></p><p><span>		</span><span>本系统可能会不时对《隐私保护指引》进行修订。当《隐私保护指引》发 生变更时，本系统会在版本更新后以推送通知、弹窗等形式向您展示变更后的内容。</span></p><p><span>		</span><span>请您注意，只有在您确认同意变更后，本系统才会按照更新后的《隐私保护指引》收 集、使用、处理和存储您的个人信息；您可以选择不同意，本系统向您提供以「游客」身份进 行浏览的功能，但这可能将导致您无法完整使用TPAY的服务和功能。</span></p><p>&nbsp;</p><h3 id='2-tpay处理个人信息的法律依据'><span>2. TPAY处理个人信息的法律依据</span></h3><p><span>		</span><span>如果您是中华人民共和国大陆地区的用户，本系统将依 据《中华人民共和国网络安全法》、《信息安全技术 个人信息安全规范》（GB/T 35273-2017）以及 其他相关法律法规收集和使用您的个人信息，为您提供TPAY产品和/或服务。 本系统通常只会 在征得您同意的情况下收集您的个人信息。 在某些情况下，本系统可能还会基于法律义务或者履行合同之 必需向您收集个人信息，或者可能需要个人信息来保护您的重要利益或其他人的利益。</span></p><p>&nbsp;</p><h3 id='3-本系统如何收集和使用您的个人信息'><span>3. 本系统如何收集和使用您的个人信息</span></h3><p><span>		</span><span>本系统会遵循正当、合法、必要的原则，出于本指引所述的以下目的，收集和使用您在使用服务过程中主动提 供或因使用TPAY产品和/或服务而产生的个人信息。如果本系统要将您的个人信息用于本指引未载 明的其它用途，或基于特定目的将收集而来的信息用于其他目的，本系统将以合理的方式向您告知，并在使用 前再次征得您的同意。</span></p><p><span>	</span><span>3.1 帮助您成为本系统的在线用户</span></p><p><span>		</span><span>您注册并登录TPAY帐号时， 需要向本系统提供以下信息：帐号名称、身份信息和邮箱。提供上述 信息并同意本指引后，您可以使用TPAY的核心业务功能，包括：浏览TPAY平台内的 内容，发布信息，购买产品等。 如果您选择不提供为实现核心业务功能的必备信息或使用其中某类功能的必 备信息，将导致本系统无法为您提供该功能。</span></p><p><span>	</span><span>3.2 向您提供产品和/或服务</span></p><p><span>		</span><span>为实现TPAY的核心业务功能，本系统可能需要向您收集个人信息。以下将详细 列出TPAY的核心业务功能及为实现该功能所需收集的个人信息，若您拒绝收集，则无法使用 该服务。</span></p><p><span>		</span><span>购买商品功能。 您注册成为TPAY用户后，可在TPAY平台上购买TPAY各项产品服务。在此过程中 ， 本系统可能会收集您的身份信息、设备信息、浏览器类型、日志信息。</span></p><p><span>	</span><span>3.3 本系统可能从第三方间接获取您的个人信息</span></p><p><span>		</span><span>您使用第三方帐号（微信、微博）登录TPAY时，可选择授权TPAY在符合相关法律法 规要求的前提下读取并获得您在该第三方平台上登记、公布、记录的公开信息（包括昵称、头像）。</span></p><p><span>		</span><span>TPAY需要您授权从第三方获取上述信息是为了记住您作为TPAY用户的登录身份，以 向您提供更优质的产品和/或服务。本系统仅会在您的授权同意的范围内收集并使用您的个人信息。 在您使用 第三方帐号注册或登录后，您的第三方帐号将会与TPAY帐号进行绑定，但您可以在【帐号与安全 → 社交帐号绑定】中选择关闭，进行取消帐号绑定。</span></p><p><span>	</span><span>3.4 敏感信息</span></p><p><span>		</span><span>在向TPAY提供任何属于敏感信息的个人信息前，请您清楚考虑该等提供是恰当的并且同意您的个 人敏感信息可按本指引所述的目的和方式进行处理。</span></p><p><span>		</span><span>本系统会在得到您的同意后收集和使用您的敏感信息以实现与TPAY业务相关的功能，并允许您对这 些敏感信息的收集与使用做出不同意的选择，但是拒绝使用这些信息会影响您使用相关功能。</span></p><p><span>	</span><span>3.5 征得授权同意的例外</span></p><p><span>		</span><span>根据相关法律法规的规定，在以下情形中，本系统可以在不征得您的授权同意的情况下收集、使用一些必要的个人信息：</span></p><p><span>		</span><span>1) 与国家安全、国防安全直接相关的；</span></p><p><span>		</span><span>2) 与公共安全、公共卫生、重大公共利益直接相关的；</span></p><p><span>		</span><span>3) 与犯罪侦查、起诉、审判和判决执行等直接相关的；</span></p><p><span>		</span><span>4) 出于维护您或其他个人的生命、财产等重大合法权益但又很难得到本人同意的；</span></p><p><span>		</span><span>所收集的个人信息是您自行向社会公众公开的；从合法公开披露的信息中收集到您的个人信息，如从合法的新闻报道、政府信息公开等渠道；根据您的要求签订和履行合同所必需的；用于维护TPAY的产品和/或服务的安全稳定运行所必需的，例如发现、处置产品或服务的故障；法律法规规定的其他情形。</span></p><p><span>	</span><span>3.6 如果您对本系统收集和使用您的个人信息的法律依据有任何疑问或需要提供进一步的信息，请通过提交工单联系本系统。</span></p><h3 id='4-本系统如何共享转让公开披露您的个人信息'><span>4 本系统如何共享、转让、公开披露您的个人信息</span></h3><p><span>	</span><span>4.1 共享您的个人信息</span></p><p><span>		</span><span>本系统不会与任何公司、组织和个人共享您的个人信息，但以下情况除外：</span></p><p><span>		</span><span>事先获得您的明确授权或同意： 获得您的明确同意后，本系统会与其他方共享您的个人信息；</span></p><p><span>		</span><span>在法定情形下的共享： 根据适用的法律法规、法律程序、政府的强制命令或司法裁定而需共享您的个人信息；</span></p><p><span>		</span><span>在法律要求或允许的范围内，为了保护TPAY及其用户或社会公众的利益、财产或安全免遭损害而有 必要提供您的个人信息给第三方；</span></p><p><span>		</span><span>与本系统的关联公司共享： 您的个人信息可能会在本系统的关联公司之间共享。本系统只会共享必要的个人信息， 且这种共享受本指引所声明目的的约束。关联公司如要改变个人信息的处理目的，将再次征求您的授权同意；</span></p><p><span>		</span><span>与授权合作伙伴共享： 为了向您提供更完善、优质的产品和服务，本系统的某些服务将由授权合作伙伴提供。 本系统可能会与合作伙伴共享您的某些个人信息，以提供更好的客户服务和用户体验。例如，TPAY 向您寄送礼品时，TPAY需要与物流服务提供商共享您的个人信息才能安排寄送。本系统仅会出于合法、正当、必要、特定、明确的目的共享您的个人信息，并且只会共享提供服务所必要的个人信息。同时，本系统会与合作伙伴签署严格的保密协定，要求他们按照本系统的说明、本指引以及其他任何相关的保密和安全措施 来处理您的个人信息。本系统的合作伙伴无权将共享的个人信息用于任何其他用途。 如果您拒绝本系统的合作伙伴 在提供服务时收集为提供服务所必须的个人信息，将可能导致您无法在TPAY中使用该第三方服务。</span></p><p><span>		</span><span>目前，本系统的授权合作伙伴包括以下类型：</span></p><p><span>		</span><span>广告、分析服务类的授权合作伙伴。除非得到您的许可，否则本系统不会将您的个人身份信息（指可以识 别您身份的信息，例如姓名或电子邮箱）与提供广告、分析服务的合作伙伴分享。对于广告合作伙伴，本系统可能会向其提供有关其广告覆盖面和有效性的信息，而不会提供您的个人身份信息，或者本系统将这些信息进行匿名化处理，以便它不会识别到您个人。对于分析数据的伙伴，为了更好的分析TPAY 用户的使用情况，本系统可能向其提供TPAY用户的数量、地区分布、活跃情况等数据，但本系统仅会向这些合作伙伴提供不能识别个人身份的统计信息（例如「位于北京的 25 岁男性，喜欢软件开发」）；</span></p><p><span>		</span><span>供应商、服务提供商和其他合作伙伴。 本系统将信息发送给在全球范围内支持 本系统业务的供应商、服务提供商和其他合作伙伴共享（例如代表本系统发出电邮或 推送通知的通讯服务供应商，以及向为本系统和您提供协助的地图服务供应商分享位置数据，向提供 人脸识别的服务供应商提供帐号名称和头像图片数据），这些信息的用途受到如下限制：</span></p><p><span>		</span><span>协助本系统向您提供服务；</span></p><p><span>		</span><span>协助本系统履行在上文「向您提供产品和/或服务」一节所载的目的；</span></p><p><span>		</span><span>履行本系统根据本指引的责任和实现本系统的权利，及／或协助理解和改善TPAY提供的服务；</span></p><p><span>		</span><span>提供技术基础设施服务、分析本系统服务的使用方式、衡量广告和服务的有效性、支付便利或进行学术研究和调查。</span></p><p><span>		</span><span>就上述目的而言，在本「共享您的个人信息」一节提及的任何第三方所在的位置或使用您的个人信息的位置可 能会在您的司法管辖区以外的地区，包括可能没有与您所在司法管辖区的法律实质上相似或达到该等法律目 的个人信息保护法规的地区；</span></p><p><span>		</span><span>有关共享信息的提示：通过由本系统或第三方提供的功能，您可以主动公开分享、共享信息（如向其他互联网平台转发内容），在这种情况下共享信息将被广泛并即时传送。</span></p><p><span>		</span><span>但只要您不删除被共享的信息，该信息会一直留存在公众领域；在一些情况下，即使您删除共享信息，该等信息仍可由其他用户或与本系统没有关联及不受本系统控制的第三方独立地缓存、复制或储存，或通过其他用户或该等第三方在公众领域保存。例如，当您将您在TPAY发表的评论转发到其他互联网平台，该平台将可能独立的展示、缓存或保存您转发的内容，其他互联网用户也可能转发、保存您的评论，而相应的页面将不受TPAY的控制。</span></p><p><span>		</span><span>此外，本系统亦会提供TPAY的其他相关功能，允许您在公众领域分享共享信息。例如公众可以通过接 入博客或论坛来使用TPAY产品中的某些社交媒体功能。 您应注意，任何您分享的共享信息均可被 任何第三方阅读、收集和使用。请您审慎考虑您通过TPAY张贴和传输的讯息内容。在某些情况下，您 可通过TPAY的设置功能控制公众阅览您共享信息的范围。</span></p><p><span>	</span><span>4.2. 转让</span></p><p><span>		</span><span>除非获取您的明确同意，本系统不会将您的个人信息转让给任何公司、组织或个人。</span></p><p><span>		</span><span>如果发生合并、收购或破产清算，将可能涉及到个人信息转让，此种情况下本系统会要求新的持有您个人信息的公司、组织继续受本指引的约束。如果本指引中约定的个人信息的收集、处理方式发生任何改变，该公司、组 织将重新向您征求授权同意。</span></p><p><span>	</span><span>4.3. 公开披露</span></p><p><span>		</span><span>除非获取您的明确同意，本系统不会公开披露您的个人信息。</span></p><p><span>		</span><span>基于法律、法律程序、诉讼或政府主管部门强制性要求的情况下，本系统可能会向有权机关披露您的个人信息。但 本系统保证，在上述情况发生时，本系统会要求披露请求方必须出具与之相应的有效法律文件，并对被披露的信息采 取符合法律和业界标准的安全防护措施。</span></p><p><span>	</span><span>4.4. 共享、转让、公开披露个人信息授权同意的例外</span></p><p><span>		</span><span>根据相关法律法规的规定，在以下情形中，本系统可以在不征得您的授权同意的情况下共享、转让、公开披露您的个人信息：</span></p><p><span>		</span><span>与国家安全、国防安全有关的；</span></p><p><span>		</span><span>与公共安全、公共卫生、重大公共利益有关的；</span></p><p><span>		</span><span>与犯罪侦查、起诉、审判和判决执行等有关的；</span></p><p><span>		</span><span>出于维护您或其他个人的生命、财产等重大合法权益但又很难得到本人同意的；</span></p><p><span>		</span><span>您自行向社会公众公开的个人信息；</span></p><p><span>		</span><span>从合法公开披露的信息中收集到的个人信息的，如合法的新闻报道、政府信息公开等渠道。</span></p><p><span>		</span><span>法律法规规定的其他情形。</span></p><p><span>		</span><span>根据法律规定，共享、转让经去标识化处理的个人信息，且确保数据接收方无法复原并重新识别个人信息 主体的，不属于个人信息的对外共享、转让及公开披露行为，对此类数据的 保存及处理将无需另行向您通知并征得您的同意。</span></p><h3 id='5-本系统如何保护您的个人信息'><span>5. 本系统如何保护您的个人信息</span></h3><p><span>	</span><span>5.1 技术措施与数据安全措施</span></p><p><span>		</span><span>本系统努力采取各种符合业界标准的物理、电子和管理方面的安全措施来保护您的个人信息安全。本系统积极建 立数据分类分级制度、数据安全管理规范、数据安全开发规范来管理规范个人信息的存储和使用，确保未收 集与本系统提供的服务无关的个人信息。</span></p><p><span>		</span><span>本系统通过与信息接触者签署保密协议、监控和审计机制来对数据进行全面安全控制。防止您的个人信息遭到 未经授权的访问、公开披露、使用、修改、损坏或丢失。</span></p><p><span>		</span><span>本系统已使用符合业界标准的安全防护措施保护您提供的个人信息，防止数据遭到未经授权的访问、公开披 露、使用、修改，防止数据发生损坏或丢失。本系统会采取一切合理可行的措施，保护您的个人信息。例如，在您的浏览器与TPAY之间交换数据（如信用卡信息）时受 SSL 加密保护；本系统同时对本指引「引言」中 出现的网站提供 https 安全浏览方式；本系统会使用加密技术确保数据的保密性；本系统会使用受信赖的保护机制 防止数据遭到恶意攻击；本系统会部署访问控制机制，确保只有授权人员才可以访问个人信息；以及本系统会举办安 全和隐私保护培训课程，加强员工对于保护个人信息重要性的认识。</span></p><p><span>	</span><span>5.2 安全事件处置</span></p><p><span>		</span><span>本系统将尽力确保您发送给本系统的任何信息的安全性，但请您理解，由于技术的限制以及在互联网行业可能存 在的各种恶意手段，不可能始终保证信息百分之百的安全。您需要了解，您接入本系统服务所用的系统和通讯网 络，有可能因本系统可控范围外的因素而出现问题。为防止安全事故的发生，本系统制定了妥善的预警机制和应急 预案。若不幸发生个人信息安全事件，本系统将按照法律法规的要求，及时向您告知：安全事件的基本情况和可能 的影响、本系统已采取或将要采取的处置措施、您可自主防范和降低风险的建议和对您的补救措施，并立即启动应 急预案，力求将损失最小化。本系统将及时将事件相关情况以电话、推送通知等方式告知您，难以逐一告知用户 时，本系统会采取合理、有效的方式发布公告。</span></p><p><span>	</span><span>同时，本系统还将按照监管部门要求，主动上报个人信息安全事件的处置情况，紧密配合政府机关的工作。</span></p><h3 id='6-本系统发出的通知'><span>6. 本系统发出的通知</span></h3><p><span>	</span><span>6.1. 与服务有关的公告</span></p><p><span>	</span><span>本系统可在本系统认为必需时（例如当本系统暂停服务进行维修时）不时向您发出一些与服务有关的公告。您不可取消这些与服务有关、性质不属于推广的公告。</span></p><h3 id='7-本系统如何使用-cookie-和其他追踪技术'><span>7. 本系统如何使用 Cookie 和其他追踪技术</span></h3><p><span>	</span><span>您使用本系统的服务时，本系统会在您的计算机或移动设备上存储名为 Cookie 的小数据文件。Cookie 通常包 含标识符、站点名称以及一些号码和字符。本系统使用该等信息判断注册用户是否已经登录，提升服务/产品质 量及优化用户体验。如您不希望个人信息保存在 Cookie 中，您可对浏览器进行配置，选择禁用 Cookie 功 能。禁用 Cookie 功能后，可能影响您访问TPAY或不能充分取得TPAY提供的服务。</span></p><p><span>	</span><span>本系统不会将 Cookie 用于本指引所述目的之外的任何用途。您可根据自己的偏好管理或删除 Cookie。您可以 清除计算机上保存的所有 Cookie，大部分网络浏览器都设有阻止 Cookie 的功能。</span></p><h3 id='8-本系统如何处理未成年人的个人信息'><span>8. 本系统如何处理未成年人的个人信息</span></h3><p><span>		</span><span>TPAY服务主要面向成人。本系统的产品、网站和服务主要面向成人。若您是 18 周岁以下的未 成年人，在使用本系统的产品和/或服务前，您应在监护人的陪同下阅读本指引，并应确保已征得您的监护人 同意后使用本系统的服务并向本系统提供您的信息。 本系统会根据国家相关法律法规的规定着重保护未成年人的 个人信息。</span></p><p><span>		</span><span>如您的监护人不同意您按照本指引使用本系统的服务或向本系统提供信息，请您立即终止使用本系统的服务并及时通知本系统。</span></p><p><span>		</span><span>对于经父母或法定监护人同意而收集未成年人个人信息的情况，本系统只会在受到法律允许、父母或监护人明确同意或者 保护未成年人所必要的情况下使用或公开披露此信息。</span></p><p><span>		</span><span>若您是未成年人的监护人，当您对您所监护的未成年人使用本系统的服务或其向本系统提供的用户信息有任何疑问 时，请您及时与本系统联系。本系统将根据国家相关法律法规及本指引的规定保护未成年人用户信息的保密性及安 全性。如果本系统发现自己在未事先获得可证实的父母或法定监护人同意的情况下收集了未成年人的个人信息，则 会设法尽快删除相关数据。</span></p><h3 id='9-本系统提供服务的使用要求'><span>9. 本系统提供服务的使用要求</span></h3><p><span>		</span><span>将严格按照发卡行合规管控要求来规范用户用卡。</span></p><p><span>		</span><span>发卡行合规管控要点：违规交易行为和拒付率。</span></p><p><span>	</span><span>9.1 本系统禁止以下违规交易行为：</span></p><p><span>		</span><span>9.1.1.禁止恶意提交充值行为。</span></p><p><span>		</span><span>9.1.2.禁止薅羊毛：阿里云、游戏视频网站等各种试用。</span></p><p><span>		</span><span>9.1.3.禁止用卡收款。</span></p><p><span>		</span><span>9.1.4.禁止用于paypal、appstore等各种身份验证。</span></p><p><span>		</span><span>9.1.5.禁止用于政务、法律机构、信贷机构等服务。</span></p><p><span>		</span><span>9.1.6.禁止用于任何非法操作。例如:不得用于Airbnb、Lyft、Uber等类似平台的诈骗行为和其他非法交易。</span></p><blockquote><p><span>温馨提醒：一经发现有上述违规交易行为，系统将作废卡片并关闭账户且不退回任何资金。请务必规范用卡。</span></p></blockquote><p><span>	</span><span>9.2 关于用卡拒付率：</span></p><p><span>		</span><span>9.2.1.请在交易前安排卡片充值以确保卡片内有足够的余额进行交易，并在交易时确认卡片信息。是否埴写正确，以免填写错误造成交易失败。</span></p><p><span>		</span><span>9.2.2.如卡片不再使用需要曾在绑定过的所有相关账户进行解绑，并停止该账户广告服务、会员服务后再作废卡。请务必不要在交易扣费失败及未与相关账户解绑的情况下，直接在系统作废卡片。否则卡片作废后如账户产生费用，平台会一直对该卡片发起请求付款，依然会造成交易失败并触发风控。</span></p><p><span>		</span><span>9.2.3.请关注系统交易明细中的失败交易。如发现余额不足引发的交易失败，请立刻为该卡充值或从相关账户解绑，否则平台会一直发起扣款请求导致交易失败并触发风控。</span></p><p><span>		</span><span>9.2.4.一个月内拒付率达到15%，系统会停止该卡段的开卡充值查余额功能；拒付率达到30%系统会自动作废该卡段已开通卡片且不退回任何资金。</span></p><p><span>	</span><span>9.3 关于用卡作废率：</span></p><p><span>		</span><span>9.3.1.我们不提供关于任何网站的使用、下单教程，也不保证一定能用于某个特定网站。如您需要测试卡段，请合理安排用卡数量。</span></p><p>&nbsp;</p><h3 id='10-如何更新与修改本指引'><span>10. 如何更新与修改本指引</span></h3><p><span>		</span><span>TPAY保留不时更新或修改本指引的权利。</span></p><p><span>		</span><span>对于重大变更，视具体情况本系统 可能还会提供更为显著的通知 说明本指引的具体变更内容。 重大变更包括但不限于：</span></p><p><span>		</span><span>本系统上游发卡行渠道政策发生变化，包括但不限于商务成本以及风控要求变化等</span></p><p><span>		</span><span>本系统的服务模式发生重大变化。如处理个人信息的目的、处理的个人信息类型、个人信息的使用方式等；</span></p><p><span>		</span><span>本系统在所有权结构、组织架构等方面发生重大变化。如业务调整、破产并购等引起的所有者变更等；</span></p><p><span>		</span><span>本系统负责处理个人信息安全的责任部门、联络方式及投诉渠道发生变化；</span></p><p><span>		</span><span>若您不同意修改后的隐私保护指引，您有权并应立即停止使用TPAY的服务。如果您继续使用TPAY的服务，则视为您接受TPAY对本指引相关条款所做的修改。</span></p><h3 id='11-名词解释'><span>11. 名词解释</span></h3><p><span>		</span><span>本隐私保护指引中使用到的名词，在通常意义中有如下定义：</span></p><p><span>		</span><span>个人信息： 个人信息是指以电子或者其他方式记录的能够单独或者与其他信息结合识别自然人个人身份 的各种信息，包括但不限于自然人的姓名、出生日期、身份证件号码、个人生物识别信息、住址、电话号码等。</span></p><p><span>		</span><span>个人敏感信息： 个人敏感信息是指一旦泄露、非法提供或滥用可能危害人身和财产安全，极易导致个人名 誉、身心健康受到损害或歧视性待遇等的个人信息。例如，个人敏感信息包括身份证件号码、个人生物识别 信息、银行账号、通信内容、健康生理信息等。</span></p><p><span>		</span><span>设备：设备是指可用于访问TPAY产品和/或服务的装置，例如台式计算机、笔记本电脑、平板电脑或智能手机。</span></p><p><span>		</span><span>唯一设备标识符： 唯一设备标识符（专属 ID 或 UUID）是指由设备制造商编入到设备中的一串字符，可 用于以独有方式标识相应设备（例如手机的 IMEI 号）。唯一设备标识符有多种用途，其中可在不能 使用 Cookie（例如在移动应用程序中）时用以提供广告。</span></p><p><span>		</span><span>IP 地址： 每台上网的设备都会指定一个编号，称为互联网协议 ( IP ) 地址。这些编号通常都是根据地理区域指定的。IP 地址通常可用于识别设备连接至互联网时所在的位置。</span></p><p><span>		</span><span>SSL： SSL（Secure Socket Layer）又称为安全套接层，是在传输通信协议（TCP/IP）上实现的一种安 全协议。SSL 支持各种类型的网络，同时提供三种基本的安全服务，均通过使用公开密钥和对称密钥技术以达到信息保密的效果。</span></p><p><span>		</span><span>信息收集技术： 本系统在《隐私保护指引》中所述的“自动收集”包括以下方式： A. Cookie Cookie 是您浏览网 页时，网站服务器放在客户端（您的计算机、移动电话或其他智能终端内）里面的一个小小的文本文件，当您再 次访问相应网站时，网站就可通过 Cookie 识别您的浏览器。Cookie 可能会存储用户偏好及其他信息。您可以 将浏览器配置为拒绝所有 Cookie 或在网站发送 Cookie 时显示提示。不过，如果没有 Cookie，某些网站功 能或服务可能无法正常工作。 B. Web beacon（网络信标） Web beacon 是装嵌在网站或电邮内的电子图像 文件案或其他技术，可用于计算访客数目、记录您是否及何时阅览电邮或网站，或用以使用某些 Cookie。 C. L og files（日志文件） Log files 储存自动收集的若干数据。该等数据包括互联网协议（ IP ）地址、浏览器 类型、互联网服务提供商（ ISP ）、引用/退出页面、操作系统、日期/时间戳和点击流数据等。 D. ET Tag（实 体标签） ET Tag 是在互联网浏览器与互联网服务器之间背后传送的 HTTP 协议标头，可代替 Cookie，用以追踪 个别使用者，使本系统可更深入地了解和改善本系统的服务。 E. JavaScript JavaScript 是一种编程语言，用于 制作更具互动性和动态的网页。JavaScript 可以设定 Cookie、阅读 Cookie 及删除 Cookie。</span></p><p><span>		</span><span>关联公司： 指一方现在或将来控制、受控制或与其处于共同控制下的任何公司、机构。“控制”是指直 接或间接地拥有影响所提及公司管理的能力，无论是通过所有权、有投票权的股份、合同或其他被依法认定的方式。</span></p><p><span>		</span><span>算法： 计算机在执行解题运算时遵循的流程或一系列规则。</span></p><p><span>		</span><span>应用数据缓存： 应用数据缓存是指设备上的一种数据存储机制。使用它有很多好处，例如，可让网络应用 在未连接互联网的情况下运行，以及可通过提高内容加载速度来改善相关应用的性能。</span></p><p><span>		</span><span>使用浏览器进行网络存储： “使用浏览器进行网络存储”的机制可让网站将数据存储在设备上的浏览 器中。如果在“本地存储”模式下使用该机制，则数据可存储在各个会话中。这样一来，即使在关闭并重 新打开浏览器后，用户仍可以获取相应数据。有助于实现网络存储的技术之一就是 HTML 5。</span></p><p><span>		</span><span>帐户： 只要注册帐号并向本系统提供一些个人信息（本指引 3.1 节已经说明），您就可以使用本系统的服务。当您访问TPAY时，系统会利用这些帐号信息对您进行身份验证，以防止未经授权的人员访问您的帐号。</span></p><p><span>		</span><span>非个人身份信息： 记录的与用户相关的信息，但实际上不可直接或间接识别您身份的信息，包括经过去标识化、匿名化处理或化名方式提供的个人信息。</span></p><p><span>		</span><span>去标识化： 指通过对个人信息的技术处理，使其在不借助额外信息的情况下，无法识别个人信息主体的过程。</span></p><p><span>		</span><span>匿名化： 指通过对个人信息的技术处理，使得个人信息主体无法被识别，且处理后的信息不能被复原的过程。</span></p><p><span>		</span><span>服务器日志： 与大多数网站一样，本系统的服务器会自动记录您在访问网站时所发出的网页请求。这些“服务器日志”通常包括您的网络请求、互联网协议地址、浏览器类型、浏览器语言、请求的日期和时间及可以唯一识别您的浏览器的一个或多个 Cookie。</span></p><h2 id='用户协议'><span>用户协议</span></h2><p><span>		</span><span>在点击“我确认并同意用户使用条款及条件”之前，请仔细阅读这些条款和条件（以下简称“本协议”）。本协议 规定我们(TPAY的所有实体)提供服务的可用性和使用情况。当您一经注 册TPAY账户或使用TPAY服务时，即视为您(在本协议中可能描述为“客户”或“您”)已详 细阅读、完全理解并同意接受本协议的全部条款和条件。如果您不理解本协议的任何条款和条件，请联系我们的 商务经理/账户经理以获取更多信息。如果您不同意本协议的任何条款和条件，请您立即停止使用TPAY服务。</span></p><p><span>		</span><span>当您创建一个TPAY账户时；以电子形式同意接受本协议；当您使用TPAY服务时，本协议将立即生效且具有法律约束力(该日期视为“生效日期”)。此后，本协议在被我们或您中的任意一方书面终止之前将持续有效。如果您对本协议的条款和条件有任何疑问，请与您的账户管理员联系以了解更多信息。</span></p><p>&nbsp;</p><p><span>免责条款</span></p><p><span>		</span><span>1.因银行等金融机构或组织、政府行为、监管政策、导致卡段失效等不可抗力的情况导致账户及卡使用受影响，本系统不承担相关的连带责任和相关损失。</span></p><p><span>		</span><span>2.本系统仅提供用卡服务，用户不得倒卖及非法使用，不然产生一切后果，与本公司无关。</span></p><p><span>承诺</span></p><p><span>		</span><span>如您开始使用本系统即代表您知晓并同意上述用户协议，并同意在此协议基础上开展合作。</span></p></div></div>
+</body>
+</html>

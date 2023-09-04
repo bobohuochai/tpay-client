@@ -10,13 +10,13 @@
 <script setup>
 const services = [{
     title: "海外IP地址",
-    content: "提供北美、欢盟、东南亚等IP地址。</br>适用于跨境店铺申请，海外SAAS服务申请，海外采购等"
+    content: "提供北美、欧盟、东南亚等IP地址。</br>适用于跨境店铺申请，海外SAAS服务申请，海外采购等"
 }, {
     title: "电商测评服务",
     content: "提供亚马逊、Aliexpress等电商平台测评服务"
 }, {
     title: "独立站服务",
-    content: "提供成功率管控服务"
+    content: "提供独立站成功率管控服务</br>提供fb海外个人号服务"
 }]
 </script>
 

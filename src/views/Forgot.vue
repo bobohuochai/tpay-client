@@ -120,7 +120,7 @@ const handleSendMessageCode = async () => {
 const formState = reactive({
     password: "",
     rePassword: "",
-    type: "",
+    type: '0',
     code: ""
 });
 

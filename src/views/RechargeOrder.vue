@@ -14,7 +14,7 @@
                         {{ option.label }}
                     </a-radio>
                 </a-radio-group>
-                <a-form-item label="" name="remittanceAmount" :rules="[{ required: true, validator: checkAmount }]">
+                <a-form-item label="" name="remittanceAmount" :rules="[{ required: true, validator: checkRechargeAmount }]">
                     <a-input style="width: 286px" v-model:value="formState.remittanceAmount" :precision="2"
                         placeholder="请输入充值金额">
                         <template #suffix>
@@ -201,6 +201,21 @@ const formState = reactive({
     receiptAccountId: null, // 汇款账户
     fileList: [], // 凭证
 });
+
+const checkRechargeAmount = async (_rule, value) => {
+  if (!value) {
+    return Promise.reject("请输入金额");
+  }
+  if (!/^(0|[1-9][0-9]*)(\.\d+)?$/.test(value)) {
+    return Promise.reject("金额格式不对");
+  }
+  if (formState.remittanceCurrency === 'CNY' && value < 500) {
+    return Promise.reject("金额最小为 500");
+  } else if (value < 0.01) {
+    return Promise.reject("金额最小为 0.01");
+  }
+  return Promise.resolve();
+};
 
 const selectedWallet = computed(() => {
     const { walletId } = formState;

@@ -6,7 +6,6 @@
                 <wallet-balance></wallet-balance>
             </div>
             <a-popover class="username">
-                <!-- <a @click.prevent><span id="user-id-handler">用户ID：{{ userStore.userInfo.id }}</span></a> -->
                 <img src="../assets/user.png" class="w-36px h-36px" style="cursor: pointer;" />
                 <template #content>
                     <ul class="popover">
@@ -20,6 +19,10 @@
                         </li>
                         <a-divider class="my-6px" />
                         <li class="py-6px">
+                            <img class="w-18px h-18px mr-12px" src="../assets/info.svg" />
+                            <a class="c-#2c261bb3 font-500" @click="showUserRateTemplate">用户费率</a>
+                        </li>
+                        <li class="py-6px">
                             <img class="w-18px h-18px mr-12px" src="../assets/cert.png" /> <router-link
                                 class="c-#2c261bb3 font-500" to="/kyc">认证信息</router-link>
                         </li>
@@ -27,9 +30,6 @@
                             <img class="w-18px h-18px mr-12px" src="../assets/password.png" />
                             <router-link class="c-#2c261bb3 font-500" to="/update-login-password">修改密码</router-link>
                         </li>
-                        <!-- <li class="py-6px ">
-                            <a @click="showUserRateTemplate">用户费率</a>
-                        </li> -->
                         <a-divider class="my-6px" />
                         <a class="c-#2c261bb3 font-400 text-14px py-6px" @click="logout">退出登录</a>
                     </ul>
@@ -66,21 +66,8 @@
                         </template>
                     </template>
                 </a-menu>
-
             </a-layout-sider>
             <a-layout class="bg-#f7f6f6 content-wrap" :style="{ marginLeft: '200px', marginTop: '64px', }">
-                <!-- <div class="tabs-box">
-                    <div ref="bsWrapper" class="bs-wrapper">
-                        <better-scroll ref="bsScroll" :options="{ scrollX: true, scrollY: false, click: canClick }">
-                            <div class="tabs">
-                                <a-tag v-for="tab in tabStore.tabs" :key="tab.name" closable
-                                    :color="tabStore.active === tab.name ? 'blue' : undefined" @click="to(tab)"
-                                    @close="tabStore.remove(tab.name)">{{ tab.title }}
-                                </a-tag>
-                            </div>
-                        </better-scroll>
-                    </div>
-                </div> -->
                 <NewMessage></NewMessage>
                 <div style="padding: 0 24px 24px">
                     <a-breadcrumb style="margin: 16px 0">
@@ -104,8 +91,11 @@
         <div v-if="userStore.rateTemplate">
             <p><span>充值手续费：{{ showRate(userStore.rateTemplate.rechargeFee) }}</span></p>
             <p><span>人民币充值手续费：{{ showRate(userStore.rateTemplate.cnyRechargeFee) }}</span></p>
-            <a-table :columns="userRateTemplateColumns" :data-source="userStore.rateTemplate.numberSegments"
-                :pagination="false" style="padding-bottom: 20px;">
+            <a-table 
+                :columns="userRateTemplateColumns" 
+                :data-source="userStore.rateTemplate.numberSegments"
+                :pagination="false" style="padding-bottom: 20px;"
+            >
                 <template #bodyCell="{ column, record }">
                     <template v-if="column.key === 'smallTransactionFee'">
                         <p v-for="(smallFee, idx) in record.smallTransactionFee" :key="`samll_${idx}`"

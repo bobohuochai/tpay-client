@@ -293,7 +293,7 @@ div.bg {
 
 .register {
     position: absolute;
-    top: 152px;
+    top: 132px;
     bottom: 162px;
     left: calc(58% - 118px);
 }

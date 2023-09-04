@@ -23,7 +23,6 @@
             </a-carousel>
         </div>
         <div class="login flex-grow-1">
-
             <p class="text-24px font-600 text-center mb-24px">登录</p>
             <a-form :model="formState" layout="vertical" name="normal_login" class="login-form" @finish="onFinish"
                 @finishFailed="onFinishFailed" ref="formRef">
@@ -106,7 +105,10 @@
             <div class="text-center mt-24px">
                 还没有账户，<router-link to="/register">去注册</router-link>
             </div>
-            <SendEmailVue ref="sendEmailVueRef"></SendEmailVue>
+            <div class="text-center mt-24px" style="margin-top: 100px;">
+                <a href="/agreement.html" style="color: #807e7a;">用户协议与隐私保护</a>
+                <!-- <a style="color: #807e7a;margin-left: 30px">隐私保护</a> -->
+            </div>
         </div>
     </div>
 </template>
@@ -115,7 +117,6 @@ import { reactive, computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import * as userApis from "../services/user";
-import SendEmailVue from "../components/SendEmail.vue";
 import { useSendMessage } from '../hooks/message-send.js';
 import Logo from '../components/logo.vue';
 
@@ -134,7 +135,6 @@ const handleSendMessageCode = async () => {
     sendMessageCode();
 }
 
-const sendEmailVueRef = ref();
 const route = useRoute();
 console.log(route);
 const formState = reactive({
@@ -282,7 +282,7 @@ h4 {
 
 .login {
     position: absolute;
-    top: 52px;
+    top: 132px;
     left: calc(58% - 118px);
 }
 
