@@ -88,12 +88,18 @@
                     <p class="label">单卡充值金额</p>
                     <a-form-item class="w-320px" label="" name="amount"
                         :rules="[{ required: true, validator: checkAmount }]">
-                        <a-input class="amount-input" placeholder="请输入充值金额" v-model:value="formState.amount" type="number"
-                            @change="handleChargeChange(formState.amount)">
+                        <a-input-number 
+                            class="amount-input w-320px" 
+                            placeholder="请输入充值金额" 
+                            v-model:value="formState.amount" 
+                            type="number"
+                            :min="1"
+                            @change="handleChargeChange(formState.amount)"
+                        >
                             <template #suffix>
                                 <span>{{ currencyCode }}</span>
                             </template>
-                        </a-input>
+                        </a-input-number>
                     </a-form-item>
                     <!-- 合并步骤-->
                     <p class="label">单卡到账金额</p>
@@ -140,12 +146,6 @@ const currencyFile = (imgFile) => {
 
 const userStore = useUserStore();
 
-const openCardStepTypes = {
-    OPEN_CARD: 'openCard',
-    CHARGE_CARD: 'chargeCard',
-    CHARGE_CARD_PAY: 'chargeCardPay',
-    SHARE_CARD_PAY: 'shareCardPay'
-};
 const openCardStep = ref('openCard');
 
 const amountDes = (currency, amount) => {
@@ -189,15 +189,6 @@ let formState = reactive({
     "sumApplyFee": '', // 总手续费
     "sumRealAmount": '' // 总到账金额
 });
-
-const router = useRouter()
-
-const handleToCharge = (val) => {
-    router.push({
-        path: '/recharge-order'
-    })
-    console.log('充值');
-}
 
 // radio-group 和select 组建chang 事件的区别
 const handeChangeCurrency = (e) => {
@@ -300,10 +291,10 @@ const checkCount = async (_rule, value) => {
         return Promise.reject('数量要求为正整数');
     }
     if (value <= 0) {
-        return Promise.reject("数量不能小于1, 开卡数量 范围 1 - 20");
+        return Promise.reject("数量不能小于1, 开卡数量 范围 1 - 100");
     }
-    if (value > 20) {
-        return Promise.reject("数量不能大于20， 开卡数量 范围 1 - 20");
+    if (value > 100) {
+        return Promise.reject("数量不能大于20， 开卡数量 范围 1 - 100");
     }
     return Promise.resolve();
 };
@@ -311,7 +302,7 @@ const checkCount = async (_rule, value) => {
 const requestCardLoading = ref(false);
 
 const handleSubmitCard = async () => {
-    if (formValid === true) {
+    if (formValid.value === true) {
         try {
             requestCardLoading.value = true;
             await cardApis.requestCard(formState);
