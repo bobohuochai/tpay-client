@@ -277,6 +277,7 @@ const handleChangeChannel = async (val) => {
         res.forEach((element) => {
             if (formState.receiptAccountId === undefined || formState.receiptAccountId === null) {
                 formState.receiptAccountId = element.id;
+                accountData.value = element;
             }
             accounts.push({
                 label: element.account,
