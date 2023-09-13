@@ -6,6 +6,10 @@
                 <a-input v-model:value="formState.cardNumber" placeholder="请输入卡号">
                 </a-input>
             </a-form-item>
+            <a-form-item label="卡备注" name="cardRemark">
+                <a-input v-model:value="formState.cardRemark" placeholder="请输入卡备注">
+                </a-input>
+            </a-form-item>
             <a-form-item label="类型" name="type" class="w-200px">
                 <a-select :options="typeEnum" v-model:value="formState.type" placeholder="请选择" allowClear>
                 </a-select>
@@ -127,6 +131,7 @@ let transData = ref({});
 
 const formState = reactive({
     cardNumber: null,
+    cardRemark: null,
     targetUserId: null,
     type: null,
     date: [dayjs().subtract(7, "day"), dayjs()],
@@ -186,6 +191,11 @@ const columns = reactive([
         title: "卡号",
         width: 150,
         dataIndex: "cardNumber",
+    },
+    {
+        title: "卡备注",
+        width: 150,
+        dataIndex: "cardRemark",
     },
     {
         title: "交易类型",

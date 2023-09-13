@@ -15,8 +15,11 @@
                     </a-radio>
                 </a-radio-group>
                 <a-form-item label="" name="remittanceAmount" :rules="[{ required: true, validator: checkRechargeAmount }]">
-                    <a-input style="width: 286px" v-model:value="formState.remittanceAmount" :precision="2"
-                        placeholder="请输入充值金额">
+                    <a-input 
+                        style="width: 286px" 
+                        v-model:value="formState.remittanceAmount" :precision="2"
+                        placeholder="请输入充值金额"
+                    >
                         <template #suffix>
                             <span class="font-400 c-#2C261B text-opacity-70">{{ formState.remittanceCurrency }}</span>
                         </template>
@@ -63,10 +66,10 @@
                             v-if="selectedWallet && formState.remittanceCurrency !== selectedWallet.currencyCode">
                             <img style="border-radius: 6px;" class="h-16px w-16px"
                                 :src="currencyFile('/src/assets/borderDollar.png')" />
-                            <span class="text-12px font-400 c-#2C261B pl-18px">1.00 {{ selectedWallet.currencyCode }} = {{
+                            <span class="text-12px font-400 c-#2C261B pl-18px">1.00 {{ formState.remittanceCurrency }} ≈ {{
                                 onlineRate }}
                                 {{
-                                    formState.remittanceCurrency
+                                    selectedWallet.currencyCode
                                 }}</span>
                             <span class="font-400 text-10px c-#2C261B text-opacity-40 pl-12px">更新于今天: {{ refreshDate }}</span>
                         </div>
@@ -101,7 +104,7 @@
                     <a-button type="primary" class="ml-8px" @click="handleCopy(formState.receiptAccountId)">复制</a-button>
                     <div v-if="formState.receiptAccountId && accountData" class="account-wrapper">
                         <div class="item-list" v-if="accountData.accountName">
-                            AccountName: <span> {{ accountData.accountName }}</span>
+                            Account Name(银行开户名): <span> {{ accountData.accountName }}</span>
                         </div>
                         <div class="item-list" v-if="accountData.supportedCurrencies">
                             Supported Currencies:
@@ -111,13 +114,13 @@
                             Bank Name: <span> {{ accountData.bankName }}</span>
                         </div>
                         <div class="item-list" v-if="accountData.bankAddress">
-                            Bank Address: <span> {{ accountData.bankAddress }}</span>
+                            Bank Address(银行地址): <span> {{ accountData.bankAddress }}</span>
                         </div>
                         <div class="item-list" v-if="accountData.country">
-                            Country/Region: <span> {{ accountData.country }}</span>
+                            Country/Region(国家/地区): <span> {{ accountData.country }}</span>
                         </div>
                         <div class="item-list" v-if="accountData.swiftCode">
-                            SwiftCode/BIC: <span> {{ accountData.swiftCode }}</span>
+                            SwiftCode/BIC(Swift代码): <span> {{ accountData.swiftCode }}</span>
                         </div>
                     </div>
                 </a-form-item>
@@ -153,7 +156,6 @@ import * as rechargeLogApis from "../services/recharge-log";
 import * as uploadApis from "../services/upload";
 import * as receiptAccountApis from "../services/receiptAccount";
 import { useUserStore } from "../stores/user";
-import { checkAmount } from "../helpers/utils";
 import { useFile } from '../hooks/useFile'
 import SelectedWalletImg from '../components/icons/selectedWallet.vue'
 
@@ -188,6 +190,14 @@ const remittanceCurrencyOption = [
     {
         label: "CNY",
         value: "CNY",
+    },
+    {
+        label: "EUR",
+        value: "EUR",
+    },
+    {
+        label: "GBP",
+        value: "GBP",
     },
 ];
 const onlineRate = ref(0);
@@ -241,6 +251,7 @@ const uploadFile = async ({ file, onSuccess, onError }) => {
 };
 
 let accountData = ref({});
+
 const handleChagneAccountId = (accountId) => {
     if (accountId) {
         let account = receiptAccounts.value.find((account) => {
@@ -302,10 +313,6 @@ const handleChangeRemiittanceCurrency = async(val) => {
     formState.receiptAccountId = null;
 }
 
-const onError = (e) => {
-    console.log(444, e);
-};
-
 const onFinish = async (values) => {
     values.fileName = values.fileList[0]?.response;
     // 处理汇款币种的默认值
@@ -333,16 +340,15 @@ let previewAmount = ref(0);
 watchEffect(async () => {
     if (
         formState.remittanceCurrency &&
-        formState.walletId &&
-        formState.remittanceAmount
+        formState.walletId
     ) {
         const res = await rechargeLogApis.calcRechargeFee({
             sourceCode: formState.remittanceCurrency, // 汇款币种
             toCode: selectedWallet.value.currencyCode, // 币种钱包
-            amount: formState.remittanceAmount,
+            amount: !formState.remittanceAmount || formState.remittanceAmount === null ? 0 : formState.remittanceAmount,
         });
         previewAmount.value = res.realAmount;
-        onlineRate.value = res.onlineRate;
+        onlineRate.value = res.onlineRateReverse;
         refreshDate.value = res.refreshDate;
     } else {
         previewAmount.value = 0;

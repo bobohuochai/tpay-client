@@ -71,7 +71,7 @@ const columns = reactive([
         title: "汇款金额",
         dataIndex: "amount",
         customRender({ record }) {
-            return `${record.remittanceAmount}${record.remittanceCurrency ?? "CNY"}`;
+            return `${record.remittanceAmount} ${record.remittanceCurrency ?? "CNY"}`;
         },
     },
     {

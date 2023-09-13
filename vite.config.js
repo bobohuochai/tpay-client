@@ -40,9 +40,9 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://47.99.36.242",
+        // target: "http://47.99.36.242",
         // target: "http://merchant.tpay123.com",
-        // target: "http://localhost:9569",
+        target: "http://localhost:9569",
         changeOrigin: true,
       },
     },
