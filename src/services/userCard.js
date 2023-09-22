@@ -8,6 +8,30 @@ export const recharge = (params) => {
   return aIns.post('/userCard/recharge', params);
 }
 
+export const rechargeBatchTemplate = (params) => {
+  return aIns.get('/userCard/rechargeBatchTemplate', { params, responseType: 'blob'});
+}
+
+export const rechargeBatch = (params) => {
+  return aIns.post('/userCard/rechargeBatch', params, {
+    headers: {
+      'Content-type': 'multipart/form-data',
+    },
+  });
+}
+
+export const closeBatchTemplate = (params) => {
+  return aIns.get('/userCard/closeBatchTemplate', { params, responseType: 'blob'});
+}
+
+export const closeBatch = (params) => {
+  return aIns.post('/userCard/closeBatch', params, {
+    headers: {
+      'Content-type': 'multipart/form-data',
+    },
+  });
+}
+
 export const calcCardRechargeFee = (params) => {
   return aIns.post('/userCard/calcCardRechargeFee', params);
 }
@@ -47,7 +71,6 @@ export const updateUserCardWallet = (params) => {
 export const verifyPayPassword = (params) => {
   return aIns.get('/userCard/verifyPayPassword', { params });
 }
-
 
 export const showUserCardInfo = (params) => {
   return aIns.post('/userCard/showUserCardInfo', params);

@@ -1,7 +1,7 @@
 <template>
     <a-button type="primary" @click="handle" class="c-#2C261B font-400 text-opacity-70">
         <template #icon>
-            <ExportOutlined />
+            <UploadOutlined />
         </template>
         导出
     </a-button>
@@ -32,7 +32,7 @@
 </template>
 <script setup>
 import { ref } from "vue";
-import { ExportOutlined } from '@ant-design/icons-vue';
+import { UploadOutlined } from '@ant-design/icons-vue';
 
 const formRef = ref();
 const visible = ref(false);

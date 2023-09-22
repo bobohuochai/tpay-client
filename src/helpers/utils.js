@@ -2,7 +2,6 @@ import UAParser from "ua-parser-js";
 
 export const downloadFromRes = (res) => {
   const { data, headers } = res;
-  console.log(data);
   const fileName = headers["content-disposition"].replace(
     /\w+;filename=(.*)/,
     "$1"

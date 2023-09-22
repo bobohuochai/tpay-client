@@ -11,3 +11,7 @@ export const upload = (params) => {
 export const generateTokenUrl = (params) => {
   return aIns.get('/upload/generateTokenUrl', { params });
 }
+
+export const download = (params) => {
+  return aIns.get('/upload/download', { params, responseType: 'blob'});
+}

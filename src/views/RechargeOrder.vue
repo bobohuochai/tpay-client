@@ -345,9 +345,9 @@ watchEffect(async () => {
         const res = await rechargeLogApis.calcRechargeFee({
             sourceCode: formState.remittanceCurrency, // 汇款币种
             toCode: selectedWallet.value.currencyCode, // 币种钱包
-            amount: !formState.remittanceAmount || formState.remittanceAmount === null ? 0 : formState.remittanceAmount,
+            amount: formState.remittanceAmount === null ? 0 : formState.remittanceAmount,
         });
-        previewAmount.value = res.realAmount;
+        previewAmount.value = formState.remittanceAmount === null ? 0 : res.realAmount;
         onlineRate.value = res.onlineRateReverse;
         refreshDate.value = res.refreshDate;
     } else {

@@ -25,6 +25,8 @@
                     </a-button>
                 </a-form-item>
                 <a-form-item class="right">
+                    <a-button class="mr-16px font-400 text-opacity-70" @click="batchRechargeModalRef.show()">批量充值</a-button>
+                    <a-button class="mr-16px font-400 text-opacity-70" @click="batchCloseCardModalRef.show()">批量注销</a-button>
                     <ExportButton @success="showDownloadModal(record)"></ExportButton>
                 </a-form-item>
             </a-form>
@@ -85,7 +87,7 @@
                 </template>
             </a-form-item>
         </a-modal>
-        <a-modal v-model:visible="editModalConfig.show" title="编辑" @ok="onEditModalOk">
+        <a-modal v-model:visible="editModalConfig.show" title="编辑卡备注" @ok="onEditModalOk">
             <div>
                 <p>卡号：{{ editModalConfig.record.cardNumber }}</p>
                 <a-form ref="editModalFormRef" :model="editModalConfig.record">
@@ -138,21 +140,19 @@
                 <a-form-item name="payPassword" label="支付密码" v-if="downloadModalConfig.formState.authType == 'payPassword'">
                     <a-input placeholder="请输入支付密码" type="password"
                         v-model:value="downloadModalConfig.formState.payPassword" />
-                </a-form-item>
+                </a-form-item>                
                 <a-form-item label="验证码类型" name="authCodeType" v-if="downloadModalConfig.formState.authType == 'authCode'">
-                    <div style="display: flex;">
-                        <a-select v-model:value="downloadModalConfig.formState.authCodeType" :allow-clear="true">
-                            <a-select-option value="0">手机验证</a-select-option>
-                            <a-select-option value="1">邮箱验证</a-select-option>
-                        </a-select>
-                        <a-button class="btn-send" @click="handleSendMessageCode()"
-                            :disabled="canSendCheck()">发送验证码</a-button>
-                        <span v-if="isSending" class="send-message-count">{{ canSendCount }}(S)</span>
-                    </div>
+                    <a-radio-group v-model:value="downloadModalConfig.formState.authCodeType">
+                        <a-radio value="0">手机验证</a-radio>
+                        <a-radio value="1">邮箱验证</a-radio>
+                    </a-radio-group>
                 </a-form-item>
                 <a-form-item label="验证码" name="authCode" v-if="downloadModalConfig.formState.authType == 'authCode'">
-                    <a-input placeholder="输入验证码" v-model:value="downloadModalConfig.formState.authCode"></a-input>
-                    <span v-if="isSending" class="send-message-count">{{ canSendCount }}(S)</span>
+                    <a-input placeholder="输入验证码" v-model:value="downloadModalConfig.formState.authCode"
+                        style="width: 220px; margin-right: 5px;"></a-input>
+                    <a-button class="btn-send" @click="handleSendMessageCode()"
+                            :disabled="canSendCheck()">发送验证码</a-button>
+                        <span v-if="isSending" class="send-message-count">{{ canSendCount }}(S)</span>
                 </a-form-item>
                 <a-form-item>
                     <a-button type="primary" html-type="submit">提交</a-button>
@@ -171,6 +171,8 @@
                 <p>卡备注：{{ closeModalConfig.record.remark }}</p>
             </div>
         </a-modal>
+        <BatchRechargeModal ref="batchRechargeModalRef" @success="refreshCurrentPage"></BatchRechargeModal>
+        <BatchCloseCardModal ref="batchCloseCardModalRef" @success="refreshCurrentPage"></BatchCloseCardModal>
     </div>
 </template>
 <script setup>
@@ -178,6 +180,8 @@ import { computed, reactive, ref, onMounted, watchEffect } from "vue";
 import { message, Modal, Button } from "ant-design-vue";
 import { downloadFromRes, checkAmount } from "../helpers/utils";
 import ExportButton from "../components/ExportButton.vue";
+import BatchRechargeModal from "../components/views/BatchRechargeModal.vue"
+import BatchCloseCardModal from "../components/views/BatchCloseCardModal.vue"
 import * as userCardApis from "../services/userCard";
 import * as userApis from "../services/user";
 import * as messageApis from "../services/message";
@@ -487,7 +491,7 @@ const downloadModalConfig = reactive({
     formState: {
         authType: 'payPassword',
         payPassword: null,
-        authCodeType: null,
+        authCodeType: '0',
         authCode: null
     },
 });
@@ -574,6 +578,11 @@ const onCloseModalOk = async () => {
     refreshCurrentPage();
     closeModalConfig.show = false;
 };
+
+
+// ======  批量充值 ======
+const batchRechargeModalRef = ref();
+const batchCloseCardModalRef = ref();
 
 onMounted(() => onFinish());
 
