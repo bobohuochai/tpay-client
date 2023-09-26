@@ -122,7 +122,7 @@ const handleChangePaySetting = async (val) => {
       payPasswordSwitch: val
     })
     message.success('更新支付设置成功');
-    userStore.updateOpen(val);
+    userStore.updateOpen(val === true ? 1 : 0);
   } catch(e) {
     isOpen.value = !val;
   }

@@ -129,10 +129,15 @@
                         文件大小：≦10M</span>
                 </p>
                 <a-form-item label="" name="fileList" :rules="[{ required: true, message: '请选择凭证' }]">
-                    <a-upload v-model:file-list="formState.fileList" name="fileList" list-type="picture-card"
+                    <a-upload 
+                        v-model:file-list="formState.fileList" 
+                        name="fileList" 
+                        list-type="picture-card"
                         :showUploadList="{ showPreviewIcon: false, showRemoveIcon: true }"
-                        accept="image/png, image/jpeg, image/jpg" :maxCount="1" :customRequest="uploadFile">
-
+                        :capture="null"
+                        accept="image/png, image/jpeg, image/jp"
+                        :maxCount="1" 
+                        :customRequest="uploadFile">
 
                         <a-button type="dashed" class="upload-btn text-10px w-80px px-4px">
                             <upload-outlined></upload-outlined><span>上传凭证</span>
@@ -242,6 +247,11 @@ const selectedWallet = computed(() => {
 const uploadFile = async ({ file, onSuccess, onError }) => {
     const formData = new FormData();
     formData.append("file", file);
+    const isLi10M = ( file.size / 1024 / 1024 ) <= 10;
+    if (!isLi10M) {
+        message.warn("图片附件过大，请重新选择");
+        return;
+    }
     try {
         const res = await uploadApis.upload(formData);
         onSuccess(res);

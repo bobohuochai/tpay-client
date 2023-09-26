@@ -32,10 +32,6 @@ export const updatePassword = (params) => {
   return aIns.post('/vccuser/updatePassword', params);
 }
 
-export const externalRegister = (params) => {
-  return aIns.post('/vccuser/externalRegister', params);
-}
-
 export const active = (params) => {
   return aIns.post('/vccuser/active', params);
 }

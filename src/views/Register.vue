@@ -113,7 +113,12 @@
                 </div>
                 <a-form-item label="" name="authCode">
                     <div class="flex">
-                        <a-input class="h-36px" placeholder="输入验证码" v-model:value="formState.authCode">
+                        <a-input 
+                            class="h-36px" 
+                            placeholder="输入验证码" 
+                            v-model:value="formState.authCode"
+                            maxlength="4"
+                        >
                             <template #prefix>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
                                     fill="none">
@@ -232,7 +237,7 @@ onMounted(() => {
 
 const onFinish = async () => {
     loading.value = true;
-    await userApis.externalRegister(formState).finally(() => {
+    await userApis.register(formState).finally(() => {
         loading.value = false;
     });
     message.success("注册成功，请登录");

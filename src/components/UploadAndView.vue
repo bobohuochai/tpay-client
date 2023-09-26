@@ -9,6 +9,8 @@
       :show-upload-list="false"
       :before-upload="beforeUpload"
       :customRequest="uploadFile"
+      :capture="null"
+      accept="image/png, image/jpeg, image/jp"
     >
       <img
         v-if="url"
