@@ -48,7 +48,12 @@
                     <a-form-item class="w-320px" label="" name="count" :rules="[
                         { required: true, validator: checkCount, trigger: 'change' },
                     ]">
-                        <a-input class="count-input" v-model:value="formState.count" placeholder="请输入开卡数量" type="number">
+                        <a-input 
+                            class="count-input" 
+                            v-model:value="formState.count" 
+                            placeholder="请输入开卡数量" 
+                            type="number"
+                        >
                         </a-input>
                     </a-form-item>
                     <p class="label">持卡人</p>
@@ -294,7 +299,7 @@ const checkCount = async (_rule, value) => {
         return Promise.reject("数量不能小于1, 开卡数量 范围 1 - 100");
     }
     if (value > 100) {
-        return Promise.reject("数量不能大于20， 开卡数量 范围 1 - 100");
+        return Promise.reject("数量不能大于100， 开卡数量 范围 1 - 100");
     }
     return Promise.resolve();
 };
