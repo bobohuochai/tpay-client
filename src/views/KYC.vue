@@ -389,6 +389,7 @@ const cancelUpdate = async () => {
 
 class MainlandIndividuals {
   constructor() {
+    this.id = '';
     this.kycType = 1; //1
     this.certNo = ""; //证件号
     this.certName = ""; //证件名
@@ -402,6 +403,7 @@ class MainlandIndividuals {
 
 class MainlandEnterprises {
   constructor() {
+    this.id = '';
     this.kycType = 2; //2
     this.certNo = ""; //法人证件号
     this.certName = ""; //法人证件名
@@ -422,6 +424,7 @@ class MainlandEnterprises {
 
 class HKEnterprises {
   constructor() {
+    this.id = '';
     this.kycType = 3; //3
     this.certNo = ""; //董事证件号
     this.certName = ""; //董事证件名
@@ -684,6 +687,7 @@ const get = async () => {
   if (data) {
     if (data.kycType === 1) {
       mainlandIndividuals.value = {
+        id: data.id,
         kycType: 1,
         certNo: data.certNo,
         certName: data.certName,
@@ -695,6 +699,7 @@ const get = async () => {
       };
     } else if (data.kycType === 2) {
       mainlandEnterprises.value = {
+        id: data.id,
         kycType: data.kycType,
         certNo: data.certNo,
         certName: data.certName,
@@ -713,6 +718,7 @@ const get = async () => {
       };
     } else if (data.kycType === 3) {
       hkEnterprises.value = {
+        id: data.id,
         kycType: data.kycType,
         certNo: data.certNo,
         certName: data.certName,
