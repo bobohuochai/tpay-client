@@ -3,20 +3,26 @@
         <div class="page page-card-request">
             <p class="label">卡片类型</p>
             <!-- 申请卡 -->
-            <div v-show="openCardStep === 'openCard'">
-                <a-form ref="openCardFormRef" name="card-request-form" layout="horizontal" :labelCol="{
-                    span: 2,
-                }" :model="formState" @finish="onFinish">
+            <div>
+                <a-form
+                    ref="openCardFormRef"
+                    name="card-request-form"
+                    layout="horizontal" 
+                    :labelCol="{ span: 2 }" 
+                    :model="formState" 
+                    @finish="onFinish"
+                >
                     <a-form-item label="" name="isShare" :rules="[{ required: true, message: '请选择卡片类型' }]"
                         @change="handleChangeCardType(formState.isShare)">
                         <a-radio-group v-model:value="formState.isShare">
+                            <!-- 充值卡 -->
                             <a-radio-button :value="false" class="radio-item no-share-radio-button mr-16px">
                                 <SelectedWalletImg class="selectd-img" v-if="!formState.isShare" />
                             </a-radio-button>
                             <!-- 共享卡 -->
-                            <!-- <a-radio-button :value="true" class="share-radio-button">
+                            <a-radio-button :value="true" class="share-radio-button" v-if="userStore.canApplyShareCard">
                                 <SelectedWalletImg class="selectd-img" v-if="formState.isShare" />
-                            </a-radio-button>  -->
+                            </a-radio-button> 
                         </a-radio-group>
                     </a-form-item>
                     <p class="label">卡Bin</p>
@@ -45,9 +51,8 @@
                         </a-radio-group>
                     </a-form-item>
                     <p class="label">开卡数量</p>
-                    <a-form-item class="w-320px" label="" name="count" :rules="[
-                        { required: true, validator: checkCount, trigger: 'change' },
-                    ]">
+                    <a-form-item class="w-320px" label="" name="count" 
+                    :rules="[ { required: true, validator: checkCount } ]">
                         <a-input 
                             class="count-input" 
                             v-model:value="formState.count" 
@@ -62,11 +67,15 @@
                         <a-select class="cardholder-select" :options="cardholder" v-model:value="formState.cardholderId"
                             placeholder="请选择持卡人" allowClear></a-select>
                     </a-form-item>
-                    <!--  合并步骤 -->
                     <p class="label">选择账户</p>
-                    <a-form-item label="" name="wallet" :rules="[{ required: true, message: '请选择余额账户' }]">
-                        <a-radio-group button-style="solid" v-model:value="formState.wallet" @change="handeChangeCurrency"
-                            class="wallet-group flex items-center">
+                    <a-form-item label="" name="wallet" 
+                    :rules="[{ required: true, message: '请选择余额账户' }]">
+                        <a-radio-group 
+                            button-style="solid" 
+                            v-model:value="formState.wallet" 
+                            @change="handeChangeCurrency"
+                            class="wallet-group flex items-center"
+                        >
                             <a-radio-button 
                                 v-for=" item in userStore.userInfo.walletVos" 
                                 :key="item" 
@@ -87,35 +96,112 @@
                                 </div>
                             </a-radio-button>
                         </a-radio-group>
-
                     </a-form-item>
-                    <!-- 合并步骤-->
-                    <p class="label">单卡充值金额</p>
-                    <a-form-item class="w-320px" label="" name="amount"
-                        :rules="[{ required: true, validator: checkAmount }]">
-                        <a-input-number 
-                            class="amount-input w-320px" 
-                            placeholder="请输入充值金额" 
-                            v-model:value="formState.amount" 
-                            type="number"
-                            :min="1"
-                            @change="handleChargeChange(formState.amount)"
-                        >
-                            <template #suffix>
-                                <span>{{ currencyCode }}</span>
-                            </template>
-                        </a-input-number>
-                    </a-form-item>
-                    <!-- 合并步骤-->
-                    <p class="label">单卡到账金额</p>
-                    <a-form-item class="w-320px" label="" name="charge">
-                        <a-input class="amount-input" placeholder="请输入到账金额" v-model:value="formState.charge"
-                            :disabled="true">
-                            <template #suffix>
-                                <span>{{ currencyCode }}</span>
-                            </template>
-                        </a-input>
-                    </a-form-item>
+                    <template v-if="formState.isShare !== true">
+                        <p class="label">单卡充值金额</p>
+                        <a-form-item class="w-320px" label="" name="amount"
+                        :rules="[{ required: true, validator: checkAmount, message: '请填写单卡充值金额'  }]">
+                            <a-input 
+                                class="amount-input w-320px" 
+                                placeholder="请输入充值金额" 
+                                v-model:value="formState.amount" 
+                                @change="handleChargeChange(formState.amount)"
+                            >
+                                <template #suffix>
+                                    <span>{{ currencyCode }}</span>
+                                </template>
+                            </a-input>
+                        </a-form-item>
+                        <p class="label">单卡到账金额</p>
+                        <a-form-item class="w-320px" label="" name="charge">
+                            <a-input class="amount-input" placeholder="请输入到账金额" v-model:value="formState.charge"
+                                :disabled="true">
+                                <template #suffix>
+                                    <span>{{ currencyCode }}</span>
+                                </template>
+                            </a-input>
+                        </a-form-item>
+                    </template>
+                    <template hidden="true">
+                        <p class="label">卡片额度管理</p>
+                        <div style="display: flex; flex-wrap: wrap;">
+                            <div style="margin-right: 30px;">
+                                <p class="label">单笔额度</p>
+                                <a-form-item class="w-200px" label="" name="singleLimit"
+                                :rules="[{ required: true, validator: checkLimit, message: '请填写单笔额度'  }]">
+                                    <a-input 
+                                        class="amount-input w-200px" 
+                                        placeholder="请输入额度" 
+                                        v-model:value="formState.singleLimit"
+                                    >
+                                        <template #suffix>
+                                            <span>{{ currencyCode }}</span>
+                                        </template>
+                                    </a-input>
+                                </a-form-item>
+                            </div>
+                            <div style="margin-right: 30px;">
+                                <p class="label">单日额度</p>
+                                <a-form-item class="w-200px" label="" name="dailyLimit"
+                                :rules="[{ required: true, validator: checkLimit, message: '请填写单日额度'  }]">
+                                    <a-input 
+                                        class="amount-input w-200px" 
+                                        placeholder="请输入额度" 
+                                        v-model:value="formState.dailyLimit"
+                                    >
+                                        <template #suffix>
+                                            <span>{{ currencyCode }}</span>
+                                        </template>
+                                    </a-input>
+                                </a-form-item>
+                            </div>
+                            <div style="margin-right: 30px;">
+                                <p class="label">单周额度</p>
+                                <a-form-item class="w-200px" label="" name="weeklyLimit"
+                                :rules="[{ required: true, validator: checkLimit, message: '请填写单周额度'  }]">
+                                    <a-input 
+                                        class="amount-input w-200px" 
+                                        placeholder="请输入额度" 
+                                        v-model:value="formState.weeklyLimit"
+                                    >
+                                        <template #suffix>
+                                            <span>{{ currencyCode }}</span>
+                                        </template>
+                                    </a-input>
+                                </a-form-item>
+                            </div>
+                            <div style="margin-right: 30px;">
+                                <p class="label">单月额度</p>
+                                <a-form-item class="w-200px" label="" name="monthlyLimit"
+                                :rules="[{ required: true, validator: checkLimit, message: '请填写单月额度'  }]">
+                                    <a-input 
+                                        class="amount-input w-200px" 
+                                        placeholder="请输入额度" 
+                                        v-model:value="formState.monthlyLimit"
+                                    >
+                                        <template #suffix>
+                                            <span>{{ currencyCode }}</span>
+                                        </template>
+                                    </a-input>
+                                </a-form-item>
+                            </div>
+                            <div style="margin-right: 30px;">
+                                <p class="label">卡生命周期额度</p>
+                                <a-form-item class="w-200px" label="" name="totalLimit"
+                                :rules="[{ required: true, validator: checkLimit, message: '请填写卡生命周期额度' }]">
+                                    <a-input 
+                                        class="amount-input w-200px" 
+                                        placeholder="请输入额度" 
+                                        v-model:value="formState.totalLimit"
+                                    >
+                                        <template #suffix>
+                                            <span>{{ currencyCode }}</span>
+                                        </template>
+                                    </a-input>
+                                </a-form-item>
+                            </div>
+                        </div>
+                    </template>
                 </a-form>
             </div>
         </div>
@@ -123,20 +209,22 @@
         <div class="result" v-if="formValid">
             <p class="c-#2C261B text-20px leading-none font-400 mb-16px mt-24px">付款确认</p>
             <div class="pay_comfirm_wrapper">
-                <div class="mb-24px"><span class="label">总手续费</span> <span>{{ formState.sumApplyFee }} {{ currencyCode
-                }}</span>
+                <div class="mb-24px">
+                    <span class="label">总手续费</span> <span>{{ formState.sumApplyFee }} {{ currencyCode }}</span>
                 </div>
-                <div class="mb-24px"><span class="label">卡到账金额</span> <span>{{ formState.sumRealAmount }} {{ currencyCode
-                }}</span></div>
-                <div><span class="label">总付款金额</span> <span>{{ formState.sumAmount }} {{ currencyCode }}</span></div>
+                <div class="mb-24px" v-if="formState.isShare !== true">
+                    <span class="label">卡到账金额</span> <span>{{ formState.sumRealAmount }} {{ currencyCode }}</span>
+                </div>
+                <div>
+                    <span class="label">总付款金额</span> <span>{{ formState.sumAmount }} {{ currencyCode }}</span>
+                </div>
             </div>
         </div>
         <a-button class="bg-#2C261B mt-24px w-114px h-40px c-#fff" html-type="submit" @click="handleSubmitCard">提交</a-button>
     </div>
 </template>
 <script setup lang="jsx">
-import { ref, computed, reactive, onMounted, onBeforeMount, watch, unref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, reactive, onMounted, onBeforeMount, watch, unref } from "vue";
 import { message } from "ant-design-vue";
 import * as cardApis from "../services/card";
 import * as cardholderApis from "../services/cardholder";
@@ -150,8 +238,6 @@ const currencyFile = (imgFile) => {
 }
 
 const userStore = useUserStore();
-
-const openCardStep = ref('openCard');
 
 const amountDes = (currency, amount) => {
     switch (currency) {
@@ -170,26 +256,29 @@ const amountDes = (currency, amount) => {
 }
 
 const cardholder = ref([]);
-
-const shareCard = ['Visa'];
-const chargeCard = ['Master', 'Visa'];
-
-let cardGroupList = ref([]);
 const sectionNoList = ref([]);
-const currencyCode = ref('');
+const currencyCode = ref('USD');
 const currencyWallet = ref(0);
 
 let formState = reactive({
-    amount: null, //金额
-    count: null,//开卡数
-    charge: null, //单卡到账金额
-    cardholderId: null,//持卡人
     isShare: false,//类型
-    cardLabel: 'Master',//卡组织
-    cardId: '',//卡bin
-    wallet: userStore.usdWallet.id, // 钱包币种
+    cardId: null,//卡bin
+    count: 1,//开卡数
+    cardholderId: null,//持卡人
+    wallet: userStore.usdWallet.id, // 钱包账户
+
+    // --- 充值卡 ---
+    amount: null, //金额
+    charge: null, //单卡到账金额
+    // --- 共享卡 ---
+    singleLimit: 10000, // 单笔额度
+    dailyLimit: 10000, // 单日额度
+    weeklyLimit: 10000, // 单周额度
+    monthlyLimit: 10000, // 单月额度
+    totalLimit: 100000, // 生命周期额度
+
+    // --- 无关字段 ---
     "singleApplyFee": '', // 单卡手续费
-    //   "singleRealAmount": '', // 单卡到账金额
     "sumAmount": '', // 总金额
     "sumApplyFee": '', // 总手续费
     "sumRealAmount": '' // 总到账金额
@@ -200,53 +289,33 @@ const handeChangeCurrency = (e) => {
     const res = waArr.find(item => item.value === e.target.value);
     console.log('wallet===>', res)
     if (res) {
-        currencyWallet.value = res?.usableQuota || 0
+        currencyWallet.value = res?.usableQuota || 0;
+        currencyCode.value = res?.currencyCode;
     } else {
         currencyWallet.value = 0;
     }
 }
 
-// 卡类型默认充值卡
-// 所以卡组织默认 ['Master', 'Visa']
-cardGroupList.value = chargeCard
-
 const handleChangeCardType = (type) => {
-    if (type) {
-        cardGroupList.value = shareCard;
-    } else {
-        cardGroupList.value = chargeCard;
-    }
+    getCardGroup(type);
     formState.cardId = '';
-    formState.cardLabel = '';
 }
 
-
-// 卡组织默认值为['Master', 'Visa'],
-onBeforeMount(() => {
-    getAllCardGroup()
-
-})
-
-const getAllCardGroup = async () => {
-    const cardListPromise = cardGroupList.value.map(val => cardApis.cardListAll({
-        cardLabel: val
-    }))
+const getCardGroup = async (isShare) => {
+    const cardListPromise = await cardApis.cardListAll({
+        isShare: isShare
+    });
+    if (cardListPromise.length > 0) {
+        formState.cardId = cardListPromise[0].id;
+    }
     Promise.all(cardListPromise).then((values) => {
         sectionNoList.value = values?.flat() || []
     })
 }
 
-
-/**
- *  "singleApplyFee":2, // 单卡手续费
-                "singleRealAmount":1, // 单卡到账金额
-                "sumAmount":12, // 总金额
-                "sumApplyFee":10, // 总手续费
-                "sumRealAmount":5 // 总到账金额
- */
-
 const handleChargeChange = debounce(async (val) => {
-    if (val >= 1) {
+    if (formState.isShare === true 
+        || (formState.isShare === false && val >= 1)) {
         const res = await cardApis.calcApplyFee({ 
             amount: val, 
             count: formState.count, 
@@ -261,28 +330,14 @@ const handleChargeChange = debounce(async (val) => {
     }
 }, 500);
 
-// 
-const formValid = ref(false);
-
-watch(() => formState, async (newValue) => {
-    formValid.value = false;
-    // 验证
-    await openCardFormRef.value.validate();
-
-    formValid.value = true;
-    // 计算
-    handleChargeChange(unref(formState).amount)
-
-}, { deep: true })
-
-let cardRecords = ref([]);
-
 const checkAmount = async (_rule, value) => {
-    if (!value) {
-        return Promise.reject("请输入金额");
-    }
-    if (value < 1) {
-        return Promise.reject("开卡金额最小为 1");
+    if (formState.isShare !== true) {
+        if (!value) {
+            return Promise.reject("请输入金额");
+        }
+        if (value < 1) {
+            return Promise.reject("金额最小为 1");
+        }
     }
     return Promise.resolve();
 };
@@ -304,13 +359,44 @@ const checkCount = async (_rule, value) => {
     return Promise.resolve();
 };
 
+const checkLimit = async (_rule, value) => {
+    if (formState.isShare === true) {
+        if (!value) {
+            return Promise.reject("请输入额度");
+        }
+        if (value < 1) {
+            return Promise.reject("额度最小为 1");
+        }
+    }
+    return Promise.resolve();
+};
+
 const requestCardLoading = ref(false);
 
 const handleSubmitCard = async () => {
     if (formValid.value === true) {
         try {
+            let body = {
+                ...formState,
+                singleLimit: undefined,
+                dailyLimit: undefined,
+                weeklyLimit: undefined,
+                monthlyLimit: undefined,
+                totalLimit: undefined,
+                singleApplyFee: undefined,
+                sumAmount: undefined,
+                sumApplyFee: undefined,
+                sumRealAmount: undefined,
+                limitConfig: {
+                    singleLimit: formState.singleLimit, // 单笔额度
+                    dailyLimit: formState.dailyLimit, // 单日额度
+                    weeklyLimit: formState.weeklyLimit, // 单周额度
+                    monthlyLimit: formState.monthlyLimit, // 单月额度
+                    totalLimit: formState.totalLimit, // 生命周期额度
+                }
+            }
             requestCardLoading.value = true;
-            await cardApis.requestCard(formState);
+            await cardApis.requestCard(body);
             message.success("开卡成功");
             requestCardLoading.value = false;
             window.location.href =
@@ -323,17 +409,14 @@ const handleSubmitCard = async () => {
 
 const listCardHolderByUserId = async () => {
     const res = await cardholderApis.listByUserId();
-    cardholder.value = res.map((it) => ({
+    cardholder.value = res.map(it => ({
         label: it.firstName + it.lastName,
         value: it.id,
     }));
+    if (cardholder.value.length > 0) {
+        formState.cardholderId = cardholder.value[0].value;
+    }
 };
-
-onMounted(async () => {
-    const res = await cardApis.paging({});
-    cardRecords.value = res.records || [];
-    listCardHolderByUserId();
-});
 
 let openCardFormRef = ref();
 
@@ -347,6 +430,27 @@ userStore.wallets.map((wa) => {
         usableQuota: wa.usableQuota
     });
 });
+
+onBeforeMount(() => {
+    getCardGroup(false);
+})
+
+onMounted(async () => {
+    listCardHolderByUserId();
+});
+
+const formValid = ref(false);
+
+watch(() => formState, async () => {
+    formValid.value = false;
+    // 验证
+    await openCardFormRef.value.validate();
+
+    formValid.value = true;
+    // 计算
+    handleChargeChange(unref(formState).amount)
+
+}, { deep: true })
 
 </script>
 <style lang="less" scoped>

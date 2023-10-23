@@ -9,5 +9,5 @@ export const dashboardApi = () => {
 };
 
 export const cardListApi = () => {
-  return aIns.get("/card/listAll");
+  return aIns.get("/card/homePage");
 };

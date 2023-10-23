@@ -25,6 +25,9 @@ export const useUserStore = defineStore("user", {
     },
     isNewCustom (state) {
       return state.userInfo.isNewCustom;
+    },
+    canApplyShareCard(state) {
+      return state.userInfo.ppBudgetId !==undefined && state.userInfo.ppBudgetId !== '';
     }
   },
   actions: {

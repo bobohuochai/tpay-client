@@ -11,6 +11,11 @@
                         placeholder="状态" allowClear>
                     </a-select>
                 </a-form-item>
+                <a-form-item label="卡类型" name="isShare">
+                    <a-select style="width: 100px;" :options="cardTypeEnum" v-model:value="formState.isShare"
+                        placeholder="卡类型" allowClear>
+                    </a-select>
+                </a-form-item>
                 <a-form-item label="备注" name="remark">
                     <a-input
                         v-model:value="formState.remark"
@@ -40,17 +45,22 @@
 
                     <a v-if="record.cardStatus === 'ACTIVE'
                         " @click="showBlockModal('冻结', record)">冻结</a>
+
                     <a v-if="record.cardStatus === 'REVOKED'
                         " @click="showBlockModal('解冻', record)">解冻</a>
+                        
                     <a v-if="record.cardStatus === 'ACTIVE'
                         " @click="showCloseModal(record)">注销</a>
 
-                    <a v-if="record.cardStatus === 'ACTIVE'
+                    <a v-if="record.isShare !== true && record.cardStatus === 'ACTIVE'
                         " @click="showPayModal('充值', record)">充值</a>
-                    <a v-if="record.cardStatus === 'ACTIVE' &&
+
+                    <a v-if="record.isShare !== true && record.cardStatus === 'ACTIVE' &&
                         record.usableQuota > 0
                         " @click="showPayModal('退回', record)">余额退回</a>
 
+                    <a v-if="record.isShare === true && record.cardStatus === 'ACTIVE'
+                        " @click="showLimitEditModal(record)">额度调整</a>
                 </a-space>
             </template>
             <template #emptyText>
@@ -171,6 +181,28 @@
                 <p>卡备注：{{ closeModalConfig.record.remark }}</p>
             </div>
         </a-modal>
+        <a-modal v-model:visible="limitEditModalConfig.show" title="额度调整" @ok="onLimitEditModalOk">
+            <div>
+                <p>卡号：{{ limitEditModalConfig.record.cardNumber }}</p>
+                <a-form ref="limitEditModalFormRef" :model="limitEditModalConfig.record">
+                    <a-form-item name="singleLimit" label="单笔额度">
+                        <a-input placeholder="请输入单笔额度" v-model:value="limitEditModalConfig.record.limitConfig.singleLimit" />
+                    </a-form-item>
+                    <a-form-item name="dailyLimit" label="单日额度">
+                        <a-input placeholder="请输入单日额度" v-model:value="limitEditModalConfig.record.limitConfig.dailyLimit" />
+                    </a-form-item>
+                    <a-form-item name="weeklyLimit" label="单周额度">
+                        <a-input placeholder="请输入单周额度" v-model:value="limitEditModalConfig.record.limitConfig.weeklyLimit" />
+                    </a-form-item>
+                    <a-form-item name="monthlyLimit" label="单月额度">
+                        <a-input placeholder="请输入单月额度" v-model:value="limitEditModalConfig.record.limitConfig.monthlyLimit" />
+                    </a-form-item>
+                    <a-form-item name="totalLimit" label="卡生命周期额度">
+                        <a-input placeholder="请输入卡生命周期额度" v-model:value="limitEditModalConfig.record.limitConfig.totalLimit" />
+                    </a-form-item>
+                </a-form>
+            </div>
+        </a-modal>
         <BatchRechargeModal ref="batchRechargeModalRef" @success="refreshCurrentPage"></BatchRechargeModal>
         <BatchCloseCardModal ref="batchCloseCardModalRef" @success="refreshCurrentPage"></BatchCloseCardModal>
     </div>
@@ -178,7 +210,7 @@
 <script setup>
 import { computed, reactive, ref, onMounted, watchEffect } from "vue";
 import { message, Modal, Button } from "ant-design-vue";
-import { downloadFromRes, checkAmount } from "../helpers/utils";
+import { downloadFromRes } from "../helpers/utils";
 import ExportButton from "../components/ExportButton.vue";
 import BatchRechargeModal from "../components/views/BatchRechargeModal.vue"
 import BatchCloseCardModal from "../components/views/BatchCloseCardModal.vue"
@@ -198,7 +230,8 @@ const formState = reactive({
     cardStatus: null,
     userCardId: null,
     walletId: null,
-    amount: null
+    amount: null,
+    isShare: null,
 });
 
 let previewAmount = ref(0);
@@ -223,6 +256,17 @@ const cardStatusEnum = reactive([
     },
 ]);
 
+const cardTypeEnum = reactive([
+    {
+        label: "充值卡",
+        value: false,
+    },
+    {
+        label: "共享卡",
+        value: true,
+    }
+]);
+
 let userCardPagingRes = ref({});
 
 const pagination = computed(() => {
@@ -237,6 +281,13 @@ const columns = reactive([
     {
         title: "开卡日期",
         dataIndex: "requestDate",
+    },
+    {
+        title: "卡类型",
+        dataIndex: "isShare",
+        customRender({ record }) {
+            return record.isShare === true ? '共享卡' : '充值卡';s
+        },
     },
     {
         title: "卡号",
@@ -508,6 +559,7 @@ let { canSendCount, isSending, canSendCheck, sendMessageCode } = useSendMessage(
     })
     message.success('发送成功');
 });
+
 const handleSendMessageCode = async () => {
     await userApis.sendAuthCode({
         type: downloadModalConfig.formState.authCodeType
@@ -577,6 +629,32 @@ const onCloseModalOk = async () => {
     message.success("销卡成功");
     refreshCurrentPage();
     closeModalConfig.show = false;
+};
+
+const limitEditModalFormRef = ref();
+
+const limitEditModalConfig = reactive({
+    show: false,
+    record: {},
+});
+const showLimitEditModal = (record) => {
+    limitEditModalConfig.record = record;
+    limitEditModalConfig.show = true;
+};
+const onLimitEditModalOk = async () => {
+    await userCardApis.updateLimit({
+        id: limitEditModalConfig.record.id,
+        limitConfig: {
+            singleLimit: limitEditModalConfig.record.limitConfig.singleLimit,
+            dailyLimit: limitEditModalConfig.record.limitConfig.dailyLimit,
+            weeklyLimit: limitEditModalConfig.record.limitConfig.weeklyLimit,
+            monthlyLimit: limitEditModalConfig.record.limitConfig.monthlyLimit,
+            totalLimit: limitEditModalConfig.record.limitConfig.totalLimit,
+        }
+    });
+    message.success("修改成功");
+    refreshCurrentPage();
+    limitEditModalConfig.show = false;
 };
 
 

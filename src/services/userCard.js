@@ -75,3 +75,7 @@ export const verifyPayPassword = (params) => {
 export const showUserCardInfo = (params) => {
   return aIns.post('/userCard/showUserCardInfo', params);
 }
+
+export const updateLimit = (params) => {
+  return aIns.post('/userCard/updateLimit', params);
+}
