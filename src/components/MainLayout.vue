@@ -89,8 +89,12 @@
     <a-modal v-model:visible="userRateTemplateConfig.show" :title="userRateTemplateConfig.title" :footer="null"
         width="1000px">
         <div v-if="userStore.rateTemplate">
-            <p><span>充值手续费：{{ showRate(userStore.rateTemplate.rechargeFee) }}</span></p>
-            <p><span>人民币充值手续费：{{ showRate(userStore.rateTemplate.cnyRechargeFee) }}</span></p>
+            <p v-if="userStore.rateTemplate.rechargeFee !== null">
+                <span>充值手续费：{{ showRate(userStore.rateTemplate.rechargeFee) }}</span></p>
+            <p v-if="userStore.rateTemplate.cnyRechargeFee !== null">
+                <span>人民币充值手续费：{{ showRate(userStore.rateTemplate.cnyRechargeFee) }}</span></p>
+            <p v-if="userStore.rateTemplate.cardRechargeFee !== null">
+                <span>卡转入手续费：{{ showRate(userStore.rateTemplate.cardRechargeFee) }}</span></p>
             <a-table 
                 :columns="userRateTemplateColumns" 
                 :data-source="userStore.rateTemplate.numberSegments"

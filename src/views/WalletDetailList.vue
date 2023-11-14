@@ -10,6 +10,10 @@
                 <a-select :options="useFlagEnum" v-model:value="formState.useFlag" placeholder="请选择" allowClear>
                 </a-select>
             </a-form-item>
+            <a-form-item label="卡备注" name="cardRemark">
+                <a-input v-model:value="formState.cardRemark" placeholder="请输入卡备注">
+                </a-input>
+            </a-form-item>
             <a-form-item label="日期" name="date">
                 <a-range-picker v-model:value="formState.date" />
             </a-form-item>
@@ -48,19 +52,14 @@ import { SearchOutlined, ExportOutlined } from '@ant-design/icons-vue';
 import { storeToRefs } from "pinia";
 import dayjs from "dayjs";
 import { downloadFromRes } from "../helpers/utils";
-import EmailSelect from "../components/EmailSelect.vue";
 import * as walletDetailApis from "../services/wallet-detail";
-import { useUserStore } from "../stores/user";
 import EmptyIcon from '../components/icons/empty.vue'
 
-const userStore = useUserStore();
 const loading = ref(false);
-
-const { listByEmail } = storeToRefs(userStore);
 
 const formState = reactive({
     cardNumber: null,
-    targetUserId: null,
+    cardRemark: null,
     useFlag: null,
     date: [dayjs().subtract(7, "day"), dayjs()],
 });
@@ -75,6 +74,10 @@ const useFlagEnum = reactive([
         value: 1,
     },
     {
+        label: "卡充值手续费",
+        value: 6,
+    },
+    {
         label: "卡余额转出",
         value: 2,
     },
@@ -84,7 +87,7 @@ const useFlagEnum = reactive([
     },
     {
         label: "销卡退回",
-        value: 5,
+        value: 15,
     },
     {
         label: "账户调账",
@@ -194,14 +197,14 @@ const columns = reactive([
         title: "交易金额",
         dataIndex: "amount",
         customRender({ record }) {
-            return `${record.amount}${record.currencyCode}`;
+            return `${record.amount}${record.currency}`;
         },
     },
     {
         title: "账户余额",
         dataIndex: "walletAmount",
         customRender({ record }) {
-            return `${record.walletAmount}${record.currencyCode}`;
+            return `${record.walletAmount}${record.currency}`;
         },
     },
 

@@ -96,6 +96,12 @@
                     {{ selectedWallet.currencyCode }}
                 </template>
             </a-form-item>
+            <a-form-item v-if="previewFeeAmount !== null && previewFeeAmount > 0" :label="payModalConfig.title + '手续费'">
+                {{ previewFeeAmount }}
+                <template v-if="selectedWallet">
+                    {{ selectedWallet.currencyCode }}
+                </template>
+            </a-form-item>
         </a-modal>
         <a-modal v-model:visible="editModalConfig.show" title="编辑卡备注" @ok="onEditModalOk">
             <div>
@@ -235,6 +241,7 @@ const formState = reactive({
 });
 
 let previewAmount = ref(0);
+let previewFeeAmount = ref(0);
 
 const cardStatusEnum = reactive([
     // 激活 ACTIVE 冻结 REVOKED 注销中 INCANCELED 已注销 CANCELED
@@ -378,6 +385,8 @@ const payModalConfig = reactive({
 const payModalFormRef = ref();
 
 const showPayModal = (title, record) => {
+    previewAmount.value = 0;
+    previewFeeAmount.value = 0;
     payModalConfig.title = title;
     payModalConfig.record = record;
     payModalConfig.show = true;
@@ -433,9 +442,11 @@ watchEffect(async () => {
         if (payModalConfig.title === "充值") {
             const res = await userCardApis.calcCardRechargeFee(payModalConfigRequestData);
             previewAmount.value = res.realAmount;
+            previewFeeAmount.value = res.rechargeFee;
         } else {
             const res = await userCardApis.calcCardOutFee(payModalConfigRequestData);
             previewAmount.value = res.realAmount;
+            previewFeeAmount.value = res.chargeOutFee;
         }
     } else {
         previewAmount.value = 0;

@@ -210,7 +210,7 @@
             <p class="c-#2C261B text-20px leading-none font-400 mb-16px mt-24px">付款确认</p>
             <div class="pay_comfirm_wrapper">
                 <div class="mb-24px">
-                    <span class="label">总手续费</span> <span>{{ formState.sumApplyFee }} {{ currencyCode }}</span>
+                    <span class="label">总手续费</span> <span>{{ formState.sumFee }} {{ currencyCode }}</span>
                 </div>
                 <div class="mb-24px" v-if="formState.isShare !== true">
                     <span class="label">卡到账金额</span> <span>{{ formState.sumRealAmount }} {{ currencyCode }}</span>
@@ -278,9 +278,9 @@ let formState = reactive({
     totalLimit: 100000, // 生命周期额度
 
     // --- 无关字段 ---
-    "singleApplyFee": '', // 单卡手续费
-    "sumAmount": '', // 总金额
-    "sumApplyFee": '', // 总手续费
+    "singleApplyFee": '', // 单卡开卡手续费
+    "sumAmount": '', // 总付款金额
+    "sumFee": '', // 总手续费
     "sumRealAmount": '' // 总到账金额
 });
 
@@ -325,7 +325,7 @@ const handleChargeChange = debounce(async (val) => {
         formState.charge = res?.singleRealAmount;
         formState.singleApplyFee = res?.singleApplyFee;
         formState.sumAmount = res?.sumAmount;
-        formState.sumApplyFee = res?.sumApplyFee;
+        formState.sumFee = res?.sumFee;
         formState.sumRealAmount = res?.sumRealAmount;
     }
 }, 500);
@@ -385,7 +385,7 @@ const handleSubmitCard = async () => {
                 totalLimit: undefined,
                 singleApplyFee: undefined,
                 sumAmount: undefined,
-                sumApplyFee: undefined,
+                sumFee: undefined,
                 sumRealAmount: undefined,
                 limitConfig: {
                     singleLimit: formState.singleLimit, // 单笔额度

@@ -14,6 +14,10 @@
                 <a-select :options="typeEnum" v-model:value="formState.type" placeholder="请选择" allowClear>
                 </a-select>
             </a-form-item>
+            <a-form-item label="状态" name="status" class="w-200px">
+                <a-select :options="statusEnum" v-model:value="formState.status" placeholder="请选择" allowClear>
+                </a-select>
+            </a-form-item>
             <a-form-item label="日期" name="date">
                 <a-range-picker v-model:value="formState.date" />
             </a-form-item>
@@ -134,6 +138,7 @@ const formState = reactive({
     cardRemark: null,
     targetUserId: null,
     type: null,
+    status: null,
     date: [dayjs().subtract(7, "day"), dayjs()],
 });
 
@@ -156,6 +161,17 @@ const typeEnum = reactive([
     {
         label: "退款",
         value: "Purchase Return",
+    }
+]);
+
+const statusEnum = reactive([
+    {
+        label: "成功",
+        value: "APPROVED",
+    },
+    {
+        label: "失败",
+        value: "DECLINED",
     }
 ]);
 

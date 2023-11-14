@@ -103,15 +103,15 @@
                         allowClear></a-select>
                     <a-button type="primary" class="ml-8px" @click="handleCopy(formState.receiptAccountId)">复制</a-button>
                     <div v-if="formState.receiptAccountId && accountData" class="account-wrapper">
+                        <div class="item-list" v-if="accountData.supportedCurrencies">
+                            Supported Currencies(币种支持):
+                            <span> {{ accountData.supportedCurrencies }}</span>
+                        </div>
                         <div class="item-list" v-if="accountData.accountName">
                             Account Name(银行开户名): <span> {{ accountData.accountName }}</span>
                         </div>
-                        <div class="item-list" v-if="accountData.supportedCurrencies">
-                            Supported Currencies:
-                            <span> {{ accountData.supportedCurrencies }}</span>
-                        </div>
                         <div class="item-list" v-if="accountData.bankName">
-                            Bank Name: <span> {{ accountData.bankName }}</span>
+                            Bank Name(银行名称): <span> {{ accountData.bankName }}</span>
                         </div>
                         <div class="item-list" v-if="accountData.bankAddress">
                             Bank Address(银行地址): <span> {{ accountData.bankAddress }}</span>
