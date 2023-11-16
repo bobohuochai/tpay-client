@@ -30,6 +30,10 @@
                             <img class="w-18px h-18px mr-12px" src="../assets/password.png" />
                             <router-link class="c-#2c261bb3 font-500" to="/update-login-password">修改密码</router-link>
                         </li>
+                        <li class="py-6px">
+                            <img class="w-18px h-18px mr-12px" src="../assets/userInfo.png" />
+                            <router-link class="c-#2c261bb3 font-500" to="/update-user-info">个人信息</router-link>
+                        </li>
                         <a-divider class="my-6px" />
                         <a class="c-#2c261bb3 font-400 text-14px py-6px" @click="logout">退出登录</a>
                     </ul>

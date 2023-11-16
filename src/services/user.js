@@ -32,6 +32,10 @@ export const updatePassword = (params) => {
   return aIns.post('/vccuser/updatePassword', params);
 }
 
+export const updateUserInfo = (params) => {
+  return aIns.post('/vccuser/updateUserInfo', params);
+}
+
 export const active = (params) => {
   return aIns.post('/vccuser/active', params);
 }

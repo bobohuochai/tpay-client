@@ -11,8 +11,8 @@ import UpdatePayPassword from "../views/UpdatePayPassword.vue";
 import BatchOperate from "../views/BatchOperate.vue";
 import UpdatePassword from "../views/UpdatePassword.vue";
 import UpdateLoginPassword from "../views/UpdateLoginPassword.vue";
+import UpdateUserInfo from "../views/UpdateUserInfo.vue";
 
-import ComptrolList from "../views/ComptrolList.vue";
 import Cardholder from "../views/Cardholder.vue";
 import KYC from "../views/KYC.vue";
 export const moduleRoutes = [
@@ -143,14 +143,14 @@ export const moduleRoutes = [
       keepAlive: true,
     },
   },
-  // {
-  //   path: "/comptrol-list",
-  //   name: "ComptrolList",
-  //   component: ComptrolList,
-  //   meta: {
-  //     auth: true,
-  //     title: "审计",
-  //     keepAlive: true,
-  //   },
-  // },
+  {
+    path: "/update-user-info",
+    name: "UpdateUserInfo",
+    component: UpdateUserInfo,
+    meta: {
+      auth: true,
+      title: "修改个人信息",
+      keepAlive: true,
+    },
+  }
 ];
