@@ -155,7 +155,6 @@ export default defineComponent({
         const deviceInfo = useDeviceInfo();
         const selectedKeys = ref([route.path.replace("\/", "")]);
 
-
         const userRateTemplateConfig = ref({
             show: false,
             title: "用户费率"
@@ -184,6 +183,89 @@ export default defineComponent({
         watchEffect(() => {
             selectedKeys.value = [route.path.replace("\/", "")];
         });
+
+        const activeUserMenu = 
+        [
+            {
+                name: "首页",
+                key: "home",
+                icon: 'home-default',
+                activeIcon: "home"
+            },
+            {
+                name: "账户管理",
+                key: "recharge",
+                icon: 'account-manage-default',
+                activeIcon: 'account-manage',
+                children: [
+                    {
+                        name: "账户充值",
+                        key: "recharge-order",
+                    },
+                    {
+                        name: "充值订单",
+                        key: "recharge-list"
+                    }
+                ],
+            },
+            {
+                name: "卡片管理",
+                key: "card",
+                activeIcon: 'cards-manage',
+                icon: 'cards-manage-default',
+                children: [
+                    {
+                        name: "申请开卡",
+                        key: "card-request",
+                    },
+                    {
+                        name: "卡列表",
+                        key: "card-list",
+                    },
+                    {
+                        name: "持卡人管理",
+                        key: "cardholder",
+                    },
+                ],
+            },
+            {
+                name: '交易详情',
+                key: 'transaction-detail',
+                icon: 'trans-default',
+                activeIcon: 'trans'
+            },
+            {
+                name: "账户明细",
+                key: "wallet-detail-list",
+                icon: "wallet-detail-default",
+                activeIcon: "wallet-detail"
+            },
+            {
+                name: "支付设置",
+                key: "update",
+                icon: 'pay-settings-default',
+                activeIcon: 'pay-settings',
+                children: [
+                    {
+                        name: "支付密码",
+                        key: "update-pay-password",
+                    },
+                    {
+                        name: "登录密码",
+                        key: "update-login-password",
+                    },
+                ],
+            },
+        ];
+        const unActiveUserMenu = [
+            {
+                name: "KYC资料",
+                key: "kyc",
+                icon: 'home',
+                activeIcon: "home"
+            }
+        ];
+
         return {
             route,
             router,
@@ -195,78 +277,7 @@ export default defineComponent({
             userRateTemplateConfig,
             userRateTemplateColumns,
             openKeys: ref([]),
-            menus: [
-                {
-                    name: "首页",
-                    key: "home",
-                    icon: 'home-default',
-                    activeIcon: "home"
-                },
-                {
-                    name: "账户管理",
-                    key: "recharge",
-                    icon: 'account-manage-default',
-                    activeIcon: 'account-manage',
-                    children: [
-                        {
-                            name: "账户充值",
-                            key: "recharge-order",
-                        },
-                        {
-                            name: "充值订单",
-                            key: "recharge-list"
-                        }
-                    ],
-                },
-                {
-                    name: "卡片管理",
-                    key: "card",
-                    activeIcon: 'cards-manage',
-                    icon: 'cards-manage-default',
-                    children: [
-                        {
-                            name: "申请开卡",
-                            key: "card-request",
-                        },
-                        {
-                            name: "卡列表",
-                            key: "card-list",
-                        },
-                        {
-                            name: "持卡人管理",
-                            key: "cardholder",
-                        },
-                    ],
-                },
-                {
-                    name: '交易详情',
-                    key: 'transaction-detail',
-                    icon: 'trans-default',
-                    activeIcon: 'trans'
-                },
-                {
-                    name: "账户明细",
-                    key: "wallet-detail-list",
-                    icon: "wallet-detail-default",
-                    activeIcon: "wallet-detail"
-                },
-                {
-                    name: "支付设置",
-                    key: "update",
-                    icon: 'pay-settings-default',
-                    activeIcon: 'pay-settings',
-                    children: [
-                        {
-                            name: "支付密码",
-                            key: "update-pay-password",
-                        },
-                        {
-                            name: "登录密码",
-                            key: "update-login-password",
-                        },
-                    ],
-                },
-            ],
+            menus: userStore.userInfo.kycStatus === 0 ? activeUserMenu : unActiveUserMenu,
             breads: ref([])
         };
     },
@@ -365,7 +376,7 @@ export default defineComponent({
             }
         });
         this.openKeys = openKeys;
-
+        console.log(this.menus)
         // this.setBreads();
     },
 });

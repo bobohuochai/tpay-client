@@ -61,16 +61,12 @@ instance.interceptors.response.use(
       return data.data || data;
     }
     if (parseInt(data.status, 10) !== 200) {
-      if (response.config.url === "/vccuser/login" && data.status === 201) {
-        Modal.info({
-          title: data.message,
-          content: "已发送邮件，请通过邮件链接激活后登录",
-          onOk() {},
-        });
+      handleBusinessError(data);
+      if (response.config.url === "/vccuser/login") {
+        return data;
       } else {
-        handleBusinessError(data);
+        return Promise.reject(data);
       }
-      return Promise.reject(data);
     } else {
       if (response.config.url === "/vccuser/login") {
         loginSuccess(response);

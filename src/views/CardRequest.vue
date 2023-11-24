@@ -305,9 +305,10 @@ const getCardGroup = async (isShare) => {
     const cardListPromise = await cardApis.cardListAll({
         isShare: isShare
     });
-    if (cardListPromise.length > 0) {
-        formState.cardId = cardListPromise[0].id;
-    }
+    // 不再默认选中一个卡头
+    // if (cardListPromise.length > 0) {
+    //     formState.cardId = cardListPromise[0].id;
+    // }
     Promise.all(cardListPromise).then((values) => {
         sectionNoList.value = values?.flat() || []
     })

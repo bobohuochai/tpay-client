@@ -64,7 +64,7 @@
                     </a-input-password>
                     <router-link class="login-form-forgot mt-12px" to="/forgot">忘记密码</router-link>
                 </a-form-item>
-                <a-form-item class="auth-code-type pt-12px mb-12px" label="验证码选择" name="authCodeType" :rules="[
+                <a-form-item v-if="loginDateFLag || passwordErrorFlag" class="auth-code-type pt-12px mb-12px" label="验证码选择" name="authCodeType" :rules="[
                     { required: true, trigger: 'change', message: '请选择验证码方式' },
                 ]">
 
@@ -74,7 +74,7 @@
                     </a-radio-group>
 
                 </a-form-item>
-                <a-form-item label="" name="authCode">
+                <a-form-item v-if="loginDateFLag || passwordErrorFlag" label="" name="authCode">
                     <div class="flex">
                         <a-input class="h-36px" placeholder="输入验证码" v-model:value="formState.authCode">
                             <template #prefix>
@@ -113,13 +113,26 @@
     </div>
 </template>
 <script setup>
-import { reactive, computed, ref } from "vue";
+import { reactive, computed, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import * as userApis from "../services/user";
 import { useSendMessage } from '../hooks/message-send.js';
 import Logo from '../components/logo.vue';
+import moment from 'moment';
 
+const loginDateFLag = ref(true);
+const passwordErrorFlag = ref(false);
+
+onMounted(() => {
+    // 上一次登录的时间
+    let lastLoginDate = window.localStorage.getItem('lastLoginDate');
+    let currentDate = moment().format('YYYY-MM-DD HH:mm:ss');
+    loginDateFLag.value = moment(currentDate).diff(lastLoginDate, 'days') > 7;
+    // 密码输错n次的判断
+    let passwordErrorCount = window.localStorage.getItem('passwordErrorCount');
+    passwordErrorFlag.value = parseInt(passwordErrorCount, 10) >= 3;
+});
 
 let { canSendCount, isSending, canSendCheck, sendMessageCode } = useSendMessage(async () => {
     await userApis.sendAuthCodeForFree({
@@ -136,7 +149,7 @@ const handleSendMessageCode = async () => {
 }
 
 const route = useRoute();
-console.log(route);
+
 const formState = reactive({
     account: "",
     password: "",
@@ -144,13 +157,43 @@ const formState = reactive({
     authCodeType: '0',
     authCode: ''
 });
+
 const onFinish = async (values) => {
-    await userApis.login(values);
-    if (route.query.from) {
-        window.location.href = decodeURIComponent(route.query.from);
+    let formData = { 
+        ...values, 
+        needAuthCode: loginDateFLag.value || passwordErrorFlag.value
+    }
+    let res = await userApis.login(formData);
+    if (res.status == 200) {
+        let lastLoginDate = window.localStorage.getItem('lastLoginDate');
+        if (lastLoginDate === undefined || lastLoginDate === null || lastLoginDate === '') {
+            let lastLoginDate = moment().format('YYYY-MM-DD HH:mm:ss');
+            // 设置上一次登录的时间
+            window.localStorage.setItem('lastLoginDate', lastLoginDate);
+        }
+        // 移出密码错误或账号错误的判断
+        window.localStorage.removeItem('passwordErrorCount');
+        
+        // 跳转到目标路由
+        if (route.query.from) {
+            window.location.href = decodeURIComponent(route.query.from);
+        } else {
+            window.location.href =
+                window.location.origin + window.location.pathname + "#/home";
+        }
     } else {
-        window.location.href =
-            window.location.origin + window.location.pathname + "#/home";
+        let passwordErrorCount = window.localStorage.getItem('passwordErrorCount');
+        if (passwordErrorCount == undefined || passwordErrorCount == '') {
+            passwordErrorCount = 0;
+        } else {
+            passwordErrorCount = parseInt(passwordErrorCount, 10);
+        }
+        passwordErrorCount = passwordErrorCount + 1;
+        window.localStorage.setItem('passwordErrorCount', passwordErrorCount);
+        // 当输错密码超过3次时，就需要验证码了
+        if (passwordErrorCount >= 3) {
+            passwordErrorFlag.value = true;
+        }
     }
 };
 const onFinishFailed = (errorInfo) => {
